@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 import org.hibernate.*;
 import org.hibernate.criterion.*;
-import edu.mum.cs490.webmart.dao.HibernateUtil;
+
 
 public abstract class HibernateDAO< T, ID extends Serializable> implements GenericDAO<T, ID> {
 
