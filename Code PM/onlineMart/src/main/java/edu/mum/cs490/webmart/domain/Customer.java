@@ -26,8 +26,8 @@ public class Customer extends User implements Serializable {
 //    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(mappedBy ="customer", cascade = CascadeType.ALL )
-    private ShoppingCartItem shoppingCart;
+    @OneToMany(cascade = CascadeType.ALL )
+    private List<ShoppingCartItem> shoppingCart;
     @OneToMany(mappedBy = "customer")
     private List<Order> order;
     public Long getId() {
@@ -37,13 +37,15 @@ public class Customer extends User implements Serializable {
     public Customer() {
     }
 
-    public ShoppingCartItem getShoppingCart() {
+    public List<ShoppingCartItem> getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingCart(ShoppingCartItem shoppingCart) {
+    public void setShoppingCart(List<ShoppingCartItem> shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
+
+   
 
     public List<Order> getOrder() {
         return order;
