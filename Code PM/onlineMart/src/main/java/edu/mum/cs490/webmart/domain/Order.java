@@ -5,82 +5,78 @@
  */
 package edu.mum.cs490.webmart.domain;
 
-import edu.mum.cs490.webmart.domain.Credentials;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
 
 /**
  *
  * @author dipika
  */
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public class User implements Serializable {
-
+public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank  
-    private String firstName;
-    @NotBlank  
-    private String middleName;
-    @NotBlank
-    private String lastName;
     @NotNull
-    private String telnum;
+    private double totalAmount;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    private List<OrderItem> orderItem;
+   
+    @ManyToOne
+    private Customer customer;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    private Credentials credential;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Role role;
-    public User() {
+    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+    private PaymentInfo paymentInfo;
+   
+    
+
+    public Order() {
     }
 
-    public String getFirstName() {
-        return firstName;
+    public PaymentInfo getPaymentInfo() {
+        return paymentInfo;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPaymentInfo(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
+    }
+    
+     public Customer getCustomer() {
+        return customer;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public String getLastName() {
-        return lastName;
+    public List<OrderItem> getOrderItem() {
+        return orderItem;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setOrderItem(List<OrderItem> orderItem) {
+        this.orderItem = orderItem;
     }
 
-    public String getTelnum() {
-        return telnum;
-    }
-
-    public void setTelnum(String telnum) {
-        this.telnum = telnum;
-    }
-
+   
+    
     public Long getId() {
         return id;
     }
@@ -99,10 +95,10 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Order)) {
             return false;
         }
-        User other = (User) object;
+        Order other = (Order) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +107,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.Users[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.Order[ id=" + id + " ]";
     }
-
+    
 }

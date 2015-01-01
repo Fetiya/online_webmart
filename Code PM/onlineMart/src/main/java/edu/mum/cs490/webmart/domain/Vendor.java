@@ -5,80 +5,80 @@
  */
 package edu.mum.cs490.webmart.domain;
 
-import edu.mum.cs490.webmart.domain.Credentials;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
 
 /**
  *
  * @author dipika
  */
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public class User implements Serializable {
+public class Vendor implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank  
-    private String firstName;
-    @NotBlank  
-    private String middleName;
-    @NotBlank
-    private String lastName;
     @NotNull
-    private String telnum;
-    
-    @OneToOne(cascade = CascadeType.ALL)
-    private Credentials credential;
-    @OneToOne(cascade = CascadeType.ALL)
+    private String companyName;
+    @OneToOne
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Role role;
-    public User() {
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
+    private List<Product> productlist;
+    @OneToOne
+    private SubscriptionRule subscriptionRule;
+    private String accountNum;
+    private enum status{ACTIVE,PENDING,REJECTED,DEACTIVATE}
+
+    public Vendor() {
     }
 
-    public String getFirstName() {
-        return firstName;
+    public List<Product> getProductlist() {
+        return productlist;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setProductlist(List<Product> productlist) {
+        this.productlist = productlist;
     }
 
-    public String getMiddleName() {
-        return middleName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public SubscriptionRule getSubscriptionRule() {
+        return subscriptionRule;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSubscriptionRule(SubscriptionRule subscriptionRule) {
+        this.subscriptionRule = subscriptionRule;
     }
 
-    public String getTelnum() {
-        return telnum;
+    public String getAccountNum() {
+        return accountNum;
     }
 
-    public void setTelnum(String telnum) {
-        this.telnum = telnum;
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Long getId() {
@@ -99,10 +99,10 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Vendor)) {
             return false;
         }
-        User other = (User) object;
+        Vendor other = (Vendor) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +111,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.Users[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.Vendors[ id=" + id + " ]";
     }
 
 }
