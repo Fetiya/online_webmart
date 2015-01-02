@@ -28,7 +28,7 @@ public class UserController {
 
   
     @Autowired
-    private UserService userService ;//= new UserSerivceImpl();
+    private UserService userService ;
 
     public UserService getUserService() {
         return userService;

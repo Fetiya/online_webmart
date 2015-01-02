@@ -11,6 +11,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>All users List</title>
+        
+        <!-- Bootstrap -->
+      <link href="/SmartMart/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
     </head>
     <body>
         <h1>All Users View!</h1>
@@ -40,6 +44,14 @@
         </c:forEach>
     </tbody>
 </table>
+        
+         <h1>Hello, world!</h1>
+
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://code.jquery.com/jquery.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files 
+            as needed -->
+      <script src="SmartMart/resources/js/bootstrap.min.js"></script>
 </body>
 
 </html>

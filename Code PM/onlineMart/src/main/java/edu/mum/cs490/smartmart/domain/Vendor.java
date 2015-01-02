@@ -36,9 +36,27 @@ public class Vendor implements Serializable {
     @OneToOne
     private SubscriptionRule subscriptionRule;
     private String accountNum;
-    private enum status{ACTIVE,PENDING,REJECTED,DEACTIVATE}
+    private VendorStatus status;
+    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
+    private List <VendorAdmin> admins;
 
     public Vendor() {
+    }
+
+    public List<VendorAdmin> getAdmins() {
+        return admins;
+    }
+
+    public void setAdmins(List<VendorAdmin> admins) {
+        this.admins = admins;
+    }
+
+    public VendorStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(VendorStatus status) {
+        this.status = status;
     }
 
     public List<Product> getProductlist() {
