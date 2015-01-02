@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;

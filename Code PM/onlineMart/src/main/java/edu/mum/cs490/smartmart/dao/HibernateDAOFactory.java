@@ -1,5 +1,5 @@
 
-package edu.mum.cs490.webmart.dao;
+package edu.mum.cs490.smartmart.dao;
 
 public class HibernateDAOFactory extends DAOFactory {
 

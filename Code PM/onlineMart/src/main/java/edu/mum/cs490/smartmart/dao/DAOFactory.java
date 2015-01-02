@@ -1,9 +1,9 @@
 
-package edu.mum.cs490.webmart.dao;
+package edu.mum.cs490.smartmart.dao;
 
 public abstract class DAOFactory {
 
-    public static final Class FACTORY_CLASS = edu.mum.cs490.webmart.dao.HibernateDAOFactory.class;
+    public static final Class FACTORY_CLASS = edu.mum.cs490.smartmart.dao.HibernateDAOFactory.class;
 
     public static DAOFactory getFactory() {
         try {
