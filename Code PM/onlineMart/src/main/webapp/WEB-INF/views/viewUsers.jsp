@@ -21,7 +21,7 @@
 
                 <tr>
                     <th>id</th>
-                    <th>date Of Birth</th>
+                
                     <th>First Name</th>
                     <th>Last Name</th>
 
@@ -31,7 +31,7 @@
                 <c:forEach var="u" items="${users}" varStatus="loopStatus" >
 
                 <td>${u.id}</td>
-                <td>${u.dateOfBirth}</td> 
+                
                 <td width="20%">${u.firstName}</td>
 
                 <td> ${u.lastName}     </td>

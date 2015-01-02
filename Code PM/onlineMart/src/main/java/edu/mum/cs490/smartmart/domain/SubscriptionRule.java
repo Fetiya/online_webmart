@@ -3,48 +3,62 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author dipika
  */
 @Entity
-public class Role implements Serializable {
+public class SubscriptionRule implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
-    private String role;
-    
-    public Role() {
+    private int startRange;
+    private int endRange;
+    private double fee;
+
+    public SubscriptionRule() {
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-    
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getStartRange() {
+        return startRange;
+    }
+
+    public void setStartRange(int startRange) {
+        this.startRange = startRange;
+    }
+
+    public int getEndRange() {
+        return endRange;
+    }
+
+    public void setEndRange(int endRange) {
+        this.endRange = endRange;
+    }
+
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
     }
 
     @Override
@@ -57,10 +71,10 @@ public class Role implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof SubscriptionRule)) {
             return false;
         }
-        Role other = (Role) object;
+        SubscriptionRule other = (SubscriptionRule) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -69,7 +83,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.Role[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.SubscriptionRule[ id=" + id + " ]";
     }
     
 }

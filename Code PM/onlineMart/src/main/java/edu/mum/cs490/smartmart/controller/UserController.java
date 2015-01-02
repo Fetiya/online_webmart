@@ -46,7 +46,7 @@ public class UserController {
         // System.out.println("Controller"+id);
         
         List<User> usr= userService.getAllUsers();
-       model.addAttribute("users",userService.getAllUsers());
+      model.addAttribute("users",userService.getAllUsers());
 
         return "viewUsers";
     }

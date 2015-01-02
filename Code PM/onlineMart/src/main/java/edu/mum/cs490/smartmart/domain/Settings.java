@@ -3,24 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author dipika
  */
 @Entity
-public class Admin extends User implements Serializable{
+public class Settings implements Serializable {
     private static final long serialVersionUID = 1L;
-    //@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotNull
+    private int profitpercentage;
+    private String accountNum;
+
+    public Settings() {
+    }
+
+    public int getProfitpercentage() {
+        return profitpercentage;
+    }
+
+    public String getAccountNum() {
+        return accountNum;
+    }
+
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
+    }
+
+    public void setProfitpercentage(int profitpercentage) {
+        this.profitpercentage = profitpercentage;
+    }
 
     public Long getId() {
         return id;
@@ -40,10 +63,10 @@ public class Admin extends User implements Serializable{
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Admin)) {
+        if (!(object instanceof Settings)) {
             return false;
         }
-        Admin other = (Admin) object;
+        Settings other = (Settings) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -52,7 +75,7 @@ public class Admin extends User implements Serializable{
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.Admin[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.Settings[ id=" + id + " ]";
     }
     
 }

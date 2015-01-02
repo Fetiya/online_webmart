@@ -7,6 +7,7 @@ package edu.mum.cs490.smartmart.service;
 
 import edu.mum.cs490.smartmart.dao.UserDAO;
 import edu.mum.cs490.smartmart.domain.User;
+//import edu.mum.cs490.smartmart.domain.User;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,5 +18,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface UserService {
         
-    public List<User> getAllUsers();
+   public List<User> getAllUsers();
 }

@@ -3,62 +3,59 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
 
 /**
  *
  * @author dipika
  */
 @Entity
-public class SubscriptionRule implements Serializable {
+public class Credentials implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int startRange;
-    private int endRange;
-    private double fee;
+    @NotNull
+    private String username;
+    @NotNull
+    private String password;
 
-    public SubscriptionRule() {
+    public Credentials() {
     }
-
+    
     public Long getId() {
         return id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
+
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getStartRange() {
-        return startRange;
-    }
-
-    public void setStartRange(int startRange) {
-        this.startRange = startRange;
-    }
-
-    public int getEndRange() {
-        return endRange;
-    }
-
-    public void setEndRange(int endRange) {
-        this.endRange = endRange;
-    }
-
-    public double getFee() {
-        return fee;
-    }
-
-    public void setFee(double fee) {
-        this.fee = fee;
     }
 
     @Override
@@ -71,10 +68,10 @@ public class SubscriptionRule implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SubscriptionRule)) {
+        if (!(object instanceof Credentials)) {
             return false;
         }
-        SubscriptionRule other = (SubscriptionRule) object;
+        Credentials other = (Credentials) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -83,7 +80,7 @@ public class SubscriptionRule implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.SubscriptionRule[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.Credentials[ id=" + id + " ]";
     }
-    
+
 }

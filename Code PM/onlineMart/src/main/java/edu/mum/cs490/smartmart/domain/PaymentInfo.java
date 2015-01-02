@@ -3,59 +3,71 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
  * @author dipika
  */
 @Entity
-public class Credentials implements Serializable {
+public class PaymentInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    private String username;
+    @Length(min = 16, max = 16)
+    private long creditCardNum;
     @NotNull
-    private String password;
+    private String creditCardType;
+    @OneToOne
+    private Order order;
 
-    public Credentials() {
+    public PaymentInfo() {
     }
-    
+
     public Long getId() {
         return id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public long getCreditCardNum() {
+        return creditCardNum;
+    }
+
+    public void setCreditCardNum(long creditCardNum) {
+        this.creditCardNum = creditCardNum;
+    }
+
+    public String getCreditCardType() {
+        return creditCardType;
+    }
+
+    public void setCreditCardType(String creditCardType) {
+        this.creditCardType = creditCardType;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     @Override
@@ -68,10 +80,10 @@ public class Credentials implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Credentials)) {
+        if (!(object instanceof PaymentInfo)) {
             return false;
         }
-        Credentials other = (Credentials) object;
+        PaymentInfo other = (PaymentInfo) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -80,7 +92,7 @@ public class Credentials implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.Credentials[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.PaymentInfo[ id=" + id + " ]";
     }
 
 }

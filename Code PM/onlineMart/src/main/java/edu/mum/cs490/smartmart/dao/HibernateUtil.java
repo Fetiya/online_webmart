@@ -1,6 +1,6 @@
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.User;
+
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
@@ -16,7 +16,7 @@ public class HibernateUtil {
     public static Configuration getInitializedConfiguration() {
         AnnotationConfiguration config = new AnnotationConfiguration();
 
-        config.addAnnotatedClass(User.class);
+ //       config.addAnnotatedClass(User.class);
         config.configure();
 
         return config;

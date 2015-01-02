@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,8 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -21,66 +23,62 @@ import javax.validation.constraints.NotNull;
  * @author dipika
  */
 @Entity
-public class Vendor implements Serializable {
-
+@Table(name="order_table")
+public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    private String companyName;
-    @OneToOne
-    private Address address;
-    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
-    private List<Product> productlist;
-    @OneToOne
-    private SubscriptionRule subscriptionRule;
-    private String accountNum;
-    private enum status{ACTIVE,PENDING,REJECTED,DEACTIVATE}
+    private double totalAmount;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
+    private List<OrderItem> orderItem;
+   
+    @ManyToOne
+    private Customer customer;
+    
+    @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+    private PaymentInfo paymentInfo;
+   
+    
 
-    public Vendor() {
+    public Order() {
     }
 
-    public List<Product> getProductlist() {
-        return productlist;
+    public PaymentInfo getPaymentInfo() {
+        return paymentInfo;
     }
 
-    public void setProductlist(List<Product> productlist) {
-        this.productlist = productlist;
+    public void setPaymentInfo(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
+    }
+    
+     public Customer getCustomer() {
+        return customer;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public SubscriptionRule getSubscriptionRule() {
-        return subscriptionRule;
+    public List<OrderItem> getOrderItem() {
+        return orderItem;
     }
 
-    public void setSubscriptionRule(SubscriptionRule subscriptionRule) {
-        this.subscriptionRule = subscriptionRule;
+    public void setOrderItem(List<OrderItem> orderItem) {
+        this.orderItem = orderItem;
     }
 
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
+   
+    
     public Long getId() {
         return id;
     }
@@ -99,10 +97,10 @@ public class Vendor implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Vendor)) {
+        if (!(object instanceof Order)) {
             return false;
         }
-        Vendor other = (Vendor) object;
+        Order other = (Order) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -111,7 +109,7 @@ public class Vendor implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.Vendors[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.Order[ id=" + id + " ]";
     }
-
+    
 }

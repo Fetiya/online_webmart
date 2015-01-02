@@ -3,51 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.webmart.domain;
+package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author dipika
  */
 @Entity
-public class ShoppingCartItem implements Serializable {
+public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank
-    private double price;
-    @NotBlank
-    private int quantity;
-    @OneToOne
-    private Customer customer;
-
-    public ShoppingCartItem() {
+    @NotNull
+    private String role;
+    
+    public Role() {
     }
 
-    public double getPrice() {
-        return price;
+    public String getRole() {
+        return role;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setRole(String role) {
+        this.role = role;
     }
     
     public Long getId() {
@@ -68,10 +57,10 @@ public class ShoppingCartItem implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ShoppingCartItem)) {
+        if (!(object instanceof Role)) {
             return false;
         }
-        ShoppingCartItem other = (ShoppingCartItem) object;
+        Role other = (Role) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -80,7 +69,7 @@ public class ShoppingCartItem implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.ShoppingCartItem[ id=" + id + " ]";
+        return "edu.mum.cs490.webmart.domain.Role[ id=" + id + " ]";
     }
     
 }
