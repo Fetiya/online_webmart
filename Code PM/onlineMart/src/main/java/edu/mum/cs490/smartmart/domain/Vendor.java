@@ -29,6 +29,8 @@ public class Vendor implements Serializable {
     private Long id;
     @NotNull
     private String companyName;
+   
+    private String email;
     @OneToOne
     private Address address;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
@@ -41,6 +43,14 @@ public class Vendor implements Serializable {
     private List <VendorAdmin> admins;
 
     public Vendor() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<VendorAdmin> getAdmins() {

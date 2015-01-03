@@ -89,6 +89,11 @@
     </bean>
     <bean id="ICredentialDAO" class="edu.mum.cs490.smartmart.dao.impl.CredentialDAOImpl" parent="hibernateDAO">     
     </bean>
+    
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
+     
+    </bean>
+    
 
     <!-- User service injections  -->
     <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
