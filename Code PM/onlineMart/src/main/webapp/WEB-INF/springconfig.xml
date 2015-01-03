@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="Pass@deliver" />
+        <property name="password" value="mumsql" />
     </bean>
 
     <!-- hibernate Properties -->
@@ -87,15 +87,26 @@
     </bean>
     
      <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">
+          
      
     </bean>
+    
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
+     
+    </bean>
+    
 
 <!--      User service injections  
     -->
     <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
 
           <property name="userDAO" ref="userDAO" />
+ </bean>
+ 
+ 
+ <bean id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
 
+          <property name="vendorDAO" ref="vendorDAO" />
  </bean>
  
  
