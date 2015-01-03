@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.Users;
-import org.hibernate.SessionFactory;
 
+import edu.mum.cs490.smartmart.domain.Order;
+import java.util.List;
 
 /**
  *
- * @author Fetiya
+ * @author Senai
  */
-
-
-public interface UserDAO  extends IGenericDAO<Users, Long>{//   // extends HibernateDAO<User, Long> { //
-
-    
-   
+public interface IOrderDAO   extends IGenericDAO<Order, Long>{
+     
 }

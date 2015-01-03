@@ -1,5 +1,7 @@
 package edu.mum.cs490.smartmart.dao;
 
+
+
 import java.util.*;
 import java.io.*;
 import org.hibernate.*;
@@ -10,7 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 //@Repository
-public abstract class GenericDAOImpl< T, ID extends Serializable> implements GenericDAO<T, ID> {
+public abstract class GenericDAOImpl< T, ID extends Serializable> implements IGenericDAO<T, ID> {
 
     
    // @Autowired
