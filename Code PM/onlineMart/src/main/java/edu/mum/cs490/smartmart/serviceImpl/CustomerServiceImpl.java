@@ -73,4 +73,14 @@ public class CustomerServiceImpl implements ICustomerService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+import edu.mum.cs490.smartmart.service.CustomerService;
+
+/**
+ *
+ * @author Fetiya
+ */
+public class CustomerServiceImpl implements CustomerService
+{
+    
+    
 }

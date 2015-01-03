@@ -23,10 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
  */
 //@Service("userService")
 //@Transactional(propagation=Propagation.REQUIRES_NEW)
-public class UserSerivceImpl implements UserService {
-
-    //  @Autowired
-    UserDAO userDAO;
+public class UserSerivceImpl implements UserService{
+    
+  
+      UserDAO userDAO;
 
     public UserDAO getUserDAO() {
         return userDAO;
