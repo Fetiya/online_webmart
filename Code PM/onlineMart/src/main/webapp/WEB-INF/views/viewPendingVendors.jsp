@@ -27,21 +27,21 @@
             <c:forEach var="vendor" items="${pendingVendors}" >
             <div>
                 <label>Company Name: </label>${vendor.companyName}
-<!--                <label>City: </label>$ {vendor.address.city} 
+                <label>City: </label>${vendor.address.city} 
                 <label>Street </label>$ {vendor.address.street}
-                 <label>Zip Code </label>$ {vendor.address.zipCode}
-                 <label>Country</label>$ {waiver.reason}
-                 <label>Email</label>$ {waiver.reason}
-                 <label>Subscription Rule</label>$ {waiver.reason}
-                 <label>Account Number</label>$ {waiver.reason}
+                 <label>Zip Code </label>$ {vendor.address.zip}
+                 <label>Country</label>${vendor.address.country}
+                 <label>Email</label>${vendor.email}
+                 <label>Subscription Rule</label>${vedor.subscriptionRule}
+                 <label>Account Number</label>${vendor.accountNum}
                  
                 
-                <form action="approveWaiver/$ {waiver.id}" method="post">
-                    <input type="radio" name="waiverStatus" value="yes" />Approve
-                    <input type="radio" name="waiverStatus" value="no" />Reject
+                <form action="approveWaiver/$ {vendor.id}" method="post">
+                    <input type="radio" name="Status" value="ACTIVE" />Approve
+                    <input type="radio" name="Status" value="REJECTED" />Reject
                     <input type="submit" value="Apply" />
                 </form>
-                -->
+                
             </div>
             
         </c:forEach>

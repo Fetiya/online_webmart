@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="root" />
+        <property name="password" value="mumsql" />
     </bean>
 
     <!-- hibernate Properties -->
@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+<!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -100,14 +100,18 @@
         <property name="userDAO" ref="userDAO" />
     </bean>
     <bean id="ICustomerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
-        <property name="userDAO" ref="userDAO" />
+        <property name="credentialDAO" ref="ICredentialDAO" />
+    </bean>
+    
+    <bean id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
+        <property name="vendorDAO" ref="vendorDAO" />
     </bean>
  
-    <!--Security-->    
+<!--    Security    
     <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
     <sec:global-method-security secured-annotations="enabled"/>
     <sec:http >
-        <!--<sec:intercept-url pattern="/SpringLoginPage.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        <sec:intercept-url pattern="/SpringLoginPage.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
         <sec:intercept-url pattern="/loginFail" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
@@ -132,6 +136,6 @@
             <sec:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, active=0 enabled from credential where username=?" authorities-by-username-query="select username, role as authority from credential where username=?"/>
         </sec:authentication-provider>
     </sec:authentication-manager>
-    <!--Security-->
-     
+    Security
+     -->
 </beans>

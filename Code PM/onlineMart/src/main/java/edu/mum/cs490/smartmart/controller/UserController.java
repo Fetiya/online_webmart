@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class UserController {
-
-  
+ 
     @Autowired
     private UserService userService ;
 
@@ -37,10 +36,7 @@ public class UserController {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-    
-    
-    
-        
+
     @RequestMapping(value = "/viewUsers", method = RequestMethod.GET)
     public String getAllUsers(Model model) {
         // System.out.println("Controller"+id);
