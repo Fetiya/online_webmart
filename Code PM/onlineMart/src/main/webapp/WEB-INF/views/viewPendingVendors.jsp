@@ -27,9 +27,9 @@
             <c:forEach var="vendor" items="${pendingVendors}" >
             <div>
                 <label>Company Name: </label>${vendor.companyName}
-<!--                <label>City: </label>$ {waiver.course.courseName} 
-                <label>Street </label>$ {waiver.reason}
-                 <label>Zip Code </label>$ {waiver.reason}
+<!--                <label>City: </label>$ {vendor.address.city} 
+                <label>Street </label>$ {vendor.address.street}
+                 <label>Zip Code </label>$ {vendor.address.zipCode}
                  <label>Country</label>$ {waiver.reason}
                  <label>Email</label>$ {waiver.reason}
                  <label>Subscription Rule</label>$ {waiver.reason}
@@ -41,8 +41,8 @@
                     <input type="radio" name="waiverStatus" value="no" />Reject
                     <input type="submit" value="Apply" />
                 </form>
-                
--->            </div>
+                -->
+            </div>
             
         </c:forEach>
 

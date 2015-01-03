@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Stella
  */
-public interface VendorDAO extends IGenericDAO<Users, Long>{
+public interface VendorDAO extends IGenericDAO<Vendor, Long>{
     
     public List<Vendor> getAllVendors();
     public List<Vendor> getAllPendingVendors();
