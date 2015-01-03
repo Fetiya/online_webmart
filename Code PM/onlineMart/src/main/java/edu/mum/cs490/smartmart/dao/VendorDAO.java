@@ -5,7 +5,7 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.Users;
+
 import edu.mum.cs490.smartmart.domain.Vendor;
 import java.util.List;
 
