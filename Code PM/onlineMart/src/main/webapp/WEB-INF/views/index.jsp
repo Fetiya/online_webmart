@@ -13,6 +13,8 @@
     </head>
     <body>
         <h1>Welcome to SmartMart</h1>
-        <a href="viewUsers" />View Users </a>
-    </body>
+        <a href="viewUsers" />View Users </a><br/>
+        <a href="addProductCategory" />Add Product Category </a><br/>
+        <a href="viewCategory" />View Product Category </a>
+</body>
 </html>
