@@ -5,8 +5,9 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
-import edu.mum.cs490.smartmart.domain.User;
+
 import edu.mum.cs490.smartmart.service.CustomerService;
+import edu.mum.cs490.smartmart.service.ICustomerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,25 +22,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CustomerController {
   
-    @Autowired
-   CustomerService customerService;
+//    @Autowired
+//   ICustomerService customerService;
+//
+//    public ICustomerService getCustomerService() {
+//        return customerService;
+//    }
+//
+//    public void setCustomerService(ICustomerService customerService) {
+//        this.customerService = customerService;
+//    }
 
-    public CustomerService getCustomerService() {
-        return customerService;
-    }
-
-    public void setCustomerService(CustomerService customerService) {
-        this.customerService = customerService;
-    }
+  
 
  
     
      @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String getCustomerCart(Model model) {
         // System.out.println("Controller"+id);
-        
-//        List<User> usr= userService.getAllUsers();
-//      model.addAttribute("users",userService.getAllUsers());
+
+ //   model.addAttribute("users",customerService.getAllUsers());
 
         return "cart";
     }

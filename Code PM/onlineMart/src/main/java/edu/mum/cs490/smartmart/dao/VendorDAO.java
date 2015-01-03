@@ -5,7 +5,7 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.User;
+
 import edu.mum.cs490.smartmart.domain.Vendor;
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Stella
  */
-public interface VendorDAO extends GenericDAO<User, Long>{
+public interface VendorDAO extends IGenericDAO<Vendor, Long>{
     
     public List<Vendor> getAllVendors();
     

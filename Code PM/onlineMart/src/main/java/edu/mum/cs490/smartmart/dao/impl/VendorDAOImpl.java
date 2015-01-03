@@ -7,7 +7,6 @@ package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.VendorDAO;
-import edu.mum.cs490.smartmart.domain.User;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import java.util.List;
 import org.hibernate.SessionFactory;
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Stella
  */
 @Transactional(propagation=Propagation.MANDATORY)
-public class VendorDAOImpl extends GenericDAOImpl<User, Long> implements VendorDAO{
+public class VendorDAOImpl extends GenericDAOImpl<Vendor, Long> implements VendorDAO{
     private SessionFactory sessionFactory; 
   
     
