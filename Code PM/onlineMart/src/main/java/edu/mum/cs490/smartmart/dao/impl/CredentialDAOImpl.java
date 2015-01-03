@@ -3,31 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.UserDAO;
-import edu.mum.cs490.smartmart.domain.Users;
-import java.util.List;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
+import edu.mum.cs490.smartmart.dao.ICredentialDAO;
+import edu.mum.cs490.smartmart.domain.Credential;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Fetiya
+ * @author Senai
  */
 
-
-//@Repository("userDAO")
 @Transactional(propagation=Propagation.MANDATORY)
-public class UserDAOImpl extends GenericDAOImpl<Users, Long> implements UserDAO {    
-    
-   public UserDAOImpl() {
-     
-    super(Users.class);
- }
+public class CredentialDAOImpl extends GenericDAOImpl<Credential, Long> implements ICredentialDAO {
 
+    public CredentialDAOImpl() {
+        super(Credential.class);
+    }
 
 }
+

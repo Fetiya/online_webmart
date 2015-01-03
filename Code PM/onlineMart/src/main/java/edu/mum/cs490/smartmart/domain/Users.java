@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.SafeHtml;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class User  {
+public class Users{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,12 +40,11 @@ public class User  {
     private String telnum;
     
     @OneToOne(cascade = CascadeType.ALL)
-    private Credentials credential;
+    private Credential credential;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Role role;
-    public User() {
+   
+    public Users() {
     }
 
     public String getFirstName() {
@@ -98,10 +97,10 @@ public class User  {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof User)) {
+        if (!(object instanceof Users)) {
             return false;
         }
-        User other = (User) object;
+        Users other = (Users) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -21,7 +21,7 @@ import javax.persistence.OneToOne;
  * @author dipika
  */
 @Entity
-public class Customer extends User implements Serializable {
+public class Customer extends Users implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @OneToMany(cascade = CascadeType.ALL )

@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="Pass@deliver" />
+        <property name="password" value="root" />
     </bean>
 
     <!-- hibernate Properties -->
@@ -62,12 +62,12 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-               <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                 <prop key="javax.persistence.validation.mode">none</prop>
+                <prop key="javax.persistence.validation.mode">none</prop>
             </props>
         </property>
     </bean>
@@ -79,29 +79,59 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-     <!-- DAO's setter injections -->
-     
-     
+    
+    <!-- DAO's setter injections --> 
     <bean id="hibernateDAO" class="edu.mum.cs490.smartmart.dao.GenericDAOImpl" abstract="true">
         <property name="sf" ref="sessionFactory"/>
     </bean>
     
-     <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">
+    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">     
+    </bean>
+    <bean id="ICredentialDAO" class="edu.mum.cs490.smartmart.dao.impl.CredentialDAOImpl" parent="hibernateDAO">     
+    </bean>
+    
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
      
     </bean>
+    
 
-<!--      User service injections  
-    -->
+    <!-- User service injections  -->
     <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
-
-          <property name="userDAO" ref="userDAO" />
-
- </bean>
+        <property name="userDAO" ref="userDAO" />
+    </bean>
+    <bean id="ICustomerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
+        <property name="userDAO" ref="userDAO" />
+    </bean>
  
-  <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
-
-          <!--<property name="customerDAO" ref="customerDAO" />-->
-
- </bean>
+    <!--Security-->    
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+    <sec:global-method-security secured-annotations="enabled"/>
+    <sec:http >
+        <!--<sec:intercept-url pattern="/SpringLoginPage.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        <sec:intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/loginFail" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+                            
+        <sec:intercept-url pattern="/viewUsers" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+        <sec:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>        
+        <sec:intercept-url pattern="/**" access="ROLE_CUSTOMER,ROLE_ADMIN,ROLE_VEENDORADMIN"/>
+   
+        <sec:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginFail"/>
+        <sec:logout delete-cookies="true" invalidate-session="true" logout-success-url="/"/>
+        
+    </sec:http>
+    <sec:authentication-manager>
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="test" password="test" authorities="ROLE_CUSTOMER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+        <sec:authentication-provider >
+            <sec:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, active=0 enabled from credential where username=?" authorities-by-username-query="select username, role as authority from credential where username=?"/>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+    <!--Security-->
      
 </beans>

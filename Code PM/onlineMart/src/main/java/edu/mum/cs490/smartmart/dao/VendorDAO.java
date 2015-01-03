@@ -5,18 +5,16 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.Users;
-import org.hibernate.SessionFactory;
-
+import edu.mum.cs490.smartmart.domain.User;
+import edu.mum.cs490.smartmart.domain.Vendor;
+import java.util.List;
 
 /**
  *
- * @author Fetiya
+ * @author Stella
  */
-
-
-public interface UserDAO  extends IGenericDAO<Users, Long>{//   // extends HibernateDAO<User, Long> { //
-
+public interface VendorDAO extends GenericDAO<User, Long>{
     
-   
+    public List<Vendor> getAllVendors();
+    
 }

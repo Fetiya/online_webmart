@@ -7,7 +7,7 @@ package edu.mum.cs490.smartmart.serviceImpl;
 
 import edu.mum.cs490.smartmart.dao.UserDAO;
 import edu.mum.cs490.smartmart.dao.impl.UserDAOImpl;
-import edu.mum.cs490.smartmart.domain.User;
+import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Fetiya
  */
-
 //@Service("userService")
 //@Transactional(propagation=Propagation.REQUIRES_NEW)
 public class UserSerivceImpl implements UserService{
@@ -37,28 +36,16 @@ public class UserSerivceImpl implements UserService{
         this.userDAO = userDAO;
     }
 
-  public boolean createUser(User user)
-  {
-      userDAO.save(user);
-      return true;
-  }
-
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public List<User> getAllUsers()
-            
-    {
-        
-        List<User> users= userDAO.findAll(0, 10);
-       return users;
+    public boolean createUser(Users user) {
+        userDAO.save(user);
+        return true;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Users> getAllUsers() {
 
-   
-
-   
-
-    
-    
+        List<Users> users = userDAO.findAll(0, 10);
+        return users;
+    }
 
 }
