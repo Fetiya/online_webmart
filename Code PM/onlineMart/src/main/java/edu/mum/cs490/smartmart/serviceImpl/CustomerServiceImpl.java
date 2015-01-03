@@ -6,6 +6,7 @@
 package edu.mum.cs490.smartmart.serviceImpl;
 
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
+import edu.mum.cs490.smartmart.dao.ICustomerDAO;
 import edu.mum.cs490.smartmart.domain.Credential;
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Users;
@@ -22,6 +23,27 @@ public class CustomerServiceImpl implements ICustomerService {
 
     private ICredentialDAO credentialDAO;
 
+    
+    private ICustomerDAO customerDAO;
+
+    public ICredentialDAO getCredentialDAO() {
+        return credentialDAO;
+    }
+
+    public void setCredentialDAO(ICredentialDAO credentialDAO) {
+        this.credentialDAO = credentialDAO;
+    }
+
+    public ICustomerDAO getCustomerDAO() {
+        return customerDAO;
+    }
+
+    public void setCustomerDAO(ICustomerDAO customerDAO) {
+        this.customerDAO = customerDAO;
+    }
+    
+    
+    
     
 
     @Transactional(propagation = Propagation.REQUIRED)
