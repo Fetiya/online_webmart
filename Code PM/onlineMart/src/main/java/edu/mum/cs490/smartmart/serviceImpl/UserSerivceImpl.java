@@ -21,14 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Fetiya
  */
-
 //@Service("userService")
 //@Transactional(propagation=Propagation.REQUIRES_NEW)
-public class UserSerivceImpl implements UserService{
-    
-  
+public class UserSerivceImpl implements UserService {
+
     //  @Autowired
-      UserDAO userDAO;
+    UserDAO userDAO;
 
     public UserDAO getUserDAO() {
         return userDAO;
@@ -38,28 +36,16 @@ public class UserSerivceImpl implements UserService{
         this.userDAO = userDAO;
     }
 
-  public boolean createUser(Users user)
-  {
-      userDAO.save(user);
-      return true;
-  }
-
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public List<Users> getAllUsers()
-            
-    {
-        
-        List<Users> users= userDAO.findAll(0, 10);
-       return users;
+    public boolean createUser(Users user) {
+        userDAO.save(user);
+        return true;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Users> getAllUsers() {
 
-   
-
-   
-
-    
-    
+        List<Users> users = userDAO.findAll(0, 10);
+        return users;
+    }
 
 }

@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.SafeHtml;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Users  {
+public class Users{
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,8 +43,7 @@ public class Users  {
     private Credential credential;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Role role;
+   
     public Users() {
     }
 
