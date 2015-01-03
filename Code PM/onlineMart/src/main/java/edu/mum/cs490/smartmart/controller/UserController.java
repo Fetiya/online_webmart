@@ -7,7 +7,7 @@ package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.UserDAO;
-import edu.mum.cs490.smartmart.domain.User;
+import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.UserService;
 import edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl;
 import java.io.Serializable;

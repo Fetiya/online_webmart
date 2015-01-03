@@ -6,16 +6,11 @@
 package edu.mum.cs490.smartmart.dao;
 
 import edu.mum.cs490.smartmart.domain.Users;
-import edu.mum.cs490.smartmart.domain.Vendor;
-import java.util.List;
 
 /**
  *
  * @author Stella
  */
-public interface VendorDAO extends IGenericDAO<Users, Long>{
-    
-    public List<Vendor> getAllVendors();
-    public List<Vendor> getAllPendingVendors();
+public interface ISubscriptionRule extends IGenericDAO<Users, Long> {
     
 }

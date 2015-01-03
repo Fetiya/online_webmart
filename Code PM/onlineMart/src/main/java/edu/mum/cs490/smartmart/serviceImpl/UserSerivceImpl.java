@@ -7,7 +7,7 @@ package edu.mum.cs490.smartmart.serviceImpl;
 
 import edu.mum.cs490.smartmart.dao.UserDAO;
 import edu.mum.cs490.smartmart.dao.impl.UserDAOImpl;
-import edu.mum.cs490.smartmart.domain.User;
+import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class UserSerivceImpl implements UserService{
         this.userDAO = userDAO;
     }
 
-  public boolean createUser(User user)
+  public boolean createUser(Users user)
   {
       userDAO.save(user);
       return true;
@@ -46,11 +46,11 @@ public class UserSerivceImpl implements UserService{
 
 
     @Transactional(propagation = Propagation.REQUIRED)
-    public List<User> getAllUsers()
+    public List<Users> getAllUsers()
             
     {
         
-        List<User> users= userDAO.findAll(0, 10);
+        List<Users> users= userDAO.findAll(0, 10);
        return users;
     }
 

@@ -22,8 +22,7 @@ public class SubscriptionRule implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int startRange;
-    private int endRange;
+    private int rangeProduct;
     private double fee;
 
     public SubscriptionRule() {
@@ -37,22 +36,15 @@ public class SubscriptionRule implements Serializable {
         this.id = id;
     }
 
-    public int getStartRange() {
-        return startRange;
+    public int getRangeProduct() {
+        return rangeProduct;
     }
 
-    public void setStartRange(int startRange) {
-        this.startRange = startRange;
+    public void setRangeProduct(int rangeProduct) {
+        this.rangeProduct = rangeProduct;
     }
 
-    public int getEndRange() {
-        return endRange;
-    }
-
-    public void setEndRange(int endRange) {
-        this.endRange = endRange;
-    }
-
+  
     public double getFee() {
         return fee;
     }

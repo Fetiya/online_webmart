@@ -1,6 +1,7 @@
 package edu.mum.cs490.smartmart.dao;
 
 
+import edu.mum.cs490.smartmart.domain.Address;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
@@ -10,6 +11,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public class HibernateUtil {
     
     private static SessionFactory factory;
+    //private DAOFactory factory = DAOFactory.getFactory();
 
    
     
@@ -54,8 +56,28 @@ public class HibernateUtil {
     public static void closeSession() {
         HibernateUtil.getSession().close();
     }
+//    public String addAuction() {
+//
+//         Address address1=new Address();
+//        address1.setCity("Fairfield");
+//        address1.setCountry("US");
+//        address1.setStreet("1000N 4th stree");
+//        address1.setZip(52557);
+//       
+//        IAddressDAO addressDAO = new 
+//
+//        auctionDao.beginTransaction();
+//        auctionDao.save(auction);
+//        auctionDao.commitTransaction();
+//
+//        return "auctionConfirmation.xhtml";
+//    }
 
     public static void main(String[] Args) {
         HibernateUtil.recreateDatabase();
+       
+       
+        
     }
+    
 }

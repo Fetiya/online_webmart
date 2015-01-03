@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
  * @author dipika
  */
 @Entity
-public class Credentials implements Serializable {
+public class Credential implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,7 +29,7 @@ public class Credentials implements Serializable {
     @NotNull
     private String password;
 
-    public Credentials() {
+    public Credential() {
     }
     
     public Long getId() {
@@ -68,10 +68,10 @@ public class Credentials implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Credentials)) {
+        if (!(object instanceof Credential)) {
             return false;
         }
-        Credentials other = (Credentials) object;
+        Credential other = (Credential) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
