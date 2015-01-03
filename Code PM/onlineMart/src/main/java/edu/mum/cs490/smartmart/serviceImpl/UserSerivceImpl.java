@@ -27,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserSerivceImpl implements UserService{
     
   
-    //  @Autowired
       UserDAO userDAO;
 
     public UserDAO getUserDAO() {
