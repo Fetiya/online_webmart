@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
  * @author dipika
  */
 @Entity
-public class VendorAdmin extends User  {
+public class VendorAdmin extends Users  {
 
     @ManyToOne
     private Vendor vendor;

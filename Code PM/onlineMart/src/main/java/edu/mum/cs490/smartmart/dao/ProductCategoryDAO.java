@@ -11,6 +11,6 @@ import edu.mum.cs490.smartmart.domain.ProductCategory;
  *
  * @author dipika
  */
-public interface ProductCategoryDAO extends GenericDAO<ProductCategory, Long> {
+public interface ProductCategoryDAO extends IGenericDAO<ProductCategory, Long> {
     
 }

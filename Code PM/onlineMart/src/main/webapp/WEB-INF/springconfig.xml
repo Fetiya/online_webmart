@@ -62,6 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
 <!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
@@ -100,6 +101,9 @@
         <property name="userDAO" ref="userDAO" />
 
     </bean>
+
+    
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
     <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
 
         <property name="productCategoryDAO" ref="productCategoryDAO" />
@@ -108,4 +112,20 @@
  
  
      
+    </bean>
+
+    <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">  
+     
+    </bean>
+    <!-- vendor service injection -->
+ 
+    <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
+        
+        <property name="vendorDAO" ref="vendorDAO" />
+    </bean>
+
+    <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
+        <property name="customerDAO" ref="customerDAO" />
+    </bean> 
+ 
 </beans>
