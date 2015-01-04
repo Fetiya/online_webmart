@@ -18,5 +18,7 @@
     
         <a href="viewPendingVendors" />View pending Vendor</a>
 
+        <a href="viewCategory" />View Product Category </a></br>
+        <a href="addProductCategory" />Add Product Category</a>
     </body>
 </html>
