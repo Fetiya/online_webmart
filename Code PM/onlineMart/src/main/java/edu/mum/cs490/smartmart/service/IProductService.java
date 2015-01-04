@@ -7,6 +7,7 @@
 package edu.mum.cs490.smartmart.service;
 
 import edu.mum.cs490.smartmart.domain.Product;
+import edu.mum.cs490.smartmart.domain.ProductCategory;
 import java.util.List;
 
 /**
@@ -16,10 +17,12 @@ import java.util.List;
 public interface IProductService {
     
      public List<Product> searchProductByName(String pname);
-    
+     public void addProduct(Product product);
+     public List<ProductCategory> getListOfCategory();
+   
      public Product getProductDetailInfo(int id);
     
-     public void addProduct(Product product);
+     
      
      public void updateProduct(Product product);
      
