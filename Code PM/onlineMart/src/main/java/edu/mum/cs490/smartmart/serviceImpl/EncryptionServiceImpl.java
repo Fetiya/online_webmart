@@ -5,7 +5,7 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.service.EncryptionService;
+import edu.mum.cs490.smartmart.service.IEncryptionService;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Komal
  */
-public class EncryptionServiceImpl implements EncryptionService{
+public class EncryptionServiceImpl implements IEncryptionService{
 
     @Override
     public String getEncryptedPassword(String textPassword) {

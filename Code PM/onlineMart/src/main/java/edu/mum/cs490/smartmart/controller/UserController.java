@@ -5,9 +5,8 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
-import edu.mum.cs490.smartmart.domain.SubscriptionRule;
-import edu.mum.cs490.smartmart.domain.User;
-import edu.mum.cs490.smartmart.service.UserService;
+import edu.mum.cs490.smartmart.domain.Users;
+import edu.mum.cs490.smartmart.service.IUserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,15 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private IUserService userService;
 
-  
-
-    public UserService getUserService() {
+    public IUserService getUserService() {
         return userService;
     }
 
-    public void setUserService(UserService userService) {
+    public void setUserService(IUserService userService) {
         this.userService = userService;
     }
 
@@ -39,7 +36,7 @@ public class UserController {
     public String getAllUsers(Model model) {
         // System.out.println("Controller"+id);
 
-        List<User> usr = userService.getAllUsers();
+        List<Users> usr = userService.getAllUsers();
         model.addAttribute("users", userService.getAllUsers());
 
         return "viewUsers";

@@ -5,65 +5,55 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.RoleDAO;
-import edu.mum.cs490.smartmart.dao.VendorDAO;
 import edu.mum.cs490.smartmart.domain.Role;
-import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorStatus;
-import edu.mum.cs490.smartmart.service.VendorService;
-import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import edu.mum.cs490.smartmart.dao.IVendorDAO;
+import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.service.IEncryptionService;
+import edu.mum.cs490.smartmart.service.IVendorService;
+import java.util.List;
 
 /**
  *
  * @author Komal
  */
-public class VendorServiceImpl implements VendorService {
+public class VendorServiceImpl implements IVendorService {
 
-    VendorDAO vendorDAO;
+    IVendorDAO vendorDAO;
 
-    EncryptionServiceImpl encryptionServiceImpl;
+    IEncryptionService encryptionService;
 
-    RoleDAO roleDAO;
-
-    public VendorDAO getVendorDAO() {
+    public IVendorDAO getVendorDAO() {
         return vendorDAO;
     }
 
-    public void setVendorDAO(VendorDAO vendorDAO) {
+    public void setVendorDAO(IVendorDAO vendorDAO) {
         this.vendorDAO = vendorDAO;
     }
 
-    public RoleDAO getRoleDAO() {
-        return roleDAO;
+    public IEncryptionService getEncryptionService() {
+        return encryptionService;
     }
 
-    public void setRoleDAO(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
-    }
-
-    public EncryptionServiceImpl getEncryptionServiceImpl() {
-        return encryptionServiceImpl;
-    }
-
-    public void setEncryptionServiceImpl(EncryptionServiceImpl encryptionServiceImpl) {
-        this.encryptionServiceImpl = encryptionServiceImpl;
+    public void setEncryptionService(IEncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void addVendor(Vendor vendor) {
+        vendor.getVendorAdmin().getCredential().setPassword(encryptionService.getEncryptedPassword(vendor.getVendorAdmin().getCredential().getPassword()));
+        vendor.getVendorAdmin().getCredential().setRole(Role.VENDORADMIN);
         vendor.setStatus(VendorStatus.PENDING);
-        vendor.getVendorAdmin().getCredential().setPassword(encryptionServiceImpl.getEncryptedPassword(vendor.getVendorAdmin().getCredential().getPassword()));
-        List<Role> roles = roleDAO.findAll(0, 10);
-
-        for (Role role : roles) {
-            if (role.getRole().equalsIgnoreCase("vendor")) {
-                vendor.getVendorAdmin().setRole(role);
-            }
-        }
         vendor.getVendorAdmin().setVendor(vendor);
         vendorDAO.save(vendor);
+    }
+
+    @Override
+    public List<Vendor> getAllVendors() {
+        List<Vendor> vendors = vendorDAO.getAllVendors();
+        return vendors;
     }
 }

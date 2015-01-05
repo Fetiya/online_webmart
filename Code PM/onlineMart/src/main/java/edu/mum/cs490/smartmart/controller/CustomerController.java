@@ -5,9 +5,9 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
+import edu.mum.cs490.smartmart.service.ICustomerService;
+import org.springframework.ui.Model;
 import edu.mum.cs490.smartmart.domain.Customer;
-import edu.mum.cs490.smartmart.service.CustomerService;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,20 +20,46 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author Komal
+ * @author Fetiya
  */
 @Controller
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService;
+    ICustomerService customerService;
 
-    public CustomerService getCustomerService() {
+    public ICustomerService getCustomerService() {
         return customerService;
     }
 
-    public void setCustomerService(CustomerService customerService) {
+    public void setCustomerService(ICustomerService customerService) {
         this.customerService = customerService;
+    }
+
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    public String getCustomerCart(Model model) {
+        // System.out.println("Controller"+id);
+
+        //   model.addAttribute("users",customerService.getAllUsers());
+        return "cart";
+    }
+
+    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+    public String checkOut(Model model) {
+        // System.out.println("Controller"+id);
+
+//        List<User> usr= userService.getAllUsers();
+//      model.addAttribute("users",userService.getAllUsers());
+        return "checkout";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        // System.out.println("Controller"+id);
+
+//        List<User> usr= userService.getAllUsers();
+//      model.addAttribute("users",userService.getAllUsers());
+        return "login";
     }
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)

@@ -5,12 +5,17 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.CustomerDAO;
-import edu.mum.cs490.smartmart.dao.RoleDAO;
-import edu.mum.cs490.smartmart.domain.Customer;
+
 import edu.mum.cs490.smartmart.domain.Role;
-import edu.mum.cs490.smartmart.service.CustomerService;
+import edu.mum.cs490.smartmart.dao.ICredentialDAO;
+import edu.mum.cs490.smartmart.dao.ICustomerDAO;
+import edu.mum.cs490.smartmart.domain.Credential;
+import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.Users;
+import edu.mum.cs490.smartmart.service.ICustomerService;
+import edu.mum.cs490.smartmart.service.IEncryptionService;
 import java.util.List;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,50 +23,85 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Komal
  */
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements ICustomerService {
 
-    CustomerDAO customerDAO;
+    ICustomerDAO customerDAO;
 
-    RoleDAO roleDAO;
+    IEncryptionService encryptionService;
+    
+    private ICredentialDAO credentialDAO;
 
-    EncryptionServiceImpl encryptionServiceImpl;
-
-    public CustomerDAO getCustomerDAO() {
+    public ICustomerDAO getCustomerDAO() {
         return customerDAO;
     }
 
-    public void setCustomerDAO(CustomerDAO customerDAO) {
+    public void setCustomerDAO(ICustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 
-    public RoleDAO getRoleDAO() {
-        return roleDAO;
+    public IEncryptionService getEncryptionService() {
+        return encryptionService;
     }
 
-    public void setRoleDAO(RoleDAO roleDAO) {
-        this.roleDAO = roleDAO;
+    public void setEncryptionService(IEncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
     }
 
-    public EncryptionServiceImpl getEncryptionServiceImpl() {
-        return encryptionServiceImpl;
+    public ICredentialDAO getCredentialDAO() {
+        return credentialDAO;
     }
 
-    public void setEncryptionServiceImpl(EncryptionServiceImpl encryptionServiceImpl) {
-        this.encryptionServiceImpl = encryptionServiceImpl;
+    public void setCredentialDAO(ICredentialDAO credentialDAO) {
+        this.credentialDAO = credentialDAO;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void addCustomer(Customer customer) {
-        customer.getCredential().setPassword(encryptionServiceImpl.getEncryptedPassword(customer.getCredential().getPassword()));
-        List<Role> roles = roleDAO.findAll(0, 10);
-
-        for (Role role : roles) {
-            if (role.getRole().equalsIgnoreCase("user")) {
-                customer.setRole(role);
-            }
-        }
+        customer.getCredential().setPassword(encryptionService.getEncryptedPassword(customer.getCredential().getPassword()));
+        customer.getCredential().setRole(Role.CUSTOMER);
         customerDAO.save(customer);
+    }
+    
+       @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public boolean checkUserName(String userName) {
+        Credential cred=new Credential();
+        cred.setUsername(userName);
+        if (credentialDAO.findByExample(cred,new String[]{}) != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Customer getCustomerById(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Customer> getAllCustomers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void disableCustomer(Customer customer) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateCustomer(int id, Customer customer) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Users getUserByUsername(String username) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void notifyCustomer(Customer customer, String message) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

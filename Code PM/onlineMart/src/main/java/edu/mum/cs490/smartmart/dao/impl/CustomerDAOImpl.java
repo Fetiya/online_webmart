@@ -5,18 +5,21 @@
  */
 package edu.mum.cs490.smartmart.dao.impl;
 
-import edu.mum.cs490.smartmart.dao.CustomerDAO;
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
+import edu.mum.cs490.smartmart.dao.ICustomerDAO;
 import edu.mum.cs490.smartmart.domain.Customer;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Komal
+ * @author Fetiya
  */
-public class CustomerDAOImpl extends GenericDAOImpl<Customer, Long> implements CustomerDAO {
+@Transactional(propagation=Propagation.MANDATORY)
+public class CustomerDAOImpl extends GenericDAOImpl<Customer, Long> implements ICustomerDAO {
 
     public CustomerDAOImpl() {
         super(Customer.class);
     }
-    
-}
+
+ }

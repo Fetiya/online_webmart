@@ -5,10 +5,11 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
+
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 import edu.mum.cs490.smartmart.domain.Vendor;
-import edu.mum.cs490.smartmart.service.SubscriptionRuleService;
-import edu.mum.cs490.smartmart.service.VendorService;
+import edu.mum.cs490.smartmart.service.ISubscriptionRuleService;
+import edu.mum.cs490.smartmart.service.IVendorService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -24,42 +25,53 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
- * @author Komal
+ * @author Stella
  */
 @Controller
 public class VendorController {
-List<SubscriptionRule> subscriptionRule;
-    @Autowired
-    private VendorService vendorService;
 
-    @Autowired
-    private SubscriptionRuleService subscriptionRuleService;
+    public VendorController() {
+    }
 
-    public VendorService getVendorService() {
+    List<SubscriptionRule> subscriptionRule;
+    @Autowired
+    ISubscriptionRuleService subscriptionRuleService;
+    
+    @Autowired
+    private IVendorService vendorService;
+
+    public IVendorService getVendorService() {
         return vendorService;
     }
 
-    public void setVendorService(VendorService vendorService) {
+    public void setVendorService(IVendorService vendorService) {
         this.vendorService = vendorService;
     }
 
-    public SubscriptionRuleService getSubscriptionRuleService() {
-        return subscriptionRuleService;
+    public List<SubscriptionRule> getSubscriptionRule() {
+        return subscriptionRule;
     }
 
-    public void setSubscriptionRuleService(SubscriptionRuleService subscriptionRuleService) {
-        this.subscriptionRuleService = subscriptionRuleService;
+    public void setSubscriptionRule(List<SubscriptionRule> subscriptionRule) {
+        this.subscriptionRule = subscriptionRule;
+    }
+
+    @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
+    public String getPendingVendors(Model model, HttpSession session) {
+        // if (session.getAttribute("pendingVendors") == null) {
+//            List<Vendor> pendingVendors = new ArrayList();
+//            pendingVendors=vendorService.getAllVendors();
+        model.addAttribute("pendingVendors", vendorService.getAllVendors());
+            //session.setAttribute("pendingVendors", vendorService.getAllVendors());
+        //  }
+
+        return "viewPendingVendors";
     }
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.GET)
-    public String addVendor(@ModelAttribute("vendor") Vendor vendor, Model model)
-//     public String addVendor(Model model)
-     {
-//        vendor.setCredential((Credential) session.getAttribute("credential"));
-        System.out.println("hello signup");
-
-        subscriptionRule= subscriptionRuleService.getAllSubscriptionRules();
-        model.addAttribute("subscriptionRule",subscriptionRuleService.getAllSubscriptionRules());
+    public String addVendor(@ModelAttribute("vendor") Vendor vendor, Model model) {
+        subscriptionRule = subscriptionRuleService.getAllSubscriptionRules();
+        model.addAttribute("subscriptionRule", subscriptionRuleService.getAllSubscriptionRules());
         return "vendorRegisteration";
     }
 
@@ -67,42 +79,17 @@ List<SubscriptionRule> subscriptionRule;
     public String add(@Valid Vendor vendor, BindingResult result, HttpSession session, RedirectAttributes flashAttr) {
         System.out.println("m inside post");
 
-       
-        
         String view = "redirect:/";
-        //System.out.println("customerController Add");
-//        System.out.println( "hello" + result.getFieldValue("subscriptionRule.id"));
-//        System.out.println( "hello" + result.getFieldValue("subscriptionRule"));
-//        Long id= Long.valueOf((String)result.getFieldValue("subscriptionRule"));
-        
-//        result.findEditor((String) result.getFieldValue("subscriptionRule.startRange"),SubscriptionRule.class);
-        
-           System.out.println( "hello" + result.getFieldValue("subscriptionRule"));
-           
-           
-//        for(SubscriptionRule sub:subscriptionRule)
-//        {
-//        if(id==sub.getId())
-//        {
-//            vendor.setSubscriptionRule(sub);
-//        }
-//        }
-//        
-//      session.removeAttribute("credential");
         if (!result.hasErrors()) {
-            System.out.println("m ihere");
-            
-//            vendor.setSubscriptionRule((SubscriptionRule) result.getModel().values());
-
             vendorService.addVendor(vendor);
             flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
 
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
-              
+
             }
-            System.out.println("before");
+
             view = "addVendor";
         }
         return view;

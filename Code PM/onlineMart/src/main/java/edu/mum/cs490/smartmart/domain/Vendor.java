@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +38,7 @@ public class Vendor implements Serializable {
     @OneToOne
     private SubscriptionRule subscriptionRule;
     private String accountNum;
+    @Enumerated(EnumType.STRING)
     private VendorStatus status;
     // commenting bcs of path error
 //    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
@@ -55,7 +58,6 @@ public class Vendor implements Serializable {
 //    public void setAdmins(List<VendorAdmin> admins) {
 //        this.admins = admins;
 //    }
-
     public VendorStatus getStatus() {
         return status;
     }
@@ -144,5 +146,5 @@ public class Vendor implements Serializable {
     public String toString() {
         return "edu.mum.cs490.webmart.domain.Vendors[ id=" + id + " ]";
     }
-    
+
 }

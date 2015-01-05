@@ -6,14 +6,14 @@
 package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.SubscriptionRuleDAO;
+import edu.mum.cs490.smartmart.dao.ISubscriptionRuleDAO;
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 
 /**
  *
  * @author Komal
  */
-public class SubscriptionRuleDAOImpl extends GenericDAOImpl<SubscriptionRule, Long> implements SubscriptionRuleDAO {
+public class SubscriptionRuleDAOImpl extends GenericDAOImpl<SubscriptionRule, Long> implements ISubscriptionRuleDAO {
 
     public SubscriptionRuleDAOImpl() {
         super(SubscriptionRule.class);

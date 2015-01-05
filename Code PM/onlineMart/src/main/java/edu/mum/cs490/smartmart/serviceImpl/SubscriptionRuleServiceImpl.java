@@ -5,9 +5,9 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.SubscriptionRuleDAO;
+import edu.mum.cs490.smartmart.dao.ISubscriptionRuleDAO;
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
-import edu.mum.cs490.smartmart.service.SubscriptionRuleService;
+import edu.mum.cs490.smartmart.service.ISubscriptionRuleService;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Komal
  */
-public class SubscriptionRuleServiceImpl implements SubscriptionRuleService {
+public class SubscriptionRuleServiceImpl implements ISubscriptionRuleService {
 
-    SubscriptionRuleDAO subscriptionRuleDAO;
+    ISubscriptionRuleDAO subscriptionRuleDAO;
 
-    public SubscriptionRuleDAO getSubscriptionRuleDAO() {
+    public ISubscriptionRuleDAO getSubscriptionRuleDAO() {
         return subscriptionRuleDAO;
     }
 
-    public void setSubscriptionRuleDAO(SubscriptionRuleDAO subscriptionRuleDAO) {
+    public void setSubscriptionRuleDAO(ISubscriptionRuleDAO subscriptionRuleDAO) {
         this.subscriptionRuleDAO = subscriptionRuleDAO;
     }
 
