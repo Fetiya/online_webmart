@@ -24,6 +24,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class VendorDAOImpl extends GenericDAOImpl<Vendor, Long> implements IVendorDAO {
 
    
+     public VendorDAOImpl()
+    {
+        super(Vendor.class);
+    }
 
     @Override
     public List<Vendor> getAllVendors() {

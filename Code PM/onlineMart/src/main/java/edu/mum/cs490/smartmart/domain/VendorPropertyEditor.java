@@ -6,7 +6,7 @@
 package edu.mum.cs490.smartmart.domain;
 
 import edu.mum.cs490.smartmart.service.ProductCategoryService;
-import edu.mum.cs490.smartmart.service.VendorService;
+import edu.mum.cs490.smartmart.service.IVendorService;
 import java.beans.PropertyEditorSupport;
 
 /**
@@ -15,9 +15,9 @@ import java.beans.PropertyEditorSupport;
  */
 public class VendorPropertyEditor extends PropertyEditorSupport {
     
-    private VendorService vendorService;
+    private IVendorService vendorService;
   
-    public VendorPropertyEditor(VendorService vendorService) {
+    public VendorPropertyEditor(IVendorService vendorService) {
         this.vendorService=vendorService;
         
     }
@@ -25,8 +25,9 @@ public class VendorPropertyEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(String text) throws IllegalArgumentException
     {
-        int id=Integer.parseInt(text);
+        long id=Long.parseLong(text);
         Vendor vendor=vendorService.getVendorById(id);
+        
         setValue(vendor);
     }
 

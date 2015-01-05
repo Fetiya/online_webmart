@@ -13,7 +13,7 @@ import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorPropertyEditor;
 import edu.mum.cs490.smartmart.service.ProductCategoryService;
 import edu.mum.cs490.smartmart.service.ProductService;
-import edu.mum.cs490.smartmart.service.VendorService;
+import edu.mum.cs490.smartmart.service.IVendorService;
 import java.beans.PropertyEditor;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -46,7 +46,7 @@ public class ProductController {
     private ProductCategoryService productCategoryService;
     
     @Autowired
-    private VendorService vendorService;
+    private IVendorService vendorService;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

@@ -5,9 +5,9 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.ProductCategoryDAO;
+import edu.mum.cs490.smartmart.dao.IProductCategoryDAO;
 import edu.mum.cs490.smartmart.dao.ProductDAO;
-import edu.mum.cs490.smartmart.dao.VendorDAO;
+import edu.mum.cs490.smartmart.dao.IVendorDAO;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Users;
@@ -24,8 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductServiceImpl implements ProductService {
 
     private ProductDAO productDAO;
-    private ProductCategoryDAO productCategoryDAO;
-    private VendorDAO vendorDAO;
+    private IProductCategoryDAO productCategoryDAO;
+    private IVendorDAO vendorDAO;
 
     public ProductDAO getProductDAO() {
         return productDAO;
@@ -35,21 +35,21 @@ public class ProductServiceImpl implements ProductService {
         this.productDAO = productDAO;
     }
 
-    public VendorDAO getVendorDAO() {
+    public IVendorDAO getVendorDAO() {
         return vendorDAO;
     }
 
-    public void setVendorDAO(VendorDAO vendorDAO) {
+    public void setVendorDAO(IVendorDAO vendorDAO) {
         this.vendorDAO = vendorDAO;
     }
     
     
 
-    public ProductCategoryDAO getProductCategoryDAO() {
+    public IProductCategoryDAO getProductCategoryDAO() {
         return productCategoryDAO;
     }
 
-    public void setProductCategoryDAO(ProductCategoryDAO productCategoryDAO) {
+    public void setProductCategoryDAO(IProductCategoryDAO productCategoryDAO) {
         this.productCategoryDAO = productCategoryDAO;
     }
     
