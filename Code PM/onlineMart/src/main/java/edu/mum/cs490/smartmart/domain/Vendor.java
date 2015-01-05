@@ -29,7 +29,7 @@ public class Vendor implements Serializable {
     private Long id;
     @NotNull
     private String companyName;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     private List<Product> productlist;
@@ -37,19 +37,24 @@ public class Vendor implements Serializable {
     private SubscriptionRule subscriptionRule;
     private String accountNum;
     private VendorStatus status;
-    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
-    private List <VendorAdmin> admins;
+    // commenting bcs of path error
+//    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
+//    private List<VendorAdmin> admins;
+    @OneToOne(cascade = CascadeType.ALL)
+    private VendorAdmin vendorAdmin; //= new VendorAdmin();
 
     public Vendor() {
+//        vendorAdmin = new VendorAdmin();
+//        admins.add(vendorAdmin);
     }
 
-    public List<VendorAdmin> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<VendorAdmin> admins) {
-        this.admins = admins;
-    }
+//    public List<VendorAdmin> getAdmins() {
+//        return admins;
+//    }
+//
+//    public void setAdmins(List<VendorAdmin> admins) {
+//        this.admins = admins;
+//    }
 
     public VendorStatus getStatus() {
         return status;
@@ -57,6 +62,14 @@ public class Vendor implements Serializable {
 
     public void setStatus(VendorStatus status) {
         this.status = status;
+    }
+
+    public VendorAdmin getVendorAdmin() {
+        return vendorAdmin;
+    }
+
+    public void setVendorAdmin(VendorAdmin vendorAdmin) {
+        this.vendorAdmin = vendorAdmin;
     }
 
     public List<Product> getProductlist() {
@@ -131,5 +144,5 @@ public class Vendor implements Serializable {
     public String toString() {
         return "edu.mum.cs490.webmart.domain.Vendors[ id=" + id + " ]";
     }
-
+    
 }

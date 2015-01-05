@@ -5,12 +5,8 @@
  */
 package edu.mum.cs490.smartmart.domain;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -19,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class VendorAdmin extends User  {
 
-    @ManyToOne
+    @OneToOne
     private Vendor vendor;
 
     public Vendor getVendor() {

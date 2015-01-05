@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.SafeHtml;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class User  {
+public class User implements Serializable  {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -86,6 +86,30 @@ public class User  {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Credentials getCredential() {
+        return credential;
+    }
+
+    public void setCredential(Credentials credential) {
+        this.credential = credential;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

@@ -5,9 +5,8 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
-import edu.mum.cs490.smartmart.domain.SubscriptionRule;
-import edu.mum.cs490.smartmart.domain.User;
-import edu.mum.cs490.smartmart.service.UserService;
+import edu.mum.cs490.smartmart.domain.Role;
+import edu.mum.cs490.smartmart.service.RoleService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,31 +16,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
- * @author Fetiya
+ * @author Komal
  */
 @Controller
-public class UserController {
-
+public class RoleController {
+    
     @Autowired
-    private UserService userService;
+    RoleService roleService;
 
-  
-
-    public UserService getUserService() {
-        return userService;
+    public RoleService getRoleService() {
+        return roleService;
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
     }
-
-    @RequestMapping(value = "/viewUsers", method = RequestMethod.GET)
+    
+      @RequestMapping(value = "/viewRoles", method = RequestMethod.GET)
     public String getAllUsers(Model model) {
         // System.out.println("Controller"+id);
 
-        List<User> usr = userService.getAllUsers();
-        model.addAttribute("users", userService.getAllUsers());
+        List<Role> usr = roleService.getAllRoles();
+        model.addAttribute("users", roleService.getAllRoles());
 
-        return "viewUsers";
+        return "viewRoles";
     }
 }

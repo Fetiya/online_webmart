@@ -1,7 +1,7 @@
 <%-- 
-    Document   : index
-    Created on : Dec 31, 2014, 5:55:49 PM
-    Author     : Fetiya
+    Document   : addVendor
+    Created on : Jan 3, 2015, 7:36:29 AM
+    Author     : Komal
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,8 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Welcome to SmartMart</h1>
-        <a href="viewUsers" />View Users </a>
-        <a href="vendorRegisteration" />Vendor Registeration </a>
+        <h1>Welcome</h1>
     </body>
 </html>

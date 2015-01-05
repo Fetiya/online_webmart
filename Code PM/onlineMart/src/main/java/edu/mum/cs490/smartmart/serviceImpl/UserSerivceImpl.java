@@ -6,14 +6,9 @@
 package edu.mum.cs490.smartmart.serviceImpl;
 
 import edu.mum.cs490.smartmart.dao.UserDAO;
-import edu.mum.cs490.smartmart.dao.impl.UserDAOImpl;
 import edu.mum.cs490.smartmart.domain.User;
 import edu.mum.cs490.smartmart.service.UserService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,13 +48,4 @@ public class UserSerivceImpl implements UserService{
         List<User> users= userDAO.findAll(0, 10);
        return users;
     }
-
-
-   
-
-   
-
-    
-    
-
 }
