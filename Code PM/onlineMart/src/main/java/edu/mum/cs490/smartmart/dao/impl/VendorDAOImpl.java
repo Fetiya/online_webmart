@@ -19,24 +19,29 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(propagation=Propagation.MANDATORY)
 public class VendorDAOImpl extends GenericDAOImpl<Vendor, Long> implements VendorDAO{
+    
+    
+    
+     public VendorDAOImpl() {
+        super(Vendor.class);
+    }
     private SessionFactory sessionFactory; 
   
-    
         
      @Transactional(propagation = Propagation.SUPPORTS)
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public VendorDAOImpl() {
-        super(Vendor.class);
-    }
+   
 
     @Override
     public List<Vendor> getAllVendors() {
         List<Vendor> vendors =sessionFactory.getCurrentSession().createQuery("from Vendor").list();
         return vendors;
     }
+
+   
     
     
 }

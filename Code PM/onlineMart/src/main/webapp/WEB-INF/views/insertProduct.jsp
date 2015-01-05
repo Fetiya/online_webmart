@@ -25,11 +25,32 @@
                     <td> <form:input path="name" /> </td>
                     <td><form:errors path="name" cssClass="error" /> </td>
                 </tr>
+                
+                
+                
+                
                 <tr>
-                    <td>Description: </td>
-                    <td><form:input path="description" /></td>
-                    <td><form:errors path="description" cssClass="error" /> </td>
+                    <td>Categories: </td>
+                    <td>
+                        <form:select path="productCategory" >
+                            <form:options items="${categories}"  itemLabel="name" itemValue="id"/>
+                            
+                        </form:select>
+                        
+                    </td>
                 </tr>
+                
+                <tr>
+                    <td>Vendor: </td>
+                    <td>
+                        <form:select path="vendor" >
+                            <form:options items="${vendors}"  itemLabel="companyName" itemValue="id"/>
+                            
+                        </form:select>
+                        
+                    </td>
+                </tr>
+                
                 <tr>
                     <td>Price: </td>
                     <td><form:input path="price" /></td>
@@ -42,18 +63,16 @@
                 </tr>
                 
                 <tr>
-                    <td>Categories: </td>
-                    <td>
-                        <form:select path="productCategory" >
-                            <form:options items="${categories}"  itemLabel="name" itemValue="id"/>
-                        </form:select>
-                    </td>
+                    <td>Description: </td>
+                    <td><form:textarea path="description" rows="5" cols="40"></form:textarea></td>
+                    <td><form:errors path="description" cssClass="error" /> </td>
                 </tr>
                 
-<!--                <tr>
+                <tr>
                     <td>Image:</td>
                     <td><input type="file" name="file"/> </td>
-                </tr>-->
+                </tr>
+                
 
                 
             </table>

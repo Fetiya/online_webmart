@@ -52,7 +52,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+   @Transactional(propagation = Propagation.REQUIRED)
    @Override
     public ProductCategory getProductCategoryById(long id) {
         

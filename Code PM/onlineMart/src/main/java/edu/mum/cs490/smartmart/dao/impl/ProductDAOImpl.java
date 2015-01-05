@@ -24,5 +24,7 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements Pro
     {
         super(Product.class);
     }
+
+
     
 }

@@ -24,6 +24,11 @@
                 
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Category</th>
+                    <th>Vendor</th>
+                    <th>Image</th>
 
                 </tr>
             </thead>
@@ -32,9 +37,22 @@
 
                 <td>${product.id}</td>
                 
+                <td width="40%">
+                        <img src="productImage/${product.id}" />
+                </td>
+                               
                 <td width="20%">${product.name}</td>
 
                 <td> ${product.description}     </td>
+                
+                <td> ${product.price}     </td>
+                <td> ${product.quantity}     </td>
+                <td> ${product.getProductCategory().name}     </td>
+                <td>${product.getVendor().companyName} </td>
+                
+               
+                
+                
 
             </tr>
         </c:forEach>

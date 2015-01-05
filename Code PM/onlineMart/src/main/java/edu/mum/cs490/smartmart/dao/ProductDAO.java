@@ -15,6 +15,7 @@ import edu.mum.cs490.smartmart.domain.Users;
 public interface ProductDAO extends IGenericDAO<Product, Long> {
     
    // public void createProduct(Product product);
+  //  public Product getProduct(int id);
             
     
 }
