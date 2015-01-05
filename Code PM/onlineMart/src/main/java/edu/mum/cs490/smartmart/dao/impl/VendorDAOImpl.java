@@ -7,7 +7,6 @@ package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.VendorDAO;
-import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorStatus;
 import java.util.ArrayList;
