@@ -51,13 +51,18 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
+     @Transactional(propagation = Propagation.REQUIRED)
     public void updateProduct(Product product) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Product getProduct(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     @Transactional(propagation = Propagation.REQUIRED)
+    public Product getProduct(Long id) {
+      
+        
+          return  productDAO.findByPrimaryKey(id);
+   
     }
 
     @Override

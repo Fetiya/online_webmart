@@ -23,7 +23,7 @@ public interface IProductService {
      
      public void updateProduct(Product product);
      
-     public Product getProduct(int id);
+     public Product getProduct(Long id);
      
      public List<Product> getAllProducts();
      

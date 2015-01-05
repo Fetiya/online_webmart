@@ -15,7 +15,9 @@ import java.util.List;
  * @author Senai
  */
 public interface IShoppingCartItemDAO   extends IGenericDAO<ShoppingCartItem, Long>{
+ 
     
+  public List<ShoppingCartItem>   getCustomerShoppingCart(Customer customer);
    
      
 }
