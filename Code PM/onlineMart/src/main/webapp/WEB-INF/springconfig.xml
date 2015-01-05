@@ -86,14 +86,8 @@
         <property name="sf" ref="sessionFactory"/>
     </bean>
     
-    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">    
-    </bean>
-    
-    <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">       
-    </bean>
-    
-    <bean id="productCategoryDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductCategoryDAOImpl" parent="hibernateDAO">
-        
+    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">
+     
     </bean>
 
     <!--      User service injections  
@@ -103,7 +97,6 @@
         <property name="userDAO" ref="userDAO" />
 
     </bean>
-   
 
     
     <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
@@ -112,6 +105,9 @@
 
     <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">  
      
+    </bean>
+    <bean id="productCategoryDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductCategoryDAOImpl" parent="hibernateDAO">
+        
     </bean>
     <!-- vendor service injection -->
  
@@ -123,10 +119,11 @@
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
     </bean> 
-     <bean id="productService" class="edu.mum.cs490.smartmart.serviceImpl.ProductServiceImpl">
-        <property name="productDAO" ref="productDAO"/>
-        
+    <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
+        <property name="productCategoryDAO" ref="productCategoryDAO" />
     </bean>
-    
  
 </beans>
+
+
+
