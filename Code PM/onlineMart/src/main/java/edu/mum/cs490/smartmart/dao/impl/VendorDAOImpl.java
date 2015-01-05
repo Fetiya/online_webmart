@@ -37,6 +37,26 @@ public class VendorDAOImpl extends GenericDAOImpl<Vendor, Long> implements IVend
         List<Vendor> vendors =sessionFactory.getCurrentSession().createQuery("from Vendor").list();
         return vendors;
     }
+
+    @Override
+    public List<Vendor> getAllPendingVendors() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Vendor getVendorById(Long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void update(Vendor vendor) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Vendor> getAllActiveVendor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }
