@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author dipika
  */
-public interface ProductCategoryService {
+public interface IProductCategoryService {
     public void addProductCategory(ProductCategory category);
     public List<ProductCategory> getAllProductCategory();
     public void updateProductCategory(ProductCategory category);

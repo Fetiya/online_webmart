@@ -6,7 +6,7 @@
 package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.domain.ProductCategory;
-import edu.mum.cs490.smartmart.service.ProductCategoryService;
+import edu.mum.cs490.smartmart.service.IProductCategoryService;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -30,13 +30,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ProductCategoryController {
 
     @Autowired
-    private ProductCategoryService categoryService;
+    private IProductCategoryService categoryService;
 
-    public ProductCategoryService getCategoryService() {
+    public IProductCategoryService getCategoryService() {
         return categoryService;
     }
 
-    public void setCategoryService(ProductCategoryService categoryService) {
+    public void setCategoryService(IProductCategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

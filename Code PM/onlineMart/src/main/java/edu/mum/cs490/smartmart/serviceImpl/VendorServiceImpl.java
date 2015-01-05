@@ -14,6 +14,8 @@ import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
 import edu.mum.cs490.smartmart.service.IVendorService;
 import java.util.List;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
