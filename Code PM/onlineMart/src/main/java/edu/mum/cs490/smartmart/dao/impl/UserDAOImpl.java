@@ -6,7 +6,7 @@
 package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.UserDAO;
+import edu.mum.cs490.smartmart.dao.IUserDAO;
 import edu.mum.cs490.smartmart.domain.Users;
 import java.util.List;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 //@Repository("userDAO")
 @Transactional(propagation=Propagation.MANDATORY)
-public class UserDAOImpl extends GenericDAOImpl<Users, Long> implements UserDAO {    
+public class UserDAOImpl extends GenericDAOImpl<Users, Long> implements IUserDAO {    
     
    public UserDAOImpl() {
      

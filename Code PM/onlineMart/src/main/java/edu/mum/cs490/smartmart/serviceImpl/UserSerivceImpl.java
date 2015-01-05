@@ -5,15 +5,11 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.UserDAO;
+import edu.mum.cs490.smartmart.dao.IUserDAO;
 import edu.mum.cs490.smartmart.dao.impl.UserDAOImpl;
 import edu.mum.cs490.smartmart.domain.Users;
-import edu.mum.cs490.smartmart.service.UserService;
+import edu.mum.cs490.smartmart.service.IUserService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,16 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
  */
 //@Service("userService")
 //@Transactional(propagation=Propagation.REQUIRES_NEW)
-public class UserSerivceImpl implements UserService{
+public class UserSerivceImpl implements IUserService{
     
   
-      UserDAO userDAO;
+      IUserDAO userDAO;
 
-    public UserDAO getUserDAO() {
+    public IUserDAO getUserDAO() {
         return userDAO;
     }
 
-    public void setUserDAO(UserDAO userDAO) {
+    public void setUserDAO(IUserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

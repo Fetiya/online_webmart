@@ -5,12 +5,17 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.SubscriptionRule;
+import edu.mum.cs490.smartmart.domain.Users;;
+
 
 /**
  *
- * @author Komal
+ * @author Fetiya
  */
-public interface ISubscriptionRuleDAO extends IGenericDAO<SubscriptionRule, Long> {
+
+
+public interface IUserDAO  extends IGenericDAO<Users, Long>{//   // extends HibernateDAO<User, Long> { //
+
     
+   
 }

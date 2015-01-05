@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -92,6 +93,29 @@ public class CustomerController {
 //      model.addAttribute("users",userService.getAllUsers());
         return "login";
     }
+
+    @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
+    public String addCustomer(@ModelAttribute("customer") Customer customer) {
+        return "customerRegisteration";
+    }
+
+    @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
+    public String add(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
+
+        String view = "redirect:/";
+        if (!result.hasErrors()) {
+            customerService.addCustomer(customer);
+            flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
+
+        } else {
+            for (FieldError err : result.getFieldErrors()) {
+                System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
+            }
+            view = "addCustomer";
+        }
+        return view;
+    }
+
     
     
     
