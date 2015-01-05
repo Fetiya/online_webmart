@@ -8,6 +8,8 @@ interface IGenericDAO< T, ID extends Serializable> {
     T findByPrimaryKey(ID id);
  
     List<T> findAll(int startIndex, int fetchSize);
+    
+    List<T> findAll();
 
     List<T> findByExample(T exampleInstance, String[] excludeProperty);
 
@@ -15,8 +17,5 @@ interface IGenericDAO< T, ID extends Serializable> {
 
     void delete(T entity);
 
-//    void beginTransaction();
-//
-//    void commitTransaction();
 
 }

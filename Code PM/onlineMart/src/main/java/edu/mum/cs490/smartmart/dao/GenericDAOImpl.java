@@ -14,16 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 //@Repository
 public abstract class GenericDAOImpl< T, ID extends Serializable> implements IGenericDAO<T, ID> {
 
-    
-   // @Autowired
     private SessionFactory sf;
 
     public SessionFactory getSf() {
         return sf;
     }
-
-    
-
 
     public void setSf(SessionFactory sf) {
         this.sf = sf;
@@ -72,6 +67,13 @@ public abstract class GenericDAOImpl< T, ID extends Serializable> implements IGe
     @Transactional(propagation = Propagation.MANDATORY)
     public void delete(T entity) {
         sf.getCurrentSession().delete(entity);
+    }
+    
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<T> findAll() {
+        Criteria crit = sf.getCurrentSession().createCriteria(persistenceClass);
+        System.out.println("......................." + crit.list());
+        return crit.list();
     }
 
 }
