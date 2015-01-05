@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Stella
  */
+
 @Transactional(propagation=Propagation.SUPPORTS)
 public class VendorDAOImpl extends GenericDAOImpl<Vendor, Long> implements VendorDAO{
  
