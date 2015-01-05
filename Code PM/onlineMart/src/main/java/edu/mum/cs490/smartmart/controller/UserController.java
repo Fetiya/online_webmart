@@ -5,6 +5,9 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
+import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
+
+import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.IUserService;
 import java.util.List;
@@ -41,4 +44,5 @@ public class UserController {
 
         return "viewUsers";
     }
+
 }

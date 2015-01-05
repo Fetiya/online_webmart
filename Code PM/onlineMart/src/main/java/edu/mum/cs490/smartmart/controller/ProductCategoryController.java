@@ -99,5 +99,7 @@ public class ProductCategoryController {
         categoryService.deleteCategory(c);
         return "redirect:/viewCategory";
     }
+    
+
 
 }

@@ -6,25 +6,19 @@
 package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.ProductDAO;
+import edu.mum.cs490.smartmart.dao.IProductDAO;
 import edu.mum.cs490.smartmart.domain.Product;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-
+import java.io.Serializable;
 
 /**
  *
- * @author Kabiraj
+ * @author Fetiya
  */
-@Transactional(propagation=Propagation.MANDATORY)
-public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements ProductDAO {
+public class ProductDAOImpl  extends GenericDAOImpl<Product, Long>implements IProductDAO{
 
-    public ProductDAOImpl()
-    {
+    public ProductDAOImpl() {
         super(Product.class);
     }
-
-
+  
     
 }

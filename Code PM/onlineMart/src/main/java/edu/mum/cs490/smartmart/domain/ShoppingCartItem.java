@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import org.hibernate.mapping.OneToMany;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -30,9 +32,22 @@ public class ShoppingCartItem implements Serializable {
     @OneToOne
     private Customer customer;
 
+    @ManyToOne
+    private Product product;
+    
     public ShoppingCartItem() {
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    
+    
     public double getPrice() {
         return price;
     }
@@ -65,6 +80,8 @@ public class ShoppingCartItem implements Serializable {
         this.customer = customer;
     }
 
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

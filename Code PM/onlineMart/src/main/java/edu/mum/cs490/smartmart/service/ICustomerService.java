@@ -7,6 +7,7 @@
 package edu.mum.cs490.smartmart.service;
 
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.domain.Users;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ICustomerService {
     
     public void addCustomer(Customer customer);
     
-    public Customer getCustomerById(int id);
+    public Customer getCustomerById(Long id);
     
     public List<Customer> getAllCustomers();
     
@@ -32,4 +33,5 @@ public interface ICustomerService {
     
     public void notifyCustomer(Customer customer, String message);
     
+   
 }
