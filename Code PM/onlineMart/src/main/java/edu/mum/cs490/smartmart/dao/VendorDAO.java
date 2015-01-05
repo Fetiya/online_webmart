@@ -16,5 +16,9 @@ import java.util.List;
 public interface VendorDAO extends IGenericDAO<Vendor, Long>{
     
     public List<Vendor> getAllVendors();
+    public List<Vendor> getAllPendingVendors();
+    public Vendor getVendorById(Long id);
+    public void update(Vendor vendor);
+    public List<Vendor> getAllActiveVendor();
     
 }

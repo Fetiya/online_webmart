@@ -25,7 +25,7 @@ public class ProductCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
+    @NotNull(message= "{NotNull.ProductCategory.name.validation}") 
     private String name;
     private String description;
     @OneToMany(mappedBy = "productCategory",cascade = CascadeType.ALL)

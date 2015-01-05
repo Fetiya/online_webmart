@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="Pass@deliver" />
+        <property name="password" value="root" />
     </bean>
 
     <!-- hibernate Properties -->
@@ -106,6 +106,9 @@
     <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">  
      
     </bean>
+    <bean id="productCategoryDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductCategoryDAOImpl" parent="hibernateDAO">
+        
+    </bean>
     <!-- vendor service injection -->
  
     <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
@@ -116,15 +119,11 @@
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
     </bean> 
-    
-    
-    <!-- service and dao injections -->
-    <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
-        
+    <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
+        <property name="productCategoryDAO" ref="productCategoryDAO" />
     </bean>
-     
-    <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
-        <property name="shoppingcartDAO" ref="shoppingcartDAO" />
-    </bean>
-
+ 
 </beans>
+
+
+
