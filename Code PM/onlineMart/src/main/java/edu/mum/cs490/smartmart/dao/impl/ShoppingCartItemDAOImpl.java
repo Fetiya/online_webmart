@@ -6,10 +6,11 @@
 package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.ICustomerDAO;
+import edu.mum.cs490.smartmart.dao.IShoppingCartItemDAO;
+import edu.mum.cs490.smartmart.dao.UserDAO;
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
-import java.util.List;
+import edu.mum.cs490.smartmart.domain.Users;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Fetiya
  */
 @Transactional(propagation=Propagation.MANDATORY)
-public class CustomerDAOImpl extends GenericDAOImpl<Customer, Long> implements ICustomerDAO {
-
-    public CustomerDAOImpl() {
-        super(Customer.class);
-    }
-
+public class ShoppingCartItemDAOImpl extends GenericDAOImpl<ShoppingCartItem, Long> implements IShoppingCartItemDAO {
+   
     
-    
+   public ShoppingCartItemDAOImpl() {
+     
+    super(ShoppingCartItem.class);
  }
+}

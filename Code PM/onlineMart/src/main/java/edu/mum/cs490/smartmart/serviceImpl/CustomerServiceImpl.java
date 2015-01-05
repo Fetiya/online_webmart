@@ -25,6 +25,8 @@ public class CustomerServiceImpl implements ICustomerService {
 
     
     private ICustomerDAO customerDAO;
+    
+    
 
     public ICredentialDAO getCredentialDAO() {
         return credentialDAO;
@@ -62,9 +64,11 @@ public class CustomerServiceImpl implements ICustomerService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public Customer getCustomerById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Customer getCustomerById(Long id) {
+        
+        return customerDAO.findByPrimaryKey(id);
     }
 
     @Override
@@ -91,5 +95,7 @@ public class CustomerServiceImpl implements ICustomerService {
     public void notifyCustomer(Customer customer, String message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
 
 }

@@ -116,5 +116,15 @@
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
     </bean> 
- 
+    
+    
+    <!-- service and dao injections -->
+    <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
+        
+    </bean>
+     
+    <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
+        <property name="shoppingcartDAO" ref="shoppingcartDAO" />
+    </bean>
+
 </beans>
