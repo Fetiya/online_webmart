@@ -21,14 +21,14 @@
 
                 <tr>
                     <th>id</th>
-                
+                    <th>Image</th>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Category</th>
                     <th>Vendor</th>
-                    <th>Image</th>
+                    
 
                 </tr>
             </thead>

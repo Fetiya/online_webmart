@@ -5,81 +5,16 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.IProductDAO;
-import edu.mum.cs490.smartmart.domain.Product;
-
-import edu.mum.cs490.smartmart.domain.Users;
-import edu.mum.cs490.smartmart.service.IProductService;
-import java.io.Serializable;
-import java.util.List;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-/**
- *
- * @author Fetiya
- */
-public class ProductServiceImpl implements IProductService{
-
-    
-      IProductDAO productDAO;
-
-    public IProductDAO getProductDAO() {
-        return productDAO;
-    }
-
-    public void setProductDAO(IProductDAO productDAO) {
-        this.productDAO = productDAO;
-    }
-
-      
-      
-    @Override
-    public List<Product> searchProductByName(String pname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Product getProductDetailInfo(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void addProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void updateProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Product getProduct(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED)
-    public List<Product> getAllProducts() {
-        
-        return productDAO.findAll();
-    }
-
-    @Override
-    public List<Product> getProductByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
   
 import edu.mum.cs490.smartmart.dao.IProductCategoryDAO;
+import edu.mum.cs490.smartmart.dao.IProductDAO;
 import edu.mum.cs490.smartmart.dao.ProductDAO;
 import edu.mum.cs490.smartmart.dao.IVendorDAO;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.domain.Vendor;
-import edu.mum.cs490.smartmart.service.ProductService;
+import edu.mum.cs490.smartmart.service.IProductService;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,17 +23,17 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Kabiraj
  */
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements IProductService {
 
-    private ProductDAO productDAO;
+    private IProductDAO productDAO;
     private IProductCategoryDAO productCategoryDAO;
     private IVendorDAO vendorDAO;
 
-    public ProductDAO getProductDAO() {
+    public IProductDAO getProductDAO() {
         return productDAO;
     }
 
-    public void setProductDAO(ProductDAO productDAO) {
+    public void setProductDAO(IProductDAO productDAO) {
         this.productDAO = productDAO;
     }
 
@@ -165,6 +100,28 @@ public class ProductServiceImpl implements ProductService {
         }catch(Exception e){
             return null;
         }
+    }
+
+    @Override
+    public List<Product> searchProductByName(String pname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Product getProductDetailInfo(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void updateProduct(Product product) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+ 
+   
+
+    @Override
+    public List<Product> getProductByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

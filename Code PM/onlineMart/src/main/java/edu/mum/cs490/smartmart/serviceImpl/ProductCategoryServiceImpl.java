@@ -7,7 +7,7 @@ package edu.mum.cs490.smartmart.serviceImpl;
 
 import edu.mum.cs490.smartmart.dao.IProductCategoryDAO;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
-import edu.mum.cs490.smartmart.service.ProductCategoryService;
+import edu.mum.cs490.smartmart.service.IProductCategoryService;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author dipika
  */
-public class ProductCategoryServiceImpl implements ProductCategoryService {
+public class ProductCategoryServiceImpl implements IProductCategoryService {
 
     private IProductCategoryDAO productCategoryDAO;
 

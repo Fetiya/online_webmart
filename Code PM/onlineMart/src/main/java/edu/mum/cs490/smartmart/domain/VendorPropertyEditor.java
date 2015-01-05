@@ -5,7 +5,7 @@
  */
 package edu.mum.cs490.smartmart.domain;
 
-import edu.mum.cs490.smartmart.service.ProductCategoryService;
+import edu.mum.cs490.smartmart.service.IProductCategoryService;
 import edu.mum.cs490.smartmart.service.IVendorService;
 import java.beans.PropertyEditorSupport;
 

@@ -1,59 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.mum.cs490.smartmart.controller;
-
-import edu.mum.cs490.smartmart.service.IProductService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-/**
- *
- * @author Fetiya
- */
-@Controller
-public class ProductController {
-    
-    @Autowired
-    private IProductService productService;
-
-    public IProductService getProductService() {
-        return productService;
-    }
-
-    public void setProductService(IProductService productService) {
-        this.productService = productService;
-    }
-    
-    
-    
-    // take it to product controller???
-   @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String initalHome(Model model) {
-         System.out.println("Controller");
-        
-     // List<Product> usr= userService.getAllUsers();
-     model.addAttribute("products",productService.getAllProducts());
-
-        return "index";
-    }
-    
-    
-    @RequestMapping(value = "/productDetail", method = RequestMethod.GET)
-    public String productDetails(Model model) {
-         System.out.println("Controller");
-        
-     // List<Product> usr= userService.getAllUsers();
-    // model.addAttribute("products",productService.getAllProducts());
-
-        return "productDetail";
-    }
-    
+ 
     
 import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
 import edu.mum.cs490.smartmart.domain.Product;
@@ -61,8 +7,8 @@ import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorPropertyEditor;
-import edu.mum.cs490.smartmart.service.ProductCategoryService;
-import edu.mum.cs490.smartmart.service.ProductService;
+import edu.mum.cs490.smartmart.service.IProductCategoryService;
+import edu.mum.cs490.smartmart.service.IProductService;
 import edu.mum.cs490.smartmart.service.IVendorService;
 import java.beans.PropertyEditor;
 import java.io.IOException;
@@ -81,7 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import edu.mum.cs490.smartmart.service.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 /**
  *
  * @author Kabiraj
@@ -90,14 +41,22 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private IProductService productService;
+
+
 
     @Autowired
-    private ProductCategoryService productCategoryService;
+    private IProductCategoryService productCategoryService;
     
     @Autowired
     private IVendorService vendorService;
+    public IProductService getProductService() {
+        return productService;
+    }
 
+    public void setProductService(IProductService productService) {
+        this.productService = productService;
+    }
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(ProductCategory.class, new CategoryPropertyEditor(productCategoryService));
@@ -149,7 +108,7 @@ public class ProductController {
             if (p != null) {
                 OutputStream out = response.getOutputStream();
                 out.write(p.getImage());
-                System.out.println("================="+Arrays.toString(p.getImage()));
+               
                 response.flushBuffer();
             }
         } catch (IOException ex) {
@@ -157,4 +116,25 @@ public class ProductController {
         }
     }
 
+     // take it to product controller???
+   @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String initalHome(Model model) {
+         System.out.println("Controller");
+        
+     // List<Product> usr= userService.getAllUsers();
+     model.addAttribute("products",productService.getAllProducts());
+
+        return "index";
+    }
+    
+    
+    @RequestMapping(value = "/productDetail", method = RequestMethod.GET)
+    public String productDetails(Model model) {
+         System.out.println("Controller");
+        
+     // List<Product> usr= userService.getAllUsers();
+    // model.addAttribute("products",productService.getAllProducts());
+
+        return "productDetail";
+    }
 }

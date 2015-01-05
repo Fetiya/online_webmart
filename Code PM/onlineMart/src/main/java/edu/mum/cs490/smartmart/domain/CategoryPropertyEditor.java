@@ -5,7 +5,7 @@
  */
 package edu.mum.cs490.smartmart.domain;
 
-import edu.mum.cs490.smartmart.service.ProductCategoryService;
+import edu.mum.cs490.smartmart.service.IProductCategoryService;
 import java.beans.PropertyEditorSupport;
 
 /**
@@ -14,9 +14,9 @@ import java.beans.PropertyEditorSupport;
  */
 public class CategoryPropertyEditor extends PropertyEditorSupport{
     
-    private ProductCategoryService categoryService;
+    private IProductCategoryService categoryService;
     
-    public CategoryPropertyEditor(ProductCategoryService categoryService)
+    public CategoryPropertyEditor(IProductCategoryService categoryService)
     {
         this.categoryService=categoryService;
     }
