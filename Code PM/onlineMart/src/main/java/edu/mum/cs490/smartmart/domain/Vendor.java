@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,44 +31,47 @@ public class Vendor implements Serializable {
     private Long id;
     @NotNull
     private String companyName;
-   
-    private String email;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     private List<Product> productlist;
     @OneToOne
     private SubscriptionRule subscriptionRule;
     private String accountNum;
+    @Enumerated(EnumType.STRING)
     private VendorStatus status;
-    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
-    private List <VendorAdmin> admins;
+    // commenting bcs of path error
+//    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
+//    private List<VendorAdmin> admins;
+    @OneToOne(cascade = CascadeType.ALL)
+    private VendorAdmin vendorAdmin; //= new VendorAdmin();
 
     public Vendor() {
+//        vendorAdmin = new VendorAdmin();
+//        admins.add(vendorAdmin);
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<VendorAdmin> getAdmins() {
-        return admins;
-    }
-
-    public void setAdmins(List<VendorAdmin> admins) {
-        this.admins = admins;
-    }
-
+//    public List<VendorAdmin> getAdmins() {
+//        return admins;
+//    }
+//
+//    public void setAdmins(List<VendorAdmin> admins) {
+//        this.admins = admins;
+//    }
     public VendorStatus getStatus() {
         return status;
     }
 
     public void setStatus(VendorStatus status) {
         this.status = status;
+    }
+
+    public VendorAdmin getVendorAdmin() {
+        return vendorAdmin;
+    }
+
+    public void setVendorAdmin(VendorAdmin vendorAdmin) {
+        this.vendorAdmin = vendorAdmin;
     }
 
     public List<Product> getProductlist() {

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.smartmart.dao;
-
-import edu.mum.cs490.smartmart.domain.ProductCategory;
+package edu.mum.cs490.smartmart.domain;
 
 /**
  *
- * @author dipika
+ * @author Komal
  */
-public interface ProductCategoryDAO extends IGenericDAO<ProductCategory, Long> {
+public enum Role {
+    
+    VENDORADMIN, ADMIN, CUSTOMER;
     
 }

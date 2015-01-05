@@ -3,20 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.smartmart.dao;
+package edu.mum.cs490.smartmart.service;
 
-
-import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 import java.util.List;
 
 /**
  *
- * @author Stella
+ * @author Komal
  */
-public interface VendorDAO extends IGenericDAO<Vendor, Long>{
-    
-    public List<Vendor> getAllVendors();
-
-   
-    
+public interface ISubscriptionRuleService {
+     public List<SubscriptionRule> getAllSubscriptionRules();
 }

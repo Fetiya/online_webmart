@@ -5,26 +5,47 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
+
+import edu.mum.cs490.smartmart.domain.Role;
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
 import edu.mum.cs490.smartmart.dao.ICustomerDAO;
 import edu.mum.cs490.smartmart.domain.Credential;
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.ICustomerService;
+import edu.mum.cs490.smartmart.service.IEncryptionService;
 import java.util.List;
+
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Senai
+ * @author Komal
  */
 public class CustomerServiceImpl implements ICustomerService {
 
+    ICustomerDAO customerDAO;
+
+    IEncryptionService encryptionService;
+    
     private ICredentialDAO credentialDAO;
 
-    
-    private ICustomerDAO customerDAO;
+    public ICustomerDAO getCustomerDAO() {
+        return customerDAO;
+    }
+
+    public void setCustomerDAO(ICustomerDAO customerDAO) {
+        this.customerDAO = customerDAO;
+    }
+
+    public IEncryptionService getEncryptionService() {
+        return encryptionService;
+    }
+
+    public void setEncryptionService(IEncryptionService encryptionService) {
+        this.encryptionService = encryptionService;
+    }
 
     public ICredentialDAO getCredentialDAO() {
         return credentialDAO;
@@ -34,19 +55,15 @@ public class CustomerServiceImpl implements ICustomerService {
         this.credentialDAO = credentialDAO;
     }
 
-    public ICustomerDAO getCustomerDAO() {
-        return customerDAO;
-    }
-
-    public void setCustomerDAO(ICustomerDAO customerDAO) {
-        this.customerDAO = customerDAO;
-    }
-    
-    
-    
-    
-
     @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void addCustomer(Customer customer) {
+        customer.getCredential().setPassword(encryptionService.getEncryptedPassword(customer.getCredential().getPassword()));
+        customer.getCredential().setRole(Role.CUSTOMER);
+        customerDAO.save(customer);
+    }
+    
+       @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public boolean checkUserName(String userName) {
         Credential cred=new Credential();
@@ -55,11 +72,6 @@ public class CustomerServiceImpl implements ICustomerService {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void addCustomer(Customer customer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
