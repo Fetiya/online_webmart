@@ -24,6 +24,7 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
+    
 <!--    <bean id="uniqueName" class="edu.mum.cs490.smartmart.validators.UniqueUserNameValidator">
     </bean>-->
     
