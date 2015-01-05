@@ -40,8 +40,7 @@ public class Customer extends Users implements Serializable {
     public void setShoppingCart(List<ShoppingCartItem> shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
-
-   
+  
 
     public List<Order> getOrder() {
         return order;

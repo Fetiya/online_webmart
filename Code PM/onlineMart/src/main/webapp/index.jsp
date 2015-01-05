@@ -16,7 +16,8 @@
 
         <a href="viewUsers" />View Users </a></br>
     
-        <a href="viewPendingVendors" />View pending Vendor</a>
+        <a href="viewPendingVendors" />View pending Vendor</a></br>
+        <a href="VendorsForUnsubscribe" />Vendor Unsubscribe</a>
 
     </body>
 </html>

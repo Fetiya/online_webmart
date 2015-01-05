@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +40,7 @@ public class Vendor implements Serializable {
     @OneToOne
     private SubscriptionRule subscriptionRule;
     private String accountNum;
+    @Enumerated(EnumType.STRING)
     private VendorStatus status;
     @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
     private List <VendorAdmin> admins;

@@ -14,5 +14,9 @@ import java.util.List;
  */
 public interface VendorService {
     public List<Vendor> getAllVendors();
+    public Vendor getVendorById(Long id);
+    public void update(Vendor vendor);
+    public List<Vendor>getAllPendingVendors();
+    public List<Vendor> getAllActiveVendor();
     
 }

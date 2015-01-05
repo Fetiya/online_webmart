@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class VendorServiceImpl implements VendorService{
     
+    
     VendorDAO vendorDAO;
 
     public VendorDAO getVendorDAO() {
@@ -32,6 +33,29 @@ public class VendorServiceImpl implements VendorService{
     public List<Vendor> getAllVendors() {
         List<Vendor>vendors=vendorDAO.getAllVendors();
         return vendors;
+    }
+
+    @Override
+    public Vendor getVendorById(Long id) {
+        Vendor vendor=vendorDAO.getVendorById(id);
+        return vendor;
+    }
+
+    @Override
+    public void update(Vendor vendor) {
+        vendorDAO.update(vendor);  
+    }
+
+    @Override
+    public List<Vendor> getAllPendingVendors() {
+         List<Vendor>vendors=vendorDAO.getAllPendingVendors();
+         return vendors;
+    }
+
+    @Override
+    public List<Vendor> getAllActiveVendor() {
+        List<Vendor>activeVendors=vendorDAO.getAllActiveVendor();
+        return activeVendors;
     }
     
 }
