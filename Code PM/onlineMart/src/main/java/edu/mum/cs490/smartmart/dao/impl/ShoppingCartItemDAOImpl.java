@@ -7,7 +7,7 @@ package edu.mum.cs490.smartmart.dao.impl;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.IShoppingCartItemDAO;
-import edu.mum.cs490.smartmart.dao.UserDAO;
+
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.domain.Users;

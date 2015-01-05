@@ -6,7 +6,7 @@
 package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
-import edu.mum.cs490.smartmart.dao.UserDAO;
+
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.IUserService;
@@ -45,17 +45,4 @@ public class UserController {
         return "viewUsers";
     }
 
-    
-    
-    
-    // take it to product controller???
-     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String initalHome(Model model) {
-        // System.out.println("Controller"+id);
-        
-     // List<Product> usr= userService.getAllUsers();
-      //model.addAttribute("users",userService.getAllUsers());
-
-        return "index";
-    }
 }

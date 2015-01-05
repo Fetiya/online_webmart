@@ -5,11 +5,13 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
+import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.IProductDAO;
-import edu.mum.cs490.smartmart.dao.UserDAO;
 import edu.mum.cs490.smartmart.domain.Product;
+
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.IProductService;
+import java.io.Serializable;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

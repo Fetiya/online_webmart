@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -99,7 +99,7 @@
     </bean>
 
     
- <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
      
     </bean>
 
@@ -109,20 +109,38 @@
     <bean id="productCategoryDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductCategoryDAOImpl" parent="hibernateDAO">
         
     </bean>
+    
+    <bean id="subscriptionRuleDAO" class="edu.mum.cs490.smartmart.dao.impl.SubscriptionRuleDAOImpl" parent="hibernateDAO">
+     
+    </bean>
+    
+    
+    
     <!-- vendor service injection -->
  
     <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
         
         <property name="vendorDAO" ref="vendorDAO" />
+        <property  name="encryptionService" ref="encryptionService" />
     </bean>
 
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
+        <property  name="encryptionService" ref="encryptionService" />
     </bean> 
-    
     <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
         <property name="productCategoryDAO" ref="productCategoryDAO" />
     </bean>
+ 
+ 
+    <bean id="subscriptionRuleService" class="edu.mum.cs490.smartmart.serviceImpl.SubscriptionRuleServiceImpl">
+        <property name="subscriptionRuleDAO" ref="subscriptionRuleDAO" />
+    </bean>
+ 
+ 
+    <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
+    </bean>
+    
     
     
     <!-- service and dao injections -->
@@ -143,5 +161,4 @@
         <property name="productDAO" ref="productDAO" />
     </bean>
     
-
 </beans>
