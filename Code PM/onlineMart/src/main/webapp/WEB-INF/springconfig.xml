@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="root" />
+        <property name="password" value="Pass@deliver" />
     </bean>
 
     <!-- hibernate Properties -->
@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -100,9 +100,14 @@
     <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
     </bean>    
         
+    <bean id="orderDAO" class="edu.mum.cs490.smartmart.dao.impl.OrderDAOImpl" parent="hibernateDAO">
+    </bean>
     
+     <bean id="salesDetailDAO" class="edu.mum.cs490.smartmart.dao.impl.SalesDetailDAOImpl" parent="hibernateDAO">
+    </bean>
     
-    
+     <bean id="settingsDAO" class="edu.mum.cs490.smartmart.dao.impl.SettingsDAOImpl" parent="hibernateDAO">
+    </bean>
     <!-- service injection -->
 
     <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
@@ -132,6 +137,18 @@
     </bean>
     <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
     </bean>
+     <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
+           <property name="orderDAO" ref="orderDAO"/> 
+    </bean>
+    
+    <bean id="salesDetailService" class="edu.mum.cs490.smartmart.serviceImpl.SalesDetailServiceImpl">
+           <property name="salesDetailDAO" ref="salesDetailDAO"/> 
+    </bean>
+    <bean id="settingsService" class="edu.mum.cs490.smartmart.serviceImpl.SettingsServiceImpl">
+           <property name="settingsDAO" ref="settingsDAO"/> 
+    </bean>
+    
+    
     
     
     

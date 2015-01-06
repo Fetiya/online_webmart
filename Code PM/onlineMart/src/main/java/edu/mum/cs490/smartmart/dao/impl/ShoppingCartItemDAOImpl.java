@@ -11,6 +11,8 @@ import edu.mum.cs490.smartmart.dao.IShoppingCartItemDAO;
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.domain.Users;
+import java.util.List;
+import org.hibernate.Query;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,4 +28,33 @@ public class ShoppingCartItemDAOImpl extends GenericDAOImpl<ShoppingCartItem, Lo
      
     super(ShoppingCartItem.class);
  }
+
+    @Override
+    public List<ShoppingCartItem> getCustomerShoppingCart(Customer customer) {
+       
+        List<ShoppingCartItem> cartItems;
+        Query query = getSf().getCurrentSession().createQuery("from ShoppingCartItem where customer=:customer");
+        
+        query.setParameter("customer", customer);
+        
+        cartItems=query.list();
+        
+        return cartItems;
+    }
+    
+    
+    @Override
+    public void clearCustomerShoppingCart(Customer customer) {
+        
+        List<ShoppingCartItem> cartItems=getCustomerShoppingCart(customer);
+        
+      //  if (cart != null) {
+            for(ShoppingCartItem cartItem: cartItems)
+            {
+                getSf().getCurrentSession().delete(cartItem);
+               // cartItem.delete();
+            }
+        }
+    
+    
 }

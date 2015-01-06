@@ -6,6 +6,7 @@
 package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,7 +17,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -40,7 +44,9 @@ public class Order implements Serializable {
     @OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
     private PaymentInfo paymentInfo;
    
-    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private Date orderDate;
 
     public Order() {
     }
@@ -87,6 +93,22 @@ public class Order implements Serializable {
         this.id = id;
     }
 
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    
+    public void addOrderItem(OrderItem orderItem)
+    {
+       orderItem.setOrder(this);
+        
+        this.orderItem.add(orderItem);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

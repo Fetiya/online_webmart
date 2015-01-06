@@ -69,13 +69,6 @@ public class ProductServiceImpl implements IProductService {
         }
     }
 
-    @Override
-    public List<Product> getAllProducts() {
-        
-        List<Product> products= productDAO.findAll(0, 10);
-        return products;
-
-    }
 
     @Override
     public List<ProductCategory> getListOfCategory() {
@@ -112,12 +105,30 @@ public class ProductServiceImpl implements IProductService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+   
     @Override
+     @Transactional(propagation = Propagation.REQUIRED)
     public void updateProduct(Product product) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
- 
+
+
+    @Override
+     @Transactional(propagation = Propagation.REQUIRED)
+    public Product getProduct(Long id) {
+      
+        
+          return  productDAO.findByPrimaryKey(id);
    
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Product> getAllProducts() {
+        
+        return productDAO.findAll();
+    }
+
 
     @Override
     public List<Product> getProductByName(String name) {
