@@ -1,6 +1,6 @@
 <%-- 
     Document   : login
-    Created on : JAN 4, 2015, 4:15:49 PM
+    Created on : oct 17, 2014, 4:15:49 PM
     Author     : Senai
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -21,7 +21,7 @@
                 Remember me: <input type="checkbox" name="_spring_security_remember_me" /> <br />
                 <input type="hidden" name="<c:out value="${_csrf.parameterName}"/>" value="<c:out value="${_csrf.token}"/>"/>
             <input type="submit" />
-            <a href="addCredential">sign up</a>
+            <a href="customerRegisteration">sign up as Customer</a><br/>
+            <a href="vendorRegisteration">sign up as Vendor</a>
         </form>
-        <div style="color:red">login Failure, please check username/password</div>
     </body>

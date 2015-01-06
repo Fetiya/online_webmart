@@ -59,6 +59,11 @@
 
     <mvc:view-controller path="index" view-name="index"/>
     
+    <!--<mvc:view-controller path="index" view-name="index"/>-->
+    <mvc:view-controller path="welcome" view-name="welcome"/>
+    <mvc:view-controller path="loginFail" view-name="loginFail"/>
+    <mvc:view-controller path="login" view-name="login"/>
+    
        
         
     <bean id="multipartResolver"

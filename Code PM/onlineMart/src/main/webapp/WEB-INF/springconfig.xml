@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-<!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -133,5 +133,47 @@
     <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
     </bean>
     
+    
+    
+    <!-- Spring Security-->
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+    <sec:global-method-security secured-annotations="enabled"/>
+    <sec:http auto-config="true">
+        <sec:intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/loginFail" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/notFound" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <!--<sec:intercept-url pattern="/contact-us" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        
+        <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+<!--        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />-->
+        <!--<sec:intercept-url pattern="/viewProducts**" access="ROLE_VENDORADMIN" />-->
+        
+        <sec:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>  
+        <sec:intercept-url pattern="/**" access="ROLE_CUSTOMER,ROLE_ADMIN,ROLE_VENDORADMIN"/>
+        
+        <sec:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginFail"/>
+        <sec:logout delete-cookies="true" invalidate-session="true" logout-success-url="/"/>
+    </sec:http>
+    <sec:authentication-manager>
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="test" password="test" authorities="ROLE_CUSTOMER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+        <sec:authentication-provider >
+            <sec:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, active=1 enabled from credential where username=?" authorities-by-username-query="select username, role as authority from credential where username=?"/>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
     
 </beans>

@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void addCustomer(Customer customer) {
         customer.getCredential().setPassword(encryptionService.getEncryptedPassword(customer.getCredential().getPassword()));
-        customer.getCredential().setRole(Role.CUSTOMER);
+        customer.getCredential().setRole(Role.ROLE_CUSTOMER);
         customerDAO.save(customer);
     }
     

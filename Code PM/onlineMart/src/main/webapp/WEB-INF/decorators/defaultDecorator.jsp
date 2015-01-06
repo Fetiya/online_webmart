@@ -70,12 +70,21 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                <ul class="nav navbar-nav">                                    
                                     <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                                     <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>
+                                        <c:choose>   
+                                            <c:when test="${not empty loggedUser }">
+                                            <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                            <li>  ${loggedUser.firstName} ${loggedUser.lastName}</li>
+                                            <li>  <a href="/SmartMart/j_spring_security_logout"><i class="fa fa-lock"></i> Logout</a>        </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                            <li><a href="${pageContext.request.contextPath}/vendorRegisteration"><i class="fa fa-user"></i> Register</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>                                            
+                                            </c:otherwise>
+                                        </c:choose>
                                 </ul>
                             </div>
                         </div>
