@@ -5,9 +5,9 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.dao.ProductCategoryDAO;
+import edu.mum.cs490.smartmart.dao.IProductCategoryDAO;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
-import edu.mum.cs490.smartmart.service.ProductCategoryService;
+import edu.mum.cs490.smartmart.service.IProductCategoryService;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,15 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author dipika
  */
-public class ProductCategoryServiceImpl implements ProductCategoryService {
+public class ProductCategoryServiceImpl implements IProductCategoryService {
 
-    private ProductCategoryDAO productCategoryDAO;
+    private IProductCategoryDAO productCategoryDAO;
 
-    public ProductCategoryDAO getProductCategoryDAO() {
+    public IProductCategoryDAO getProductCategoryDAO() {
         return productCategoryDAO;
     }
 
-    public void setProductCategoryDAO(ProductCategoryDAO productCategoryDAO) {
+    public void setProductCategoryDAO(IProductCategoryDAO productCategoryDAO) {
         this.productCategoryDAO = productCategoryDAO;
     }
 
@@ -52,7 +52,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         }
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+   @Transactional(propagation = Propagation.REQUIRED)
    @Override
     public ProductCategory getProductCategoryById(long id) {
         

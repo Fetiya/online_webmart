@@ -5,18 +5,14 @@
  */
 package edu.mum.cs490.smartmart.service;
 
-import edu.mum.cs490.smartmart.dao.UserDAO;
 import edu.mum.cs490.smartmart.domain.Users;
-//import edu.mum.cs490.smartmart.domain.User;
 import java.util.List;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Fetiya
  */
-public interface UserService {
-        
-   public List<Users> getAllUsers();
+public interface IUserService {
+
+    public List<Users> getAllUsers();
 }

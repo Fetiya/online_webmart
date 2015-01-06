@@ -5,12 +5,13 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.ProductCategory;
+import edu.mum.cs490.smartmart.domain.Settings;
+import java.io.Serializable;
 
 /**
  *
- * @author dipika
+ * @author Fetiya
  */
-public interface ProductCategoryDAO extends IGenericDAO<ProductCategory, Long> {
-    
+public interface ISettingsDAO  extends IGenericDAO<Settings, Long>{
+   public String findSettingsValueByName(String name);
 }

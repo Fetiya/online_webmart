@@ -5,18 +5,17 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
+import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.Users;
-import org.hibernate.SessionFactory;
-
 
 /**
  *
- * @author Fetiya
+ * @author Kabiraj
  */
-
-
-public interface UserDAO  extends IGenericDAO<Users, Long>{//   // extends HibernateDAO<User, Long> { //
-
+public interface ProductDAO extends IGenericDAO<Product, Long> {
     
-   
+   // public void createProduct(Product product);
+  //  public Product getProduct(int id);
+            
+    
 }

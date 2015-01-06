@@ -7,16 +7,18 @@ package edu.mum.cs490.smartmart.service;
 
 import edu.mum.cs490.smartmart.domain.Vendor;
 import java.util.List;
-
 /**
  *
- * @author Stella
+ * @author Komal
  */
-public interface VendorService {
+public interface IVendorService {
+    
+    public void addVendor(Vendor vendor);
     public List<Vendor> getAllVendors();
     public Vendor getVendorById(Long id);
     public void update(Vendor vendor);
     public List<Vendor>getAllPendingVendors();
     public List<Vendor> getAllActiveVendor();
-    
 }
+
+

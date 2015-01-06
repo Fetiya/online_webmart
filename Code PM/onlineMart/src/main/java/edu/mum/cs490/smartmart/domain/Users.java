@@ -39,7 +39,7 @@ public class Users{
     @NotNull
     private String telnum;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy="user",cascade = CascadeType.ALL)
     private Credential credential;
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
@@ -85,6 +85,22 @@ public class Users{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Credential getCredential() {
+        return credential;
+    }
+
+    public void setCredential(Credential credential) {
+        this.credential = credential;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

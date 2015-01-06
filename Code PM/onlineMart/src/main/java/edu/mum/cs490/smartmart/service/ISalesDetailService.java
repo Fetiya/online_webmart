@@ -5,11 +5,13 @@
  */
 package edu.mum.cs490.smartmart.service;
 
+import edu.mum.cs490.smartmart.domain.SalesDetail;
+
 /**
  *
  * @author Fetiya
  */
-public interface CustomerService {
-    
+public interface ISalesDetailService {
    
+    public void addSalesDetail(SalesDetail salesDetail);
 }

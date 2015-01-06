@@ -6,11 +6,10 @@
 package edu.mum.cs490.smartmart.dao;
 
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
-import edu.mum.cs490.smartmart.domain.Users;
 
 /**
  *
- * @author Stella
+ * @author Komal
  */
 public interface ISubscriptionRuleDAO extends IGenericDAO<SubscriptionRule, Long> {
     

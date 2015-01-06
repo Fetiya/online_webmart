@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IShoppingCartService {
 
-    public List<ShoppingCartItem> getShoppingCart(int id);
+    public ShoppingCartItem getShoppingCart(Long id);
 
     public List<ShoppingCartItem> getCart(Customer customer);
 
@@ -20,4 +20,16 @@ public interface IShoppingCartService {
 
     public void deleteShoppingCartItem(Customer customer, ShoppingCartItem item);
 
+      public List<ShoppingCartItem> getCustomerShoppingCart(Customer   customer);
+      
+      public List<ShoppingCartItem> findAll();
+    
+    public void deleteShoppingCartItem(ShoppingCartItem item);
+    
+    public void updateCart(ShoppingCartItem item);
+    
+    public void addShoppingCart(ShoppingCartItem item);
+    
+    public void clearCustomerShoppingCart(Customer customer);
+   
 }

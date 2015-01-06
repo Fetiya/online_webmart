@@ -8,6 +8,8 @@ package edu.mum.cs490.smartmart.dao.impl;
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.ICustomerDAO;
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
+import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,4 +24,6 @@ public class CustomerDAOImpl extends GenericDAOImpl<Customer, Long> implements I
         super(Customer.class);
     }
 
+    
+    
  }

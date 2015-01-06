@@ -13,10 +13,10 @@ import java.util.List;
  *
  * @author Stella
  */
-public interface VendorDAO extends IGenericDAO<Vendor, Long>{
+public interface IVendorDAO extends IGenericDAO<Vendor, Long>{
     
     public List<Vendor> getAllVendors();
-    public List<Vendor> getAllPendingVendors();
+     public List<Vendor> getAllPendingVendors();
     public Vendor getVendorById(Long id);
     public void update(Vendor vendor);
     public List<Vendor> getAllActiveVendor();

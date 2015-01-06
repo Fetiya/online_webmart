@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
 
 /**
  *
@@ -29,8 +30,16 @@ public class OrderItem implements Serializable {
     private Order order;
     @ManyToOne
     private Product product;
+    
     @OneToOne(mappedBy = "orderItem",cascade = CascadeType.ALL)
     private SalesDetail salesDetail;
+    
+     @Min(0)
+    private double price;
+           
+    @Min(1)
+    private int quantity;
+    
     public Long getId() {
         return id;
     }
@@ -38,6 +47,24 @@ public class OrderItem implements Serializable {
     public OrderItem() {
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    
+    
     public SalesDetail getSalesDetail() {
         return salesDetail;
     }

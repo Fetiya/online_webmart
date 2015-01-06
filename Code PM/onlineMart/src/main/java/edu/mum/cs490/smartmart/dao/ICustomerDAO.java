@@ -7,6 +7,7 @@
 package edu.mum.cs490.smartmart.dao;
 
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import java.util.List;
 
 /**
@@ -15,4 +16,5 @@ import java.util.List;
  */
 public interface ICustomerDAO   extends IGenericDAO<Customer, Long>{
     
+ 
 }

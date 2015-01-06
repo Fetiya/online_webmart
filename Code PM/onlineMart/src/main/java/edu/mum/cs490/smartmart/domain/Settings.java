@@ -6,6 +6,7 @@
 package edu.mum.cs490.smartmart.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,28 +23,35 @@ public class Settings implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
-    private int profitpercentage;
-    private String accountNum;
+//    @NotNull
+//    private int profitpercentage;
+//    private String accountNum;
 
     public Settings() {
     }
+    @NotNull
+    private String name;
+    
+    private String value;
 
-    public int getProfitpercentage() {
-        return profitpercentage;
+    public String getName() {
+        return name;
     }
 
-    public String getAccountNum() {
-        return accountNum;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
+    public String getValue() {
+        return value;
     }
 
-    public void setProfitpercentage(int profitpercentage) {
-        this.profitpercentage = profitpercentage;
+    public void setValue(String value) {
+        this.value = value;
     }
+
+    
+    
 
     public Long getId() {
         return id;
@@ -55,27 +63,30 @@ public class Settings implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + Objects.hashCode(this.value);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Settings)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Settings other = (Settings) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Settings other = (Settings) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.value, other.value)) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "edu.mum.cs490.webmart.domain.Settings[ id=" + id + " ]";
-    }
     
+   
 }

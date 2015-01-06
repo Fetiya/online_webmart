@@ -14,12 +14,14 @@
     <body>
         <h1>Welcome to SmartMart</h1>
 
-        <a href="viewUsers" />View Users </a></br>
-    
-        <a href="viewPendingVendors" />View pending Vendor</a></br>
+        <a href="viewUsers" >View Users </a></br>
 
-        <a href="VendorsForUnsubscribe" />Vendor Unsubscribe</a></br>
-         <a href="viewCategory" />View Product Category </a></br>
-        <a href="addProductCategory" />Add Product Category</a>
+        <a href="viewPendingVendors" >View pending Vendor</a><br/>
+        <a href="VendorsForUnsubscribe" >Vendor Unsubscribe</a><br/>
+        <a href="insertProduct">Insert Product</a><br/>
+        <a href="viewPendingVendors" >View pending Vendor</a><br/>
+
+        <a href="viewCategory" >View Product Category </a><br/>
+        <a href="addProductCategory" >Add Product Category</a><br/>
     </body>
 </html>
