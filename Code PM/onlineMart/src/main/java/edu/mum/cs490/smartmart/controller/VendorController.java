@@ -70,10 +70,12 @@ public class VendorController {
     public String unsubscribeVendors(@PathVariable Long id, String Status, Model model, HttpSession session) {
          System.out.println("unsubscribeVendors controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
        Vendor vendor = vendorService.getVendorById(id);
+       if (Status.equalsIgnoreCase("DEACTIVATE")) {
             vendor.setStatus(VendorStatus.DEACTIVATE);
         vendorService.update(vendor);
          System.out.println("vendor "+ vendor.getId());
-         return "redirect:/VendorsForUnsubscribe";
+             }
+       return "redirect:/VendorsForUnsubscribe";
     }
 
  }
