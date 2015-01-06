@@ -53,17 +53,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-
-
-    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkOut(Model model) {
-        // System.out.println("Controller"+id);
-
-//        List<User> usr= userService.getAllUsers();
-//      model.addAttribute("users",userService.getAllUsers());
-        return "checkout";
-    }
-    
         
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

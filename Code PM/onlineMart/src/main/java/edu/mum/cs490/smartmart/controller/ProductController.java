@@ -11,11 +11,15 @@ import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 
 import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
+import edu.mum.cs490.smartmart.domain.Order;
+import edu.mum.cs490.smartmart.domain.OrderItem;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
+import edu.mum.cs490.smartmart.domain.SalesDetail;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorPropertyEditor;
+import edu.mum.cs490.smartmart.service.IOrderService;
 import edu.mum.cs490.smartmart.service.IProductCategoryService;
 import edu.mum.cs490.smartmart.service.IProductService;
 import edu.mum.cs490.smartmart.service.IVendorService;
@@ -38,7 +42,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.mum.cs490.smartmart.service.IProductService;
+import edu.mum.cs490.smartmart.service.ISalesDetailService;
+import edu.mum.cs490.smartmart.service.ISettingsService;
 import edu.mum.cs490.smartmart.service.IShoppingCartService;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpSession;
@@ -66,15 +74,46 @@ public class ProductController {
     @Autowired
     private IVendorService vendorService;
 
-    public IProductService getProductService() {
-        return productService;
-    }
-
     @Autowired
     public ICustomerService customerService;
 
     @Autowired
     IShoppingCartService shoppingCartService;
+
+    @Autowired
+    IOrderService orderService;
+    
+    @Autowired
+    ISalesDetailService salesService;
+    
+    @Autowired
+    ISettingsService settingsService;
+
+    public ISettingsService getSettingsService() {
+        return settingsService;
+    }
+
+    public void setSettingsService(ISettingsService settingsService) {
+        this.settingsService = settingsService;
+    }
+    
+
+    
+    public ISalesDetailService getSalesService() {
+        return salesService;
+    }
+
+    
+    public void setSalesService(ISalesDetailService salesService) {
+        this.salesService = salesService;
+    }
+
+    
+
+    
+    public IProductService getProductService() {
+        return productService;
+    }
 
     public ICustomerService getCustomerService() {
         return customerService;
@@ -94,6 +133,30 @@ public class ProductController {
 
     public void setProductService(IProductService productService) {
         this.productService = productService;
+    }
+
+    public IProductCategoryService getProductCategoryService() {
+        return productCategoryService;
+    }
+
+    public void setProductCategoryService(IProductCategoryService productCategoryService) {
+        this.productCategoryService = productCategoryService;
+    }
+
+    public IVendorService getVendorService() {
+        return vendorService;
+    }
+
+    public void setVendorService(IVendorService vendorService) {
+        this.vendorService = vendorService;
+    }
+
+    public IOrderService getOrderService() {
+        return orderService;
+    }
+
+    public void setOrderService(IOrderService orderService) {
+        this.orderService = orderService;
     }
 
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
@@ -147,13 +210,12 @@ public class ProductController {
         }
     }
 
-
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-   
-    public String initHome( Model model) {
+
+    public String initHome(Model model) {
 
         model.addAttribute("products", productService.getAllProducts());
-
+        
         return "index";
     }
 
@@ -162,6 +224,7 @@ public class ProductController {
         binder.registerCustomEditor(ProductCategory.class, new CategoryPropertyEditor(productCategoryService));
         binder.registerCustomEditor(Vendor.class, new VendorPropertyEditor(vendorService));
     }
+
     @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET)
     public String addToCart(@PathVariable int id, Model model, final RedirectAttributes re, HttpSession session) {
 
@@ -175,11 +238,9 @@ public class ProductController {
         cartItem.setCustomer(customer);
         boolean flag = true;
 
-        System.out.println("Before loop item : passed productid is " + product.getId());
         List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(customer);
         for (ShoppingCartItem item : currentCartItems) {
-            System.out.println("product passed is " + product.getId());
-            System.out.println("product insideloop is " + item.getProduct().getId());
+
             if (item.getProduct().getId() == product.getId()) {
                 //If the items are of the same product just update the quantity
                 // ShoppingCartItem item = shoppingCartItemService.getCartItem(items.getId());
@@ -215,10 +276,6 @@ public class ProductController {
 
         customer = customerService.getCustomerById(id);
 
-        System.out.println(" custmer name is" + customer.getFirstName());
-
-        // List<ShoppingCartItem> cartItems= shoppingCartService.findAll();
-        // model.addAttribute("cartItems",shoppingCartService.getCustomerShoppingCart(customer));
         List<ShoppingCartItem> cartItems = shoppingCartService.findAll();
         double total = 0;
         for (ShoppingCartItem i : cartItems) {
@@ -229,6 +286,106 @@ public class ProductController {
         model.addAttribute("totalPrice", total);
 
         return "cart";
+    }
+
+    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+    // public String checkout(@ModelAttribute Address address,Model model,final RedirectAttributes re, HttpSession session) {
+    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+        String message = "";
+        double totalPrice = 0;
+        
+        //........................change back to this
+       // Customer c = (Customer) session.getAttribute("loggedUser");
+        //------------------------------------------
+        Customer c= customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+        
+//        if (c.getAddress().isEmpty()) {
+//            //model.addAttribute("message", message);
+//            model.addAttribute("message","No address, Update your profile please");
+//            //re.addFlashAttribute("message", "No address, Update your profile please");
+//            return "purchasingAddress";
+//        }
+        List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
+
+        for (ShoppingCartItem item : currentCartItems) {
+            //calculate total price
+            totalPrice += item.getQuantity() * item.getProduct().getPrice();
+        }
+
+        String view = "productList";
+
+        if (currentCartItems.isEmpty()) {
+            message = "Your shopping cart is Empty";
+            model.addAttribute("message", message);
+
+            return "invoice";
+        } else {
+            //  List<ShoppingCartItem> items = c.getShoppingCart().getShoppingCartItems();
+
+            Date timeNow = new Date();
+             
+           List<OrderItem> oi= new ArrayList<OrderItem>();
+            Order order = new Order();
+            order.setTotalAmount(totalPrice);
+            order.setOrderDate(timeNow);
+            order.setOrderItem(oi);
+            order = cartItemsToOrderItems(order, currentCartItems);
+            order.setCustomer(c);
+
+            c.getOrder().add(order);
+        
+            //save order
+            orderService.addOrder(order);
+             
+                       
+         //   salesService.addSalesDetail(profitAmount,profitToSmartMart,profitToVendor,order_itemid);
+            saveSalesDetail(order);
+            shoppingCartService.clearCustomerShoppingCart(c);
+            
+            message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
+                    + "receive order confirmation email recently";
+            model.addAttribute("message", message);
+            
+            return "invoice";
+        }
+    }
+
+ 
+    public Order cartItemsToOrderItems(Order order, List<ShoppingCartItem> items) {
+
+        for (ShoppingCartItem shoppingItems : items) {
+            OrderItem orderItem  = new OrderItem();
+            orderItem.setProduct(shoppingItems.getProduct());
+            orderItem.setQuantity(shoppingItems.getQuantity());
+            orderItem.setPrice(shoppingItems.getProduct().getPrice());
+            
+            order.addOrderItem(orderItem);
+            
+        }
+        return order;
+    }
+
+    public void saveSalesDetail(Order order)
+    {
+        for(OrderItem oi : order.getOrderItem())
+        {
+            SalesDetail sale= new SalesDetail();
+            
+            sale.setOrderitem(oi);
+            double total= oi.getPrice()*oi.getQuantity();
+            sale.setProfitAmount(total);
+            
+            double profitPercentage;
+            
+            profitPercentage = Double.valueOf(settingsService.getSettingsValueByName("profitPercentage"));
+            
+            double profitToSmartMart=(profitPercentage*total)/100;
+            double profitToVendor=total-profitToSmartMart;
+            sale.setProfitToSmartmart(profitToSmartMart);
+            sale.setProfitToVendor(profitToVendor);
+            salesService.addSalesDetail(sale);
+            
+        }
     }
 
 }

@@ -44,7 +44,8 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
 
     @Override
     public void clearCart(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
     }
 
     @Override
@@ -92,6 +93,12 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
     @Override
     public void addShoppingCart(ShoppingCartItem item) {
        shoppingcartDAO.save(item);
+    
+    }
+
+    @Override
+    public void clearCustomerShoppingCart(Customer customer) {
+       shoppingcartDAO.clearCustomerShoppingCart(customer);
     
     }
 }

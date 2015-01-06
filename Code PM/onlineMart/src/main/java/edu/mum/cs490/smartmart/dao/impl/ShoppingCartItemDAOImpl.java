@@ -41,4 +41,20 @@ public class ShoppingCartItemDAOImpl extends GenericDAOImpl<ShoppingCartItem, Lo
         
         return cartItems;
     }
+    
+    
+    @Override
+    public void clearCustomerShoppingCart(Customer customer) {
+        
+        List<ShoppingCartItem> cartItems=getCustomerShoppingCart(customer);
+        
+      //  if (cart != null) {
+            for(ShoppingCartItem cartItem: cartItems)
+            {
+                getSf().getCurrentSession().delete(cartItem);
+               // cartItem.delete();
+            }
+        }
+    
+    
 }

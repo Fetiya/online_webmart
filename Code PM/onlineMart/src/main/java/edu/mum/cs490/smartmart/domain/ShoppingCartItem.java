@@ -29,7 +29,7 @@ public class ShoppingCartItem implements Serializable {
     private double price;
     @NotBlank
     private int quantity;
-    @OneToOne
+    @ManyToOne
     private Customer customer;
 
     @ManyToOne

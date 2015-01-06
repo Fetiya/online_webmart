@@ -29,5 +29,7 @@ public interface IShoppingCartService {
     public void updateCart(ShoppingCartItem item);
     
     public void addShoppingCart(ShoppingCartItem item);
+    
+    public void clearCustomerShoppingCart(Customer customer);
    
 }
