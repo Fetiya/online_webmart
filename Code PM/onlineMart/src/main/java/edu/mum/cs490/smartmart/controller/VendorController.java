@@ -8,6 +8,7 @@ package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.domain.VendorStatus;
 import edu.mum.cs490.smartmart.service.ISubscriptionRuleService;
 import edu.mum.cs490.smartmart.service.IVendorService;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -50,6 +52,7 @@ public class VendorController {
 
     public List<SubscriptionRule> getSubscriptionRule() {
         return subscriptionRule;
+    }
     
      @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
     public String getPendingVendors(Model model, HttpSession session) {
@@ -94,17 +97,17 @@ public class VendorController {
         this.subscriptionRule = subscriptionRule;
     }
 
-    @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
-    public String getPendingVendors(Model model, HttpSession session) {
-        // if (session.getAttribute("pendingVendors") == null) {
-//            List<Vendor> pendingVendors = new ArrayList();
-//            pendingVendors=vendorService.getAllVendors();
-        model.addAttribute("pendingVendors", vendorService.getAllVendors());
-            //session.setAttribute("pendingVendors", vendorService.getAllVendors());
-        //  }
-
-        return "viewPendingVendors";
-    }
+//    @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
+//    public String getPendingVendors(Model model, HttpSession session) {
+//        // if (session.getAttribute("pendingVendors") == null) {
+////            List<Vendor> pendingVendors = new ArrayList();
+////            pendingVendors=vendorService.getAllVendors();
+//        model.addAttribute("pendingVendors", vendorService.getAllVendors());
+//            //session.setAttribute("pendingVendors", vendorService.getAllVendors());
+//        //  }
+//
+//        return "viewPendingVendors";
+//    }
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.GET)
     public String addVendor(@ModelAttribute("vendor") Vendor vendor, Model model) {
