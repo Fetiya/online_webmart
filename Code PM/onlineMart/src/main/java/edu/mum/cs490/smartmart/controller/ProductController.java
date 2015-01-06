@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.domain.Customer;
@@ -5,8 +10,6 @@ import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 
- 
-    
 import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
@@ -57,13 +60,12 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-
-
     @Autowired
     private IProductCategoryService productCategoryService;
-    
+
     @Autowired
     private IVendorService vendorService;
+
     public IProductService getProductService() {
         return productService;
     }
@@ -94,26 +96,16 @@ public class ProductController {
         this.productService = productService;
     }
 
-
-    // take it to product controller???
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(ProductCategory.class, new CategoryPropertyEditor(productCategoryService));
-        binder.registerCustomEditor(Vendor.class, new VendorPropertyEditor(vendorService));
-    }
-
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
     public String addProduct(Product product, @RequestParam("file") MultipartFile file) {
-        
+
         String view = "redirect:/products";
         try {
-                product.setImage(file.getBytes());
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        System.out.println("product iname is"  + product.getName());
+            product.setImage(file.getBytes());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("product iname is" + product.getName());
         productService.addProduct(product);
         return view;
     }
@@ -139,9 +131,7 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "viewProducts";
     }
-    
-    
-    
+
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {
         try {
@@ -149,7 +139,7 @@ public class ProductController {
             if (p != null) {
                 OutputStream out = response.getOutputStream();
                 out.write(p.getImage());
-               
+
                 response.flushBuffer();
             }
         } catch (IOException ex) {
@@ -157,20 +147,21 @@ public class ProductController {
         }
     }
 
-     // take it to product controller???
-   @RequestMapping(value = "/index", method = RequestMethod.GET)
 
-    public String initalHome(Model model) {
-        System.out.println("Controller");
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+   
+    public String initHome( Model model) {
 
-        // List<Product> usr= userService.getAllUsers();
         model.addAttribute("products", productService.getAllProducts());
 
         return "index";
     }
 
-
-
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(ProductCategory.class, new CategoryPropertyEditor(productCategoryService));
+        binder.registerCustomEditor(Vendor.class, new VendorPropertyEditor(vendorService));
+    }
     @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET)
     public String addToCart(@PathVariable int id, Model model, final RedirectAttributes re, HttpSession session) {
 
@@ -183,13 +174,13 @@ public class ProductController {
         cartItem.setQuantity(quantity);
         cartItem.setCustomer(customer);
         boolean flag = true;
-              
+
         System.out.println("Before loop item : passed productid is " + product.getId());
-        List<ShoppingCartItem> currentCartItems=shoppingCartService.getCustomerShoppingCart(customer);
+        List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(customer);
         for (ShoppingCartItem item : currentCartItems) {
-           System.out.println("product passed is " + product.getId());
-            System.out.println("product insideloop is " +  item.getProduct().getId());
-            if (item.getProduct().getId()==product.getId()) {
+            System.out.println("product passed is " + product.getId());
+            System.out.println("product insideloop is " + item.getProduct().getId());
+            if (item.getProduct().getId() == product.getId()) {
                 //If the items are of the same product just update the quantity
                 // ShoppingCartItem item = shoppingCartItemService.getCartItem(items.getId());
                 item.setQuantity(item.getQuantity() + quantity);
@@ -239,6 +230,5 @@ public class ProductController {
 
         return "cart";
     }
-
 
 }
