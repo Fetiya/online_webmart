@@ -84,6 +84,14 @@ public class ProductController {
         model.addAttribute("vendors", productService.getListOfVendor());
         return "insertProduct";
     }
+    
+    @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
+    public String getProduct(Model model, @PathVariable long id) {
+        model.addAttribute("product", productService.getProduct(id));
+        model.addAttribute("categories", productService.getListOfCategory());
+        model.addAttribute("vendors", productService.getListOfVendor());
+        return "editProduct";
+    }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -98,6 +106,32 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "viewProducts";
     }
+    
+    @RequestMapping(value = "/editProduct", method = RequestMethod.POST)
+    public String updateProduct(Product product) {
+
+        try {
+           // System.out.println(product.getId());
+          //  product.setImage(file.getBytes());
+            productService.updateProduct(product); 
+           
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+              
+        return "redirect:/products";
+
+    }
+    
+    @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
+    public String deleteProduct(Model model, @PathVariable long id) {
+       // ProductCategory c = productService.getProductById(id);
+        Product product=productService.getProduct(id);
+        productService.deleteProduct(product);
+        return "redirect:/products";
+    }
+    
     
     
     

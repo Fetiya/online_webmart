@@ -35,5 +35,6 @@ public interface IProductService {
     public List<Vendor> getListOfVendor();
 
     public Product getProduct(long id);
+    public void deleteProduct(Product product);
 
 }

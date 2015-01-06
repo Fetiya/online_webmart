@@ -112,9 +112,15 @@ public class ProductServiceImpl implements IProductService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void updateProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            productDAO.save(product);
+        } catch (Exception e) {
+        }
+        
     }
  
    
@@ -123,6 +129,17 @@ public class ProductServiceImpl implements IProductService {
     public List<Product> getProductByName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteProduct(Product product) {
+        try {
+            productDAO.delete(product);
+        } catch (Exception e) {
+        }
+    }
+    
+   
     
     
     
