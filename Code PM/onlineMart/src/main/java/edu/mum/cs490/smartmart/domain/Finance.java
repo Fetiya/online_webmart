@@ -11,25 +11,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author dipika
+ * @author Kabiraj
  */
 @Entity
-public class SubscriptionRule implements Serializable {
+@XmlRootElement
+public class Finance implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @NotBlank (message = "{NotBlank.SubscriptionRule.id.validation}")
     private Long id;
-    private int rangeProduct;
-    private double fee;
+    private String accountNo;
+    private double Amount;
+    private String type;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
-    public SubscriptionRule() {
+    public Finance(String accountNo, double Amount, String type, Date date) {
+        this.accountNo = accountNo;
+        this.Amount = Amount;
+        this.type = type;
+        this.date = date;
     }
 
+    public Finance() {
+    }
+
+        
     public Long getId() {
         return id;
     }
@@ -38,22 +51,38 @@ public class SubscriptionRule implements Serializable {
         this.id = id;
     }
 
-    public int getRangeProduct() {
-        return rangeProduct;
+    public String getAccountNo() {
+        return accountNo;
     }
 
-    public void setRangeProduct(int rangeProduct) {
-        this.rangeProduct = rangeProduct;
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
-  
-    public double getFee() {
-        return fee;
+    public double getAmount() {
+        return Amount;
     }
 
-    public void setFee(double fee) {
-        this.fee = fee;
+    public void setAmount(double Amount) {
+        this.Amount = Amount;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
 
     @Override
     public int hashCode() {
@@ -65,10 +94,10 @@ public class SubscriptionRule implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SubscriptionRule)) {
+        if (!(object instanceof Finance)) {
             return false;
         }
-        SubscriptionRule other = (SubscriptionRule) object;
+        Finance other = (Finance) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -77,7 +106,7 @@ public class SubscriptionRule implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.mum.cs490.webmart.domain.SubscriptionRule[ id=" + id + " ]";
+        return "entities.Finance[ id=" + id + " ]";
     }
     
 }

@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Kabiraj
  */
+
+@Transactional(propagation = Propagation.REQUIRED)    
 public class ProductServiceImpl implements IProductService {
 
     private IProductDAO productDAO;
@@ -105,10 +107,6 @@ public class ProductServiceImpl implements IProductService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-//<<<<<<< HEAD
-//    @Transactional(propagation = Propagation.REQUIRED)
-//   
-//>>>>>>> origin/master
    
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
@@ -157,10 +155,7 @@ public class ProductServiceImpl implements IProductService {
         } catch (Exception e) {
         }
     }
-    
-   
-    
-    
+  
     
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
@@ -184,5 +179,13 @@ public class ProductServiceImpl implements IProductService {
     }
 
     
+
+    @Override
+    public List<Product> getAllAvailalbleProducts() {
+        
+       
+        return productDAO.getAllAvailalbleProducts();
+    
+    }
 
 }
