@@ -24,8 +24,9 @@ import javax.persistence.OneToOne;
 public class Customer extends Users implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @OneToMany(cascade = CascadeType.ALL )
+    @OneToMany( mappedBy="customer" ,cascade = CascadeType.ALL )
     private List<ShoppingCartItem> shoppingCart;
+    
     @OneToMany(mappedBy = "customer")
     private List<Order> order;
 
