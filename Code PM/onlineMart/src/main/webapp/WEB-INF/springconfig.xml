@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="Pass@deliver" />
+        <property name="password" value="root" />
     </bean>
 
     <!-- hibernate Properties -->
@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -114,19 +114,41 @@
      
     </bean>
     
+    <bean id="credentialDAO" class="edu.mum.cs490.smartmart.dao.impl.CredentialDAOImpl" parent="hibernateDAO">
+     
+    </bean>
     
     
+    
+     <!-- Email Service injections --> 
+    <bean id="emailAdvice" class="edu.mum.cs490.smartmart.aop.EmailAdvice">
+        <property name="notificationService" ref="notificationService"/>
+    </bean> 
+    
+    <bean id="notificationService" class="edu.mum.cs490.smartmart.serviceImpl.NotificationServiceImpl">
+        <property name="javaMailSender" ref="javaMailSender"/>
+        <property name="toVendorTemplate" ref="toVendorTemplate"/> 
+        <property name="toCustomersTemplate" ref="toCustomersTemplate"/> 
+    </bean>
+    
+ 
     <!-- vendor service injection -->
  
     <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
         
         <property name="vendorDAO" ref="vendorDAO" />
+         <!--<property name="customerService" ref="customerService" />-->
+         <!--<property  name="credentialService" ref="credentialService" />-->
         <property  name="encryptionService" ref="encryptionService" />
+         <property  name="notificationService" ref="notificationService" />
     </bean>
 
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
         <property  name="encryptionService" ref="encryptionService" />
+        <property  name="credentialService" ref="credentialService" />
+        <property  name="notificationService" ref="notificationService" />
+     
     </bean> 
     <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
         <property name="productCategoryDAO" ref="productCategoryDAO" />
@@ -141,8 +163,6 @@
     <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
     </bean>
     
-    
-    
     <!-- service and dao injections -->
     <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
         
@@ -152,7 +172,7 @@
         <property name="shoppingcartDAO" ref="shoppingcartDAO" />
     </bean>
     
-     <!-- Product service and dao injections -->
+    <!-- Product service and dao injections -->
     <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">
         
     </bean>
@@ -161,4 +181,69 @@
         <property name="productDAO" ref="productDAO" />
     </bean>
     
+    <bean id="credentialService" class="edu.mum.cs490.smartmart.serviceImpl.CredentialServiceImpl">
+        <property name="credentialDAO" ref="credentialDAO" />
+    </bean>
+     
+     <!--Email Service--> 
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="mum.smartmart@gmail.com" />
+        <property name="password" value="Pmsmartmart" /> 
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>                                
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+  
+    <bean id="toCustomersTemplate"
+          class="org.springframework.mail.SimpleMailMessage"> 
+        <property name="from" value="mum.smartmart@gmail.com" />
+        <property name="to" value="komal.ashraf2012@gmail.com" />
+        <property name="subject" value="Smart Mart: Notification" />
+        <property name="text">
+        <value>
+		<![CDATA[
+Dear %1$s,
+
+%2$s
+
+Regards,
+Smart Mart
+Tel - (111)111-2222
+Administrator @SM.
+		]]>
+            </value>
+        </property>
+    </bean>
+    
+    
+       <bean id="toVendorTemplate"
+          class="org.springframework.mail.SimpleMailMessage"> 
+        <property name="from" value="mum.smartmart@gmail.com" />
+        <property name="to" value="wel.berhe@gmail.com" />
+        <property name="subject" value="Smart Mart: Notification" />
+        <property name="text">
+            <value>
+		<![CDATA[
+Dear %1$s,
+
+%2$s
+
+Regards,
+Smart Mart
+Tel - (111)111-2222
+Administrator @SM.
+		]]>
+            </value>
+        </property>
+    </bean>
+    
+    
+    
+    <!--Email Service-->   
 </beans>

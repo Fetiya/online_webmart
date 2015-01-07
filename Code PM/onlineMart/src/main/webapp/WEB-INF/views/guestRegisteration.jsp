@@ -1,6 +1,6 @@
 <%-- 
-    Document   : CustomerRegisteration
-    Created on : Jan 4, 2015, 12:47:53 AM
+    Document   : guestRegisteration
+    Created on : Jan 7, 2015, 10:38:46 AM
     Author     : Komal
 --%>
 
@@ -14,7 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form:form commandName="customer" action="addCustomer" method="POST" enctype="multipart/form-data">
+        <form:form commandName="address" action="addGuest" method="POST" enctype="multipart/form-data">
             <table>
 
                 <tr>

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.mum.cs490.smartmart.dao.IVendorDAO;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
+import edu.mum.cs490.smartmart.service.INotificationService;
 import edu.mum.cs490.smartmart.service.IVendorService;
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class VendorServiceImpl implements IVendorService {
     IVendorDAO vendorDAO;
 
     IEncryptionService encryptionService;
+    
+    INotificationService notificationService;
 
     public IVendorDAO getVendorDAO() {
         return vendorDAO;
@@ -41,11 +44,21 @@ public class VendorServiceImpl implements IVendorService {
         this.encryptionService = encryptionService;
     }
 
+    public INotificationService getNotificationService() {
+        return notificationService;
+    }
+
+    public void setNotificationService(INotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void addVendor(Vendor vendor) {
         vendor.getVendorAdmin().getCredential().setPassword(encryptionService.getEncryptedPassword(vendor.getVendorAdmin().getCredential().getPassword()));
         vendor.getVendorAdmin().getCredential().setRole(Role.VENDORADMIN);
+//        vendor.getVendorAdmin().setCredential(credential);
+//        vendor.getVendorAdmin().setAddress(address);
         vendor.setStatus(VendorStatus.PENDING);
         vendor.getVendorAdmin().setVendor(vendor);
         vendorDAO.save(vendor);
