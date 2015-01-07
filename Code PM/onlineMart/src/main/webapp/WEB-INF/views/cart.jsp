@@ -23,6 +23,7 @@
                     return false;
                 }
             }
+         
         </script>
     </head>
 
@@ -36,9 +37,10 @@
                         <li class="active">Shopping Cart</li>
                     </ol>
                 </div>
+                   <h4 style="font:red">${message}</h4>
                 <c:choose>
                     <c:when test="${ empty cartItems}">
-                        <h3 style="font:red">${message}</h3>          
+                         
                     </c:when>
                     <c:otherwise>
 
@@ -62,8 +64,8 @@
                                     <c:forEach var="cartItem" items="${cartItems}" varStatus="loopStatus" >
                                         <tr >
 
-                                            <form:form action="${pageContext.request.contextPath}/cart/edit/${cartItem.id}" method="post">
-
+                                            <form:form  commandName="cartUpdate" action="${pageContext.request.contextPath}/cart/edit/${cartItem.id}" method="post" enctype="multipart/form-data" >
+ 
                                                 <td class="cart_product">
                                                     <a href="">   <img src="productImage/${cartItem.product.id}" 
                                                                        width="100" height="100" alt=""></a>
@@ -77,11 +79,12 @@
                                                 </td>
                                                 <td class="cart_quantity">
                                                     <div class="cart_quantity_button">
-                                                        <a class="cart_quantity_up" href=""> + </a>
-                                                        <input class="cart_quantity_input" type="text" name="quantity" value="${cartItem.quantity}" autocomplete="off" size="2"/>
-                                                        <a class="cart_quantity_down" href=""> - </a>
+                                                              <form:input path="quantity"  class="cart_quantity_input" type="text" name="quantity" value="${cartItem.quantity}" autocomplete="off" size="2"/>
+                                                       
                                                     </div>
                                                 </td>
+
+                                             <td><form:errors path="quantity" cssClass="error" /> </td> 
                                                 <td class="cart_total">
                                                     <p class="cart_total_price">
                                                         <c:set var="result" value="${cartItem.product.price * cartItem.quantity}"/>
@@ -89,18 +92,19 @@
 
                                                     </p>
                                                 </td>
-                                                
+
                                                 <td><input class="btn btn-primary" type="submit" value="Update" />
                                                 </td>
-                                              <td class="cart_delete">
+
+                                                <td class="cart_delete">
                                                     <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/cart/delete/${cartItem.id}"><i class="fa fa-times"></i></a>
                                                 </td>
 
-                                        
-                                    </form:form>
-                                    </tr>
 
-                                </c:forEach>
+                                            </form:form>
+                                        </tr>
+
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -124,7 +128,7 @@
                                         <li>Shipping Cost <span>Free</span></li>
                                         <li>Total <span>$ <c:out value="${totalPrice}"/></span></li>
                                     </ul>
-                                  
+
                                     <a class="btn btn-default check_out" href="checkout">Check Out</a>
 
                                 </div>

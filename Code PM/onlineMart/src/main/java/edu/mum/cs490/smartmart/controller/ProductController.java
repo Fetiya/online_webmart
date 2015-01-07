@@ -311,7 +311,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String getCustomerCart(Model model) {
+    public String getCustomerCart(@ModelAttribute("cartUpdate") ShoppingCartItem cartItem, Model model) {
         // System.out.println("Controller"+id);
 
         Customer customer = new Customer();
@@ -336,7 +336,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+    public String checkout(@ModelAttribute("cartCheckout") ShoppingCartItem cartItem, Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
 
         //........................change back to this
@@ -350,56 +350,52 @@ public class ProductController {
             model.addAttribute("message", message);
 
         } else {
-            
-             List<ShoppingCartItem> stockouts= checkQuantityAvailablity(currentCartItems);
-              
-             if(!stockouts.isEmpty())
-             {
-                   model.addAttribute("stockOutItems",stockouts);
-                   model.addAttribute("message","Sorry, Your order couldn't be processed. The following products in your cart"
-                           + " do not have available stock right now. Please edit your quantity accordingly or remove them from cart.");
-                   return "stockout";
-             }
-           else
-             {
-            double totalPrice = 0;
-            for (ShoppingCartItem item : currentCartItems) {
+
+            List<ShoppingCartItem> stockouts = checkQuantityAvailablity(currentCartItems);
+
+            if (!stockouts.isEmpty()) {
+                model.addAttribute("stockOutItems", stockouts);
+                model.addAttribute("message", "Sorry, Your order couldn't be processed. The following products in your cart"
+                        + " do not have available stock right now. Please edit your quantity accordingly or remove them from cart.");
+                return "stockout";
+            } else {
+                double totalPrice = 0;
+                for (ShoppingCartItem item : currentCartItems) {
                 //calculate total price
-               
-                totalPrice += item.getQuantity() * item.getProduct().getPrice();
+
+                    totalPrice += item.getQuantity() * item.getProduct().getPrice();
+                }
+                Date timeNow = new Date();
+
+                List<OrderItem> oi = new ArrayList<OrderItem>();
+                Order order = new Order();
+                order.setTotalAmount(totalPrice);
+                order.setOrderDate(timeNow);
+                order.setOrderItem(oi);
+                order = cartItemsToOrderItems(order, currentCartItems);
+                order.setCustomer(c);
+
+                c.getOrder().add(order);
+
+                //save order
+                orderService.addOrder(order);
+
+                //deduct order quantity from product stock
+                for (OrderItem orderItem : order.getOrderItem()) {
+                    Product product = orderItem.getProduct();
+                    product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+                    productService.updateProduct(product);
+                }
+
+                saveSalesDetail(order);
+                shoppingCartService.clearCustomerShoppingCart(c);
+
+                message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
+                        + "receive order confirmation email recently";
+                model.addAttribute("message", message);
+                model.addAttribute("order", order);
+
             }
-            Date timeNow = new Date();
-
-            List<OrderItem> oi = new ArrayList<OrderItem>();
-            Order order = new Order();
-            order.setTotalAmount(totalPrice);
-            order.setOrderDate(timeNow);
-            order.setOrderItem(oi);
-            order = cartItemsToOrderItems(order, currentCartItems);
-            order.setCustomer(c);
-
-            c.getOrder().add(order);
-
-            //save order
-            orderService.addOrder(order);
-
-            //deduct order quantity from product stock
-            for(OrderItem orderItem : order.getOrderItem())
-            {
-               Product product=orderItem.getProduct();
-               product.setQuantity(product.getQuantity() - orderItem.getQuantity());
-               productService.updateProduct(product);
-            }
-            
-            saveSalesDetail(order);
-            shoppingCartService.clearCustomerShoppingCart(c);
-
-            message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
-                    + "receive order confirmation email recently";
-            model.addAttribute("message", message);
-            model.addAttribute("order", order);
-
-        }
         }
 
         return "invoice";
@@ -546,34 +542,37 @@ public class ProductController {
         System.out.println(v.size());
         return "brands";
     }
-    
-    public List<ShoppingCartItem> checkQuantityAvailablity(List<ShoppingCartItem> cartItems)
-    {
-        
+
+    public List<ShoppingCartItem> checkQuantityAvailablity(List<ShoppingCartItem> cartItems) {
+
         List<ShoppingCartItem> stockouts = new ArrayList<ShoppingCartItem>();
-        for(ShoppingCartItem ci: cartItems)
-        {
-            if(!(ci.getProduct().getQuantity()>=ci.getQuantity()))
-            {
+        for (ShoppingCartItem ci : cartItems) {
+            if (!(ci.getProduct().getQuantity() >= ci.getQuantity())) {
                 stockouts.add(ci);
             }
         }
-        
+
         return stockouts;
     }
-    
-    
-    
+
     @RequestMapping(value = "/cart/edit/{id}", method = RequestMethod.POST)
-    public String editCart(Model model, @PathVariable long id,String quantity) {
-      
-        ShoppingCartItem cart =shoppingCartService.getShoppingCart(id);
-         cart.setQuantity(Integer.valueOf(quantity));
+    public String editCart(Model model, @PathVariable long id, String quantity, HttpSession session) {
+
+        ShoppingCartItem cart = shoppingCartService.getShoppingCart(id);
+
+        try {
+            cart.setQuantity(Integer.valueOf(quantity));
+            session.setAttribute("message", "");
+
+        } catch (Exception e) {
+
+            session.setAttribute("message", "Error: Your shoppingcart is not updated. '" + quantity + "' is not a valid quantity");
+            return "redirect:/cart";
+        }
         shoppingCartService.updateCart(cart);
         System.out.println("current quantity is " + quantity);
         return "redirect:/cart";
+
     }
-    
-  
 
 }
