@@ -27,16 +27,20 @@ public class Settings implements Serializable {
     private int profitpercentage;
     private String accountNum;
 
-    public Settings() {
-    }
+    
     @NotNull
     private String name;
     
     private String value;
+    
+     public Settings() {
+    }
 
     public String getName() {
         return name;
     }
+    
+   
 
     public void setName(String name) {
         this.name = name;
@@ -76,6 +80,8 @@ public class Settings implements Serializable {
     public void setAccountNum(String accountNum) {
         this.accountNum = accountNum;
     }
+    
+    
 
     @Override
     public int hashCode() {

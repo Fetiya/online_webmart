@@ -5,6 +5,7 @@
 --%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,19 +27,19 @@
                 <tr>
                     <td>Account Number:  </td>
                     <td><form:input path="accountNum" /></td>
-                    <td><form:errors path="price" cssClass="error" /> </td>
+                    <td><form:errors path="accountNum" cssClass="error" /> </td>
                 </tr>
                 
                 <tr>
                     <td>Value </td>
-                    <td><form:input path="price" /></td>
-                    <td><form:errors path="price" cssClass="error" /> </td>
+                    <td><form:input path="value" /></td>
+                    <td><form:errors path="value" cssClass="error" /> </td>
                 </tr>
                 
                 <tr>
                     <td>Profit Percentage: </td>
                     <td><form:input path="profitpercentage" /></td>
-                    <td><form:errors path="price" cssClass="error" /> </td>
+                    <td><form:errors path="profitpercentage" cssClass="error" /> </td>
                 </tr>
                 
                 

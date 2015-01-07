@@ -7,7 +7,9 @@ package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.domain.Settings;
 import edu.mum.cs490.smartmart.service.ISettingsService;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  * @author Kabiraj
  */
+@Controller
 public class SettingController {
     
     @Autowired
@@ -34,13 +37,16 @@ public class SettingController {
     
     @RequestMapping(value = "/settingEdit/{id}", method = RequestMethod.GET)
     public String getProduct(Model model, @PathVariable long id) {
+        Settings setting=settingService.getSetting(id);
+        System.out.println("setting controller"+ setting.getName());
+        model.addAttribute("setting",settingService.getSetting(id));
                return "editSetting";
     }
     
     @RequestMapping(value = "/settings", method = RequestMethod.GET)
     public String getAll(Model model) {
 
-        model.addAttribute("settings", settingService.getAllSettings());
+        model.addAttribute("allSettings", settingService.getAllSettings());
         return "viewSetting";
     }
     
@@ -48,13 +54,13 @@ public class SettingController {
     public String insertSetting(@ModelAttribute("settings") Settings settings) {      
         return "addSetting";
     }
-    
+   
     @RequestMapping(value = "/settingDelete/{id}", method = RequestMethod.GET)
     public String productDelete(Model model, @PathVariable long id) {
        
         Settings setting=settingService.getSetting(id);
         settingService.deleteSetting(setting);
-        return "redirect:/products";
+        return "redirect:/settings";
     }
     
     @RequestMapping(value = "/editSetting", method = RequestMethod.POST)

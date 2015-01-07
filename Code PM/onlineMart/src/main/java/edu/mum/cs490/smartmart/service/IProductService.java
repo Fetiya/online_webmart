@@ -36,12 +36,12 @@ public interface IProductService {
   
     public List<Vendor> getListOfVendor();
 
-   // public Product getProduct(long id);
+  
     public void deleteProduct(Product product);
 
 
     
-    public Product getProduct(int id);
+   
 
  
     public List<Product> getProductByCategoryId(long categoryId);

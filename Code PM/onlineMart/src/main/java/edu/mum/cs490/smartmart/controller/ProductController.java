@@ -266,22 +266,23 @@ public class ProductController {
             if (p != null) {
                 OutputStream out = response.getOutputStream();
                 out.write(p.getImage());
-
                 response.flushBuffer();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+    
+  
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-
-    public String initHome(Model model) {
-
-        model.addAttribute("products", productService.getAllProducts());
-
-        return "index";
-    }
+//    @RequestMapping(value = "/index", method = RequestMethod.GET)
+//
+//    public String initHome(Model model) {
+//
+//        model.addAttribute("products", productService.getAllProducts());
+//
+//        return "index";
+//    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
