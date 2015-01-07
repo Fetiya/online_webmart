@@ -8,13 +8,15 @@ package edu.mum.cs490.smartmart.domain;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull; 
 
 /**
  *
@@ -30,8 +32,10 @@ public class Product implements Serializable {
     @NotNull
     private String name;
     private String description;
-    @NotNull
-    private String imageUrl;
+   // @Column(name="poductImage",columnDefinition="longblob")
+   // private String imageUrl;
+    @Lob
+    private byte[] image;
     @NotNull
     private int quantity;
     @NotNull
@@ -42,6 +46,32 @@ public class Product implements Serializable {
     private Vendor vendor;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<OrderItem> orderItem;
+
+    public Vendor getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+    
+    
+
+    public List<OrderItem> getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(List<OrderItem> orderItem) {
+        this.orderItem = orderItem;
+    }
 
     public Product() {
     }
@@ -66,13 +96,16 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
+//    public byte[] getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(byte[] image) {
+//        this.image = image;
+//    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+ 
+  
 
     public int getQuantity() {
         return quantity;

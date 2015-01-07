@@ -25,5 +25,11 @@ public interface IShoppingCartService {
       public List<ShoppingCartItem> findAll();
     
     public void deleteShoppingCartItem(ShoppingCartItem item);
+    
+    public void updateCart(ShoppingCartItem item);
+    
+    public void addShoppingCart(ShoppingCartItem item);
+    
+    public void clearCustomerShoppingCart(Customer customer);
    
 }

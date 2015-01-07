@@ -31,6 +31,14 @@ public class ProductCategory implements Serializable {
     @OneToMany(mappedBy = "productCategory",cascade = CascadeType.ALL)
     private List<Product> productlist;
 
+    public List<Product> getProductlist() {
+        return productlist;
+    }
+
+    public void setProductlist(List<Product> productlist) {
+        this.productlist = productlist;
+    }
+
     public ProductCategory() {
     }
 
