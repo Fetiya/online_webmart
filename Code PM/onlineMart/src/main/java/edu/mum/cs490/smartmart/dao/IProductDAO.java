@@ -6,7 +6,10 @@
 
 package edu.mum.cs490.smartmart.dao;
 
+import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Product;
+import edu.mum.cs490.smartmart.domain.ProductCategory;
+import edu.mum.cs490.smartmart.domain.Vendor;
 import java.util.List;
 
 /**
@@ -14,5 +17,12 @@ import java.util.List;
  * @author Senai
  */
 public interface IProductDAO   extends IGenericDAO<Product, Long>{
+     public List<Product> getProductByName(String name);
+     public List<Product> getProductByCatId(long categoryId );
+     public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c);
+     
+     public List<Product> getProductByVendor(Vendor v);
+     
+     public List<Product> getAllAvailalbleProducts();
      
 }

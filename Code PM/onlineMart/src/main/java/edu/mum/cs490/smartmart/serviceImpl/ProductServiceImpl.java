@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Kabiraj
  */
+
+@Transactional(propagation = Propagation.REQUIRED)    
 public class ProductServiceImpl implements IProductService {
 
     private IProductDAO productDAO;
@@ -106,10 +108,15 @@ public class ProductServiceImpl implements IProductService {
     }
 
    
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-     @Transactional(propagation = Propagation.REQUIRED)
     public void updateProduct(Product product) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        try {
+            productDAO.save(product);
+        } catch (Exception e) {
+        }
+        
     }
 
 
@@ -125,16 +132,63 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public List<Product> getAllProducts() {
-        
+
         return productDAO.findAll();
     }
 
 
     @Override
     public List<Product> getProductByName(String name) {
+        System.out.println(" i m here at product service implementation");
+
+        List<Product> products = productDAO.getProductByName(name);
+        System.out.println(" i m here at product service implementation inside function");
+        return products;
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void deleteProduct(Product product) {
+        try {
+            productDAO.delete(product);
+        } catch (Exception e) {
+        }
+    }
+  
+    
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Product> getProductByCategoryId(long categoryId) {
+        List<Product> p = productDAO.getProductByCatId(categoryId);
+        return p;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c) {
+        List<Product> p = productDAO.getProductByVendorCategoryId(v, c);
+        return p;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public List<Product> getProductByVendor(Vendor v) {
+        List<Product> p = productDAO.getProductByVendor(v);
+        return p;
+    }
+
+    @Override
+    public Product getProduct(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Product> getAllAvailalbleProducts() {
+        
+       
+        return productDAO.getAllAvailalbleProducts();
     
-    
-    
+    }
+
 }

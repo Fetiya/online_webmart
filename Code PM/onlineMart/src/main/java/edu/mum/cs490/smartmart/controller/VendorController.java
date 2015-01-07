@@ -5,7 +5,6 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
-
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorStatus;
@@ -38,7 +37,7 @@ public class VendorController {
     List<SubscriptionRule> subscriptionRule;
     @Autowired
     ISubscriptionRuleService subscriptionRuleService;
-    
+
     @Autowired
     private IVendorService vendorService;
 
@@ -135,5 +134,7 @@ public class VendorController {
         }
         return view;
     }
+
+   
 
 }

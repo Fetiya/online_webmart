@@ -5,6 +5,7 @@
  */
 package edu.mum.cs490.smartmart.service;
 
+import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Vendor;
@@ -15,27 +16,36 @@ import java.util.List;
  * @author Kabiraj
  */
 public interface IProductService {
-    
-     public List<Product> searchProductByName(String pname);
-    
-     public Product getProductDetailInfo(int id);
-    
-     public void addProduct(Product product);
-     
-     public void updateProduct(Product product);
-     
-     public Product getProduct(Long id);
-     
-     public List<Product> getAllProducts();
-     
-     public List<Product> getProductByName(String name);
 
-     public List<ProductCategory> getListOfCategory();
+    public List<Product> searchProductByName(String pname);
 
-  
+    public Product getProductDetailInfo(int id);
+
+    public void addProduct(Product product);
+
+    public void updateProduct(Product product);
+
+    public Product getProduct(Long id);
+
+    public List<Product> getAllProducts();
+
+    public List<Product> getAllAvailalbleProducts();
+
+    public List<Product> getProductByName(String name);
+
+    public List<ProductCategory> getListOfCategory();
+
     public List<Vendor> getListOfVendor();
 
     public Product getProduct(long id);
 
+    public void deleteProduct(Product product);
 
+    public Product getProduct(int id);
+
+    public List<Product> getProductByCategoryId(long categoryId);
+
+    public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c);
+
+    public List<Product> getProductByVendor(Vendor v);
 }
