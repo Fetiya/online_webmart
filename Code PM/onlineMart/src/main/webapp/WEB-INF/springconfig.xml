@@ -118,7 +118,19 @@
      
     </bean>
     
+    <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">
+    </bean>    
+    <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
+    </bean>    
+        
+    <bean id="orderDAO" class="edu.mum.cs490.smartmart.dao.impl.OrderDAOImpl" parent="hibernateDAO">
+    </bean>
     
+     <bean id="salesDetailDAO" class="edu.mum.cs490.smartmart.dao.impl.SalesDetailDAOImpl" parent="hibernateDAO">
+    </bean>
+    
+     <bean id="settingsDAO" class="edu.mum.cs490.smartmart.dao.impl.SettingsDAOImpl" parent="hibernateDAO">
+    </bean>
     
      <!-- Email Service injections --> 
     <bean id="emailAdvice" class="edu.mum.cs490.smartmart.aop.EmailAdvice">
@@ -163,26 +175,15 @@
     <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
     </bean>
     
-    <!-- service and dao injections -->
-    <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
-        
-    </bean>
-     
-    <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
-        <property name="shoppingcartDAO" ref="shoppingcartDAO" />
+       <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
+           <property name="orderDAO" ref="orderDAO"/> 
     </bean>
     
-    <!-- Product service and dao injections -->
-    <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">
-        
+    <bean id="salesDetailService" class="edu.mum.cs490.smartmart.serviceImpl.SalesDetailServiceImpl">
+           <property name="salesDetailDAO" ref="salesDetailDAO"/> 
     </bean>
-     
-    <bean id="productService" class="edu.mum.cs490.smartmart.serviceImpl.ProductServiceImpl">
-        <property name="productDAO" ref="productDAO" />
-    </bean>
-    
-    <bean id="credentialService" class="edu.mum.cs490.smartmart.serviceImpl.CredentialServiceImpl">
-        <property name="credentialDAO" ref="credentialDAO" />
+    <bean id="settingsService" class="edu.mum.cs490.smartmart.serviceImpl.SettingsServiceImpl">
+           <property name="settingsDAO" ref="settingsDAO"/> 
     </bean>
      
      <!--Email Service--> 
