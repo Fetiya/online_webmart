@@ -77,4 +77,16 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
         return product;
     }
 
+    @Override
+    public List<Product> getAllAvailalbleProducts() {
+       
+    Query query=getSf().getCurrentSession().createQuery("select p from Product p where p.quantity > 0");
+    
+    List<Product> products=query.list();
+    
+    return products;
+    
+    
+    }
+
 }

@@ -53,8 +53,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-        
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         // System.out.println("Controller"+id);
@@ -86,24 +84,13 @@ public class CustomerController {
         return view;
     }
 
-    
-    
-    
     @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
     public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
 
         ShoppingCartItem item = shoppingCartService.getShoppingCart(id);
-        
-        //use this after login is done
-        //Customer customer = (Customer) session.getAttribute("loggedUser");
-          Customer customer= customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-        customer.getShoppingCart().remove(item);
 
         shoppingCartService.deleteShoppingCartItem(item);
 
-        //cartService.updateCart(customer.getShoppingCart());
-
-        //cartService.deleteShoppingCartItem(customer.getShoppingCart(), item);
         return "redirect:/cart";
     }
 }

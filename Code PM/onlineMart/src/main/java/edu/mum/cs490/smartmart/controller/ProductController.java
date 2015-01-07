@@ -34,9 +34,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -154,16 +151,6 @@ public class ProductController {
         this.productService = productService;
     }
 
-    // take it to product controller???
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String initalHome(Model model) {
-        System.out.println("Controller");
-
-        // List<Product> usr= userService.getAllUsers();
-        model.addAttribute("products", productService.getAllProducts());
-        return "index";
-    }
-
     public IProductCategoryService getProductCategoryService() {
         return productCategoryService;
     }
@@ -209,7 +196,7 @@ public class ProductController {
         model.addAttribute("vendors", productService.getListOfVendor());
         return "insertProduct";
     }
-    
+
     @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
     public String getProduct(Model model, @PathVariable long id) {
         model.addAttribute("product", productService.getProduct(id));
@@ -232,35 +219,29 @@ public class ProductController {
         return "viewProducts";
     }
 
-    
     @RequestMapping(value = "/editProduct", method = RequestMethod.POST)
     public String updateProduct(Product product) {
 
         try {
-           // System.out.println(product.getId());
-          //  product.setImage(file.getBytes());
-            productService.updateProduct(product); 
-           
+            // System.out.println(product.getId());
+            //  product.setImage(file.getBytes());
+            productService.updateProduct(product);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-              
+
         return "redirect:/products";
 
     }
-    
+
     @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
     public String deleteProduct(Model model, @PathVariable long id) {
-       // ProductCategory c = productService.getProductById(id);
-        Product product=productService.getProduct(id);
+        // ProductCategory c = productService.getProductById(id);
+        Product product = productService.getProduct(id);
         productService.deleteProduct(product);
         return "redirect:/products";
     }
-    
-    
-    
-    
 
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {
@@ -281,7 +262,7 @@ public class ProductController {
 
     public String initHome(Model model) {
 
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("products", productService.getAllAvailalbleProducts());
 
         return "index";
     }
@@ -310,9 +291,7 @@ public class ProductController {
 
             if (item.getProduct().getId() == product.getId()) {
                 //If the items are of the same product just update the quantity
-                // ShoppingCartItem item = shoppingCartItemService.getCartItem(items.getId());
                 item.setQuantity(item.getQuantity() + quantity);
-                //update in the DB
                 shoppingCartService.updateCart(item);
                 flag = false;
                 break;
@@ -320,10 +299,7 @@ public class ProductController {
         }
         if (flag) {
             //if the items are of different product
-            // customer.getShoppingCart().addShoppingCartItem(cartItem);
             customer.getShoppingCart().add(cartItem);
-            //persist to DB
-
             shoppingCartService.addShoppingCart(cartItem);
 
         }
@@ -344,51 +320,54 @@ public class ProductController {
         customer = customerService.getCustomerById(id);
 
         List<ShoppingCartItem> cartItems = shoppingCartService.findAll();
-        double total = 0;
-        for (ShoppingCartItem i : cartItems) {
-            total += i.getProduct().getPrice() * i.getQuantity();
+        if (cartItems.isEmpty()) {
+            model.addAttribute("message", "Your cart is empty");
+        } else {
+            double total = 0;
+            for (ShoppingCartItem i : cartItems) {
+                total += i.getProduct().getPrice() * i.getQuantity();
+            }
+            model.addAttribute("cartItems", cartItems);
+
+            model.addAttribute("totalPrice", total);
+
         }
-        model.addAttribute("cartItems", cartItems);
-
-        model.addAttribute("totalPrice", total);
-
         return "cart";
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    // public String checkout(@ModelAttribute Address address,Model model,final RedirectAttributes re, HttpSession session) {
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
-        double totalPrice = 0;
 
         //........................change back to this
         // Customer c = (Customer) session.getAttribute("loggedUser");
         //------------------------------------------
         Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-
-//        if (c.getAddress().isEmpty()) {
-//            //model.addAttribute("message", message);
-//            model.addAttribute("message","No address, Update your profile please");
-//            //re.addFlashAttribute("message", "No address, Update your profile please");
-//            return "purchasingAddress";
-//        }
         List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
-
-        for (ShoppingCartItem item : currentCartItems) {
-            //calculate total price
-            totalPrice += item.getQuantity() * item.getProduct().getPrice();
-        }
-
-        String view = "productList";
 
         if (currentCartItems.isEmpty()) {
             message = "Your shopping cart is Empty";
             model.addAttribute("message", message);
 
-            return "invoice";
         } else {
-            //  List<ShoppingCartItem> items = c.getShoppingCart().getShoppingCartItems();
-
+            
+             List<ShoppingCartItem> stockouts= checkQuantityAvailablity(currentCartItems);
+              
+             if(!stockouts.isEmpty())
+             {
+                   model.addAttribute("stockOutItems",stockouts);
+                   model.addAttribute("message","Sorry, Your order couldn't be processed. The following products in your cart"
+                           + " do not have available stock right now. Please edit your quantity accordingly or remove them from cart.");
+                   return "stockout";
+             }
+           else
+             {
+            double totalPrice = 0;
+            for (ShoppingCartItem item : currentCartItems) {
+                //calculate total price
+               
+                totalPrice += item.getQuantity() * item.getProduct().getPrice();
+            }
             Date timeNow = new Date();
 
             List<OrderItem> oi = new ArrayList<OrderItem>();
@@ -404,16 +383,26 @@ public class ProductController {
             //save order
             orderService.addOrder(order);
 
-            //   salesService.addSalesDetail(profitAmount,profitToSmartMart,profitToVendor,order_itemid);
+            //deduct order quantity from product stock
+            for(OrderItem orderItem : order.getOrderItem())
+            {
+               Product product=orderItem.getProduct();
+               product.setQuantity(product.getQuantity() - orderItem.getQuantity());
+               productService.updateProduct(product);
+            }
+            
             saveSalesDetail(order);
             shoppingCartService.clearCustomerShoppingCart(c);
 
             message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
                     + "receive order confirmation email recently";
             model.addAttribute("message", message);
+            model.addAttribute("order", order);
 
-            return "invoice";
         }
+        }
+
+        return "invoice";
     }
 
     public Order cartItemsToOrderItems(Order order, List<ShoppingCartItem> items) {
@@ -460,7 +449,6 @@ public class ProductController {
             processFinance(f);
         }
 
-        //add smartmart to finance gatewaylist to save
         String smartMartAccount = settingsService.getSettingsValueByName("smartMartAccoutNumber");
 
         Finance toSmartMart = new Finance(smartMartAccount, orderAmountToSmartmart, "D", new Date());
@@ -468,10 +456,9 @@ public class ProductController {
         processFinance(toSmartMart);
 
         // deduct from customer as well
-     //   processFinance(finances);
     }
 
-    public void testMe() {
+    public void readFromWS() {
         RestTemplate restTemplate = new RestTemplate();
         Finance finance = restTemplate.getForObject("http://localhost:8080/FincanceCompanyWebService/webresources/entities.finance/1", Finance.class);
         System.out.println("Name:    " + finance.getAccountNo());
@@ -489,18 +476,14 @@ public class ProductController {
             rt.getMessageConverters().add(new StringHttpMessageConverter());
 
             String uri = new String("http://localhost:8080/FincanceCompanyWebService/webresources/entities.finance");
-          //  for (Finance finance : finances) {
-            
-            Finance f= new Finance();
+
+            Finance f = new Finance();
             f.setAccountNo(finance.getAccountNo());
             f.setAmount(finance.getAmount());
             f.setDate(finance.getDate());
             f.setType(finance.getType());
             Finance returns = rt.postForObject(uri, f, Finance.class);
 
-                System.out.println("finance amout is " + returns.getAmount());
-
-           // }
         } catch (HttpClientErrorException e) {
 
             System.out.println("error:  " + e.getResponseBodyAsString());
@@ -510,7 +493,7 @@ public class ProductController {
 
         }
     }
-        
+
     @RequestMapping(value = "/searchProduct", method = RequestMethod.GET)
     public String searchProductByName() {;
         return "searchProduct";
@@ -563,5 +546,34 @@ public class ProductController {
         System.out.println(v.size());
         return "brands";
     }
+    
+    public List<ShoppingCartItem> checkQuantityAvailablity(List<ShoppingCartItem> cartItems)
+    {
+        
+        List<ShoppingCartItem> stockouts = new ArrayList<ShoppingCartItem>();
+        for(ShoppingCartItem ci: cartItems)
+        {
+            if(!(ci.getProduct().getQuantity()>=ci.getQuantity()))
+            {
+                stockouts.add(ci);
+            }
+        }
+        
+        return stockouts;
+    }
+    
+    
+    
+    @RequestMapping(value = "/cart/edit/{id}", method = RequestMethod.POST)
+    public String editCart(Model model, @PathVariable long id,String quantity) {
+      
+        ShoppingCartItem cart =shoppingCartService.getShoppingCart(id);
+         cart.setQuantity(Integer.valueOf(quantity));
+        shoppingCartService.updateCart(cart);
+        System.out.println("current quantity is " + quantity);
+        return "redirect:/cart";
+    }
+    
+  
 
 }
