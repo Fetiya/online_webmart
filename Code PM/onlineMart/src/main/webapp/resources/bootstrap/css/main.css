@@ -257,13 +257,14 @@ a#scrollUp i{
   font-family: 'roboto';
   font-size: 12px;
   font-weight: 300;
-  height: 35px;
+  height: 26px;
   outline: medium none;
   padding-left: 10px;
-  width: 155px;
+  width: 26px;
   background-image: url(../images/home/searchicon.png);
   background-repeat: no-repeat;
-  background-position: 130px;
+  background-position: 10px;
+  border : 1px solid #ccc;
 }
 
 
