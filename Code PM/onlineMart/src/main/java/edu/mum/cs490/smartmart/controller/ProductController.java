@@ -222,16 +222,13 @@ public class ProductController {
     }
     
     @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
-    public String deleteProduct(Model model, @PathVariable long id) {
-       // ProductCategory c = productService.getProductById(id);
+    public String productDelete(Model model, @PathVariable long id) {
+       
         Product product=productService.getProduct(id);
         productService.deleteProduct(product);
         return "redirect:/products";
     }
-    
-    
-    
-    
+  
 
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {

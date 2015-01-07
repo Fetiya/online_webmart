@@ -24,7 +24,7 @@ public interface IProductService {
      
      public void updateProduct(Product product);
      
-     public Product getProduct(Long id);
+     public Product getProduct(long id);
      
      public List<Product> getAllProducts();
      
@@ -35,7 +35,7 @@ public interface IProductService {
   
     public List<Vendor> getListOfVendor();
 
-    public Product getProduct(long id);
+   // public Product getProduct(long id);
     public void deleteProduct(Product product);
 
 

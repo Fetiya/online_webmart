@@ -85,6 +85,7 @@ public class ProductServiceImpl implements IProductService {
         
     }
     
+    
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Product getProduct(long id) {
@@ -123,14 +124,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
 
-    @Override
-     @Transactional(propagation = Propagation.REQUIRED)
-    public Product getProduct(Long id) {
-      
-        
-          return  productDAO.findByPrimaryKey(id);
-   
-    }
+    
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
