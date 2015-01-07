@@ -61,13 +61,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    public Customer getCust() {
-        return cust;
-    }
 
-    public void setCust(Customer cust) {
-        this.cust = cust;
-    }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String getCustomerCart(Model model) {
@@ -102,6 +96,9 @@ public class CustomerController {
 //      model.addAttribute("users",userService.getAllUsers());
         return "checkout";
     }
+=======
+        
+>>>>>>> origin/master
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
