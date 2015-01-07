@@ -23,7 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS)
 public class VendorDAOImpl extends GenericDAOImpl<Vendor, Long> implements IVendorDAO {
 
-    public VendorDAOImpl() {
+   
+     public VendorDAOImpl()
+    {
         super(Vendor.class);
     }
 

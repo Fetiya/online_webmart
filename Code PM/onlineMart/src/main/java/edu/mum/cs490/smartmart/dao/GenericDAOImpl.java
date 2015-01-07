@@ -35,6 +35,8 @@ public abstract class GenericDAOImpl< T, ID extends Serializable> implements IGe
         // return (T) HibernateUtil.getSession().load(persistenceClass, id);
         return (T) sf.getCurrentSession().load(persistenceClass, id);
     }
+    
+   
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<T> findByExample(T exampleInstance, String[] excludeProperty) {

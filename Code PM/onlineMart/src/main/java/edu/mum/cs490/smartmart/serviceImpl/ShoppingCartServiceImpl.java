@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Fetiya
  */
-public class ShoppingCartServiceImpl implements IShoppingCartService{
+@Transactional(propagation = Propagation.REQUIRED)
+public class ShoppingCartServiceImpl implements IShoppingCartService {
 
-    
     private IShoppingCartItemDAO shoppingcartDAO;
 
     public IShoppingCartItemDAO getShoppingcartDAO() {
@@ -29,14 +29,12 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
     public void setShoppingcartDAO(IShoppingCartItemDAO shoppingcartDAO) {
         this.shoppingcartDAO = shoppingcartDAO;
     }
- 
-    
-    
+
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public ShoppingCartItem getShoppingCart(Long id) {
-       return shoppingcartDAO.findByPrimaryKey(id);
-        
+        return shoppingcartDAO.findByPrimaryKey(id);
+
     }
 
     @Override
@@ -46,7 +44,8 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
 
     @Override
     public void clearCart(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
     }
 
     @Override
@@ -58,31 +57,48 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
     public void deleteShoppingCartItem(Customer customer, ShoppingCartItem item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
-     @Override
-     @Transactional(propagation = Propagation.REQUIRED)
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<ShoppingCartItem> getCustomerShoppingCart(Customer customer) {
-       
-       ShoppingCartItem cartItem= new ShoppingCartItem();
-       cartItem.setCustomer(customer);
-       
-      return shoppingcartDAO.findByExample(cartItem, new String[]{});
-    //return shoppingcartDAO.findAll(0, 14);
-        
+
+        //ShoppingCartItem cartItem = new ShoppingCartItem();
+       // cartItem.setCustomer(customer);
+
+        return shoppingcartDAO.getCustomerShoppingCart(customer);
+   
+
     }
 
     @Override
-     @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public List<ShoppingCartItem> findAll() {
-       
-      return shoppingcartDAO.findAll(0, 10);
+
+        return shoppingcartDAO.findAll(0, 10);
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteShoppingCartItem(ShoppingCartItem item) {
         shoppingcartDAO.delete(item);
+
+    }
+
+    @Override
+    public void updateCart(ShoppingCartItem item) {
+
+        shoppingcartDAO.save(item);
+    }
+
+    @Override
+    public void addShoppingCart(ShoppingCartItem item) {
+       shoppingcartDAO.save(item);
+    
+    }
+
+    @Override
+    public void clearCustomerShoppingCart(Customer customer) {
+       shoppingcartDAO.clearCustomerShoppingCart(customer);
     
     }
 }
