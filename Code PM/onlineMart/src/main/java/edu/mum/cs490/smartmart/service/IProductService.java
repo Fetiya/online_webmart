@@ -41,7 +41,7 @@ public interface IProductService {
 
 
     
-    public Product getProduct(int id);
+   
 
  
     public List<Product> getProductByCategoryId(long categoryId);

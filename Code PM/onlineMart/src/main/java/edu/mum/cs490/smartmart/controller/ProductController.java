@@ -95,10 +95,10 @@ public class ProductController {
 
     @Autowired
     IOrderService orderService;
-    
+
     @Autowired
     ISalesDetailService salesService;
-    
+
     @Autowired
     ISettingsService settingsService;
 
@@ -109,21 +109,15 @@ public class ProductController {
     public void setSettingsService(ISettingsService settingsService) {
         this.settingsService = settingsService;
     }
-    
 
-    
     public ISalesDetailService getSalesService() {
         return salesService;
     }
 
-    
     public void setSalesService(ISalesDetailService salesService) {
         this.salesService = salesService;
     }
 
-    
-
-    
     public IProductService getProductService() {
         return productService;
     }
@@ -149,15 +143,6 @@ public class ProductController {
     }
 
     // take it to product controller???
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String initalHome(Model model) {
-        System.out.println("Controller");
-
-        // List<Product> usr= userService.getAllUsers();
-        model.addAttribute("products", productService.getAllProducts());
-        return "index";
-    }
-
     public IProductCategoryService getProductCategoryService() {
         return productCategoryService;
     }
@@ -203,7 +188,7 @@ public class ProductController {
         model.addAttribute("vendors", productService.getListOfVendor());
         return "insertProduct";
     }
-    
+
     @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
     public String getProduct(Model model, @PathVariable long id) {
         model.addAttribute("product", productService.getProduct(id));
@@ -226,35 +211,29 @@ public class ProductController {
         return "viewProducts";
     }
 
-    
     @RequestMapping(value = "/editProduct", method = RequestMethod.POST)
     public String updateProduct(Product product) {
 
         try {
            // System.out.println(product.getId());
-          //  product.setImage(file.getBytes());
-            productService.updateProduct(product); 
-           
+            //  product.setImage(file.getBytes());
+            productService.updateProduct(product);
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-              
+
         return "redirect:/products";
 
     }
-    
+
     @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
     public String deleteProduct(Model model, @PathVariable long id) {
-       // ProductCategory c = productService.getProductById(id);
-        Product product=productService.getProduct(id);
+        // ProductCategory c = productService.getProductById(id);
+        Product product = productService.getProduct(id);
         productService.deleteProduct(product);
         return "redirect:/products";
     }
-    
-    
-    
-    
 
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {
@@ -276,7 +255,7 @@ public class ProductController {
     public String initHome(Model model) {
 
         model.addAttribute("products", productService.getAllProducts());
-        
+
         return "index";
     }
 
@@ -354,12 +333,12 @@ public class ProductController {
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
         double totalPrice = 0;
-        
+
         //........................change back to this
-       // Customer c = (Customer) session.getAttribute("loggedUser");
+        // Customer c = (Customer) session.getAttribute("loggedUser");
         //------------------------------------------
-        Customer c= customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-        
+        Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+
 //        if (c.getAddress().isEmpty()) {
 //            //model.addAttribute("message", message);
 //            model.addAttribute("message","No address, Update your profile please");
@@ -384,8 +363,8 @@ public class ProductController {
             //  List<ShoppingCartItem> items = c.getShoppingCart().getShoppingCartItems();
 
             Date timeNow = new Date();
-             
-           List<OrderItem> oi= new ArrayList<OrderItem>();
+
+            List<OrderItem> oi = new ArrayList<OrderItem>();
             Order order = new Order();
             order.setTotalAmount(totalPrice);
             order.setOrderDate(timeNow);
@@ -394,78 +373,88 @@ public class ProductController {
             order.setCustomer(c);
 
             c.getOrder().add(order);
-        
+
             //save order
             orderService.addOrder(order);
-             
-                       
-         //   salesService.addSalesDetail(profitAmount,profitToSmartMart,profitToVendor,order_itemid);
+
+            //   salesService.addSalesDetail(profitAmount,profitToSmartMart,profitToVendor,order_itemid);
             saveSalesDetail(order);
             shoppingCartService.clearCustomerShoppingCart(c);
-            
+
             message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
                     + "receive order confirmation email recently";
             model.addAttribute("message", message);
-            
+
             return "invoice";
         }
     }
 
- 
     public Order cartItemsToOrderItems(Order order, List<ShoppingCartItem> items) {
 
         for (ShoppingCartItem shoppingItems : items) {
-            OrderItem orderItem  = new OrderItem();
+            OrderItem orderItem = new OrderItem();
             orderItem.setProduct(shoppingItems.getProduct());
             orderItem.setQuantity(shoppingItems.getQuantity());
             orderItem.setPrice(shoppingItems.getProduct().getPrice());
-            
+
             order.addOrderItem(orderItem);
-            
+
         }
         return order;
     }
 
-    public void saveSalesDetail(Order order)
-    {
-        for(OrderItem oi : order.getOrderItem())
-        {
-            SalesDetail sale= new SalesDetail();
-            
+    public void saveSalesDetail(Order order) {
+        for (OrderItem oi : order.getOrderItem()) {
+            SalesDetail sale = new SalesDetail();
+
             sale.setOrderitem(oi);
-            double total= oi.getPrice()*oi.getQuantity();
+            double total = oi.getPrice() * oi.getQuantity();
             sale.setProfitAmount(total);
-            
+
             double profitPercentage;
-            
+
             profitPercentage = Double.valueOf(settingsService.getSettingsValueByName("profitPercentage"));
-            
-            double profitToSmartMart=(profitPercentage*total)/100;
-            double profitToVendor=total-profitToSmartMart;
+
+            double profitToSmartMart = (profitPercentage * total) / 100;
+            double profitToVendor = total - profitToSmartMart;
             sale.setProfitToSmartmart(profitToSmartMart);
             sale.setProfitToVendor(profitToVendor);
             salesService.addSalesDetail(sale);
-            
+
         }
     }
-        
+
     @RequestMapping(value = "/searchProduct", method = RequestMethod.GET)
     public String searchProductByName() {;
         return "searchProduct";
     }
 
     @RequestMapping(value = "/searchProduct", method = RequestMethod.POST)
-    public String searchProduct(RedirectAttributes re, Model model, @Valid String productName) {
+    public String searchProduct(RedirectAttributes re, Model model, @Valid String productName, HttpSession session) {
         System.out.println("Produdtc Name : " + productName);
         List<Product> products = productService.getProductByName(productName);
-        System.out.println(products.size());
-        if (products.size() > 0) {  //searched product found           
-            model.addAttribute("products", products);
-            return "productResult";
+        System.out.println("size of product " + products.size());
+        if (products.size() > 0) {  //searched product found
+            System.out.println("i m inside after product is saerched");
+
+            session.setAttribute("searchProducts", products);
+            return "redirect:/productResult";
         } else {
-            re.addFlashAttribute("msgs", "Product not found, please try again");
-            return "notFound";
+            session.setAttribute("msgs", "Product not found, please try again");
+            return "redirect:/notFound";
         }
+    }
+    
+    @RequestMapping(value = "/notFound")
+    public String searchResult(Model model,HttpSession session) {
+        model.addAttribute("msgs", session.getAttribute("msgs"));
+        return "notFound";
+    }
+    
+    @RequestMapping(value = "/productResult")
+    public String resultNotFound(Model model,HttpSession session) {
+        model.addAttribute("products", session.getAttribute("searchProducts"));
+        return "productResult";
     }
 
     @RequestMapping(value = "/navigation", method = RequestMethod.GET)
@@ -476,22 +465,33 @@ public class ProductController {
     }
 
     @RequestMapping(value = "getProductsByVendor/{vid}/{cid}", method = RequestMethod.GET)
-    public String getProductByVendor(Model model, @PathVariable long vid, @PathVariable long cid) {
+    public String getProductByVendor(Model model, @PathVariable long vid, @PathVariable long cid, HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
         ProductCategory c = categoryService.getProductCategoryById(cid);
         List<Product> productList = productService.getProductByVendorCategoryId(v, c);
-        model.addAttribute("productlist", productList);
-        return "productByVendor";
+        session.setAttribute("productlist", productList);
+        return "redirect:/productByVendor";
 
     }
+    
+//    @RequestMapping(value = "productByVendor")
+//    public String  listOfVendor(Model model, HttpSession session) {
+//        model.addAttribute("productlist", session.getAttribute("productlist"));
+//        return "productByVendor";       
+//    }
 
     @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
-    public String getProductByVendor(Model model, @PathVariable long vid) {
+    public String getProductByVendor(Model model, @PathVariable long vid,HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
         List<Product> productList = productService.getProductByVendor(v);
-        model.addAttribute("productlist", productList);
-        return "productByVendor";
+        session.setAttribute("productlist", productList);
+        return "redirect:/productByVendor";
 
+    }
+    @RequestMapping(value="/productByVendor")
+    public String productByVendor(Model model, HttpSession session) {
+            model.addAttribute("productlist", session.getAttribute("productlist"));
+            return "productByVendor";
     }
 
     @RequestMapping(value = "/brands", method = RequestMethod.GET)
