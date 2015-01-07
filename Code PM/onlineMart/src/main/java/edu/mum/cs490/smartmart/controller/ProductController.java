@@ -6,17 +6,16 @@
 package edu.mum.cs490.smartmart.controller;
 
 import edu.mum.cs490.smartmart.domain.Customer;
-import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 
 import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
+import edu.mum.cs490.smartmart.domain.Finance;
 import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.domain.OrderItem;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.SalesDetail;
-import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorPropertyEditor;
 import edu.mum.cs490.smartmart.service.IOrderService;
@@ -47,15 +46,28 @@ import edu.mum.cs490.smartmart.service.ISettingsService;
 import edu.mum.cs490.smartmart.service.IShoppingCartService;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import javax.json.JsonArray;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -82,10 +94,10 @@ public class ProductController {
 
     @Autowired
     IOrderService orderService;
-    
+
     @Autowired
     ISalesDetailService salesService;
-    
+
     @Autowired
     ISettingsService settingsService;
 
@@ -96,21 +108,15 @@ public class ProductController {
     public void setSettingsService(ISettingsService settingsService) {
         this.settingsService = settingsService;
     }
-    
 
-    
     public ISalesDetailService getSalesService() {
         return salesService;
     }
 
-    
     public void setSalesService(ISalesDetailService salesService) {
         this.salesService = salesService;
     }
 
-    
-
-    
     public IProductService getProductService() {
         return productService;
     }
@@ -215,7 +221,7 @@ public class ProductController {
     public String initHome(Model model) {
 
         model.addAttribute("products", productService.getAllProducts());
-        
+
         return "index";
     }
 
@@ -293,12 +299,12 @@ public class ProductController {
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
         double totalPrice = 0;
-        
+
         //........................change back to this
-       // Customer c = (Customer) session.getAttribute("loggedUser");
+        // Customer c = (Customer) session.getAttribute("loggedUser");
         //------------------------------------------
-        Customer c= customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-        
+        Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+
 //        if (c.getAddress().isEmpty()) {
 //            //model.addAttribute("message", message);
 //            model.addAttribute("message","No address, Update your profile please");
@@ -323,8 +329,8 @@ public class ProductController {
             //  List<ShoppingCartItem> items = c.getShoppingCart().getShoppingCartItems();
 
             Date timeNow = new Date();
-             
-           List<OrderItem> oi= new ArrayList<OrderItem>();
+
+            List<OrderItem> oi = new ArrayList<OrderItem>();
             Order order = new Order();
             order.setTotalAmount(totalPrice);
             order.setOrderDate(timeNow);
@@ -333,58 +339,114 @@ public class ProductController {
             order.setCustomer(c);
 
             c.getOrder().add(order);
-        
+
             //save order
             orderService.addOrder(order);
-             
-                       
-         //   salesService.addSalesDetail(profitAmount,profitToSmartMart,profitToVendor,order_itemid);
+
+            //   salesService.addSalesDetail(profitAmount,profitToSmartMart,profitToVendor,order_itemid);
             saveSalesDetail(order);
             shoppingCartService.clearCustomerShoppingCart(c);
-            
+
             message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
                     + "receive order confirmation email recently";
             model.addAttribute("message", message);
-            
+
             return "invoice";
         }
     }
 
- 
     public Order cartItemsToOrderItems(Order order, List<ShoppingCartItem> items) {
 
         for (ShoppingCartItem shoppingItems : items) {
-            OrderItem orderItem  = new OrderItem();
+            OrderItem orderItem = new OrderItem();
             orderItem.setProduct(shoppingItems.getProduct());
             orderItem.setQuantity(shoppingItems.getQuantity());
             orderItem.setPrice(shoppingItems.getProduct().getPrice());
-            
+
             order.addOrderItem(orderItem);
-            
+
         }
         return order;
     }
 
-    public void saveSalesDetail(Order order)
-    {
-        for(OrderItem oi : order.getOrderItem())
-        {
-            SalesDetail sale= new SalesDetail();
-            
+    public void saveSalesDetail(Order order) {
+
+        List<Finance> finances = new ArrayList<Finance>();
+
+        double orderAmountToSmartmart = 0;
+        for (OrderItem oi : order.getOrderItem()) {
+
+            SalesDetail sale = new SalesDetail();
+
             sale.setOrderitem(oi);
-            double total= oi.getPrice()*oi.getQuantity();
+            double total = oi.getPrice() * oi.getQuantity();
             sale.setProfitAmount(total);
-            
+
             double profitPercentage;
-            
+
             profitPercentage = Double.valueOf(settingsService.getSettingsValueByName("profitPercentage"));
-            
-            double profitToSmartMart=(profitPercentage*total)/100;
-            double profitToVendor=total-profitToSmartMart;
+
+            double profitToSmartMart = (profitPercentage * total) / 100;
+            double profitToVendor = total - profitToSmartMart;
             sale.setProfitToSmartmart(profitToSmartMart);
             sale.setProfitToVendor(profitToVendor);
             salesService.addSalesDetail(sale);
+
+            Finance f = new Finance(oi.getProduct().getVendor().getAccountNum(), profitToVendor, "D", new Date());
+
+            finances.add(f);
+            orderAmountToSmartmart += profitToSmartMart;
+            processFinance(f);
+        }
+
+        //add smartmart to finance gatewaylist to save
+        String smartMartAccount = settingsService.getSettingsValueByName("smartMartAccoutNumber");
+
+        Finance toSmartMart = new Finance(smartMartAccount, orderAmountToSmartmart, "D", new Date());
+        finances.add(toSmartMart);
+        processFinance(toSmartMart);
+
+        // deduct from customer as well
+     //   processFinance(finances);
+    }
+
+    public void testMe() {
+        RestTemplate restTemplate = new RestTemplate();
+        Finance finance = restTemplate.getForObject("http://localhost:8080/FincanceCompanyWebService/webresources/entities.finance/1", Finance.class);
+        System.out.println("Name:    " + finance.getAccountNo());
+        System.out.println("About:   " + finance.getAmount());
+        System.out.println("Phone:   " + finance.getDate());
+
+    }
+
+    public void processFinance(Finance finance) {
+
+        try {
+
+            RestTemplate rt = new RestTemplate();
+            rt.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+            rt.getMessageConverters().add(new StringHttpMessageConverter());
+
+            String uri = new String("http://localhost:8080/FincanceCompanyWebService/webresources/entities.finance");
+          //  for (Finance finance : finances) {
             
+            Finance f= new Finance();
+            f.setAccountNo(finance.getAccountNo());
+            f.setAmount(finance.getAmount());
+            f.setDate(finance.getDate());
+            f.setType(finance.getType());
+            Finance returns = rt.postForObject(uri, f, Finance.class);
+
+                System.out.println("finance amout is " + returns.getAmount());
+
+           // }
+        } catch (HttpClientErrorException e) {
+
+            System.out.println("error:  " + e.getResponseBodyAsString());
+
+        } catch (Exception e) {
+            System.out.println("error:  " + e.getMessage());
+
         }
     }
 
