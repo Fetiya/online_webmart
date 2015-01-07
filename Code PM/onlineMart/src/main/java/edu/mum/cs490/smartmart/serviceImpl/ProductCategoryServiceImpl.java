@@ -63,7 +63,7 @@ public class ProductCategoryServiceImpl implements IProductCategoryService {
         }
     }
 
-     @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void deleteCategory(ProductCategory category) {
         try {

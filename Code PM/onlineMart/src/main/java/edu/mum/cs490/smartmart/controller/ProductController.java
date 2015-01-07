@@ -54,6 +54,7 @@ import javax.json.JsonArray;
 import javax.json.JsonString;
 import javax.json.JsonValue;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
@@ -79,6 +80,18 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+    private IProductCategoryService categoryService;
+    @Autowired
+    private IVendorService vendor;
+
+    public IProductCategoryService getCategoryService() {
+        return categoryService;
+    }
+
+    public void setCategoryService(IProductCategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @Autowired
     private IProductCategoryService productCategoryService;
@@ -141,6 +154,16 @@ public class ProductController {
         this.productService = productService;
     }
 
+    // take it to product controller???
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String initalHome(Model model) {
+        System.out.println("Controller");
+
+        // List<Product> usr= userService.getAllUsers();
+        model.addAttribute("products", productService.getAllProducts());
+        return "index";
+    }
+
     public IProductCategoryService getProductCategoryService() {
         return productCategoryService;
     }
@@ -186,6 +209,14 @@ public class ProductController {
         model.addAttribute("vendors", productService.getListOfVendor());
         return "insertProduct";
     }
+    
+    @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
+    public String getProduct(Model model, @PathVariable long id) {
+        model.addAttribute("product", productService.getProduct(id));
+        model.addAttribute("categories", productService.getListOfCategory());
+        model.addAttribute("vendors", productService.getListOfVendor());
+        return "editProduct";
+    }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -200,6 +231,36 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProducts());
         return "viewProducts";
     }
+
+    
+    @RequestMapping(value = "/editProduct", method = RequestMethod.POST)
+    public String updateProduct(Product product) {
+
+        try {
+           // System.out.println(product.getId());
+          //  product.setImage(file.getBytes());
+            productService.updateProduct(product); 
+           
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+              
+        return "redirect:/products";
+
+    }
+    
+    @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
+    public String deleteProduct(Model model, @PathVariable long id) {
+       // ProductCategory c = productService.getProductById(id);
+        Product product=productService.getProduct(id);
+        productService.deleteProduct(product);
+        return "redirect:/products";
+    }
+    
+    
+    
+    
 
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {
@@ -448,6 +509,59 @@ public class ProductController {
             System.out.println("error:  " + e.getMessage());
 
         }
+    }
+        
+    @RequestMapping(value = "/searchProduct", method = RequestMethod.GET)
+    public String searchProductByName() {;
+        return "searchProduct";
+    }
+
+    @RequestMapping(value = "/searchProduct", method = RequestMethod.POST)
+    public String searchProduct(RedirectAttributes re, Model model, @Valid String productName) {
+        System.out.println("Produdtc Name : " + productName);
+        List<Product> products = productService.getProductByName(productName);
+        System.out.println(products.size());
+        if (products.size() > 0) {  //searched product found           
+            model.addAttribute("products", products);
+            return "productResult";
+        } else {
+            re.addFlashAttribute("msgs", "Product not found, please try again");
+            return "notFound";
+        }
+    }
+
+    @RequestMapping(value = "/navigation", method = RequestMethod.GET)
+    public String showNavigation(Model model) {
+        model.addAttribute("categories", categoryService.getAllProductCategory());
+        model.addAttribute("vendor", vendor.getAllVendors());
+        return "navigation";
+    }
+
+    @RequestMapping(value = "getProductsByVendor/{vid}/{cid}", method = RequestMethod.GET)
+    public String getProductByVendor(Model model, @PathVariable long vid, @PathVariable long cid) {
+        Vendor v = vendor.getVendorById(vid);
+        ProductCategory c = categoryService.getProductCategoryById(cid);
+        List<Product> productList = productService.getProductByVendorCategoryId(v, c);
+        model.addAttribute("productlist", productList);
+        return "productByVendor";
+
+    }
+
+    @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
+    public String getProductByVendor(Model model, @PathVariable long vid) {
+        Vendor v = vendor.getVendorById(vid);
+        List<Product> productList = productService.getProductByVendor(v);
+        model.addAttribute("productlist", productList);
+        return "productByVendor";
+
+    }
+
+    @RequestMapping(value = "/brands", method = RequestMethod.GET)
+    public String VendorList(Model model) {
+        List<Vendor> v = vendor.getAllVendors();
+        model.addAttribute("vendorList", v);
+        System.out.println(v.size());
+        return "brands";
     }
 
 }

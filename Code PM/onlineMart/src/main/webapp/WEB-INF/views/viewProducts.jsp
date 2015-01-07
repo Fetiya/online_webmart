@@ -34,7 +34,7 @@
             </thead>
             <tbody>
                 <c:forEach var="product" items="${products}" varStatus="loopStatus" >
-
+            <tr>
                 <td>${product.id}</td>
                 
                 <td width="40%">
@@ -49,9 +49,9 @@
                 <td> ${product.quantity}     </td>
                 <td> ${product.getProductCategory().name}     </td>
                 <td>${product.getVendor().companyName} </td>
-                
+                <td><a href="productEdit/${product.id}"> Edit</a></td>
+                <td><a href="productDelete/${product.id}">DELETE</a></td>
                
-                
                 
 
             </tr>

@@ -5,6 +5,7 @@
  */
 package edu.mum.cs490.smartmart.service;
 
+import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Vendor;
@@ -36,6 +37,16 @@ public interface IProductService {
     public List<Vendor> getListOfVendor();
 
     public Product getProduct(long id);
+    public void deleteProduct(Product product);
 
 
+    
+    public Product getProduct(int id);
+
+ 
+    public List<Product> getProductByCategoryId(long categoryId);
+
+    public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c);
+
+    public List<Product> getProductByVendor(Vendor v);
 }
