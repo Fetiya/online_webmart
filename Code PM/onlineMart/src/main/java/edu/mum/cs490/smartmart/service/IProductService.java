@@ -40,20 +40,10 @@ public interface IProductService {
     public void deleteProduct(Product product);
 
 
-    public List<Product> searchProductByName(String pname);
-
-    public Product getProductDetailInfo(int id);
-
-    public void addProduct(Product product);
-
-    public void updateProduct(Product product);
-
+    
     public Product getProduct(int id);
 
-    public List<Product> getAllProducts();
-
-    public List<Product> getProductByName(String name);
-
+ 
     public List<Product> getProductByCategoryId(long categoryId);
 
     public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c);

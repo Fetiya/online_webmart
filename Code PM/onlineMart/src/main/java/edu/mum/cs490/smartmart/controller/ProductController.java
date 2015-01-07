@@ -50,6 +50,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,15 +69,15 @@ public class ProductController {
     @Autowired
     private IProductService productService;
     @Autowired
-    private ProductCategoryService categoryService;
+    private IProductCategoryService categoryService;
     @Autowired
     private IVendorService vendor;
 
-    public ProductCategoryService getCategoryService() {
+    public IProductCategoryService getCategoryService() {
         return categoryService;
     }
 
-    public void setCategoryService(ProductCategoryService categoryService) {
+    public void setCategoryService(IProductCategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -154,6 +155,8 @@ public class ProductController {
 
         // List<Product> usr= userService.getAllUsers();
         model.addAttribute("products", productService.getAllProducts());
+        return "index";
+    }
 
     public IProductCategoryService getProductCategoryService() {
         return productCategoryService;
@@ -444,6 +447,8 @@ public class ProductController {
             salesService.addSalesDetail(sale);
             
         }
+    }
+        
     @RequestMapping(value = "/searchProduct", method = RequestMethod.GET)
     public String searchProductByName() {;
         return "searchProduct";
