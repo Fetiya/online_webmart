@@ -5,7 +5,6 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
-
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.service.ISubscriptionRuleService;
@@ -36,7 +35,7 @@ public class VendorController {
     List<SubscriptionRule> subscriptionRule;
     @Autowired
     ISubscriptionRuleService subscriptionRuleService;
-    
+
     @Autowired
     private IVendorService vendorService;
 
@@ -62,7 +61,7 @@ public class VendorController {
 //            List<Vendor> pendingVendors = new ArrayList();
 //            pendingVendors=vendorService.getAllVendors();
         model.addAttribute("pendingVendors", vendorService.getAllVendors());
-            //session.setAttribute("pendingVendors", vendorService.getAllVendors());
+        //session.setAttribute("pendingVendors", vendorService.getAllVendors());
         //  }
 
         return "viewPendingVendors";
@@ -94,5 +93,7 @@ public class VendorController {
         }
         return view;
     }
+
+   
 
 }
