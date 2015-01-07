@@ -43,7 +43,7 @@ public class CustomerController {
     @Autowired
     IEncryptionService encryptionService;
 
-    Customer cust;
+
 
     public ICustomerService getCustomerService() {
         return customerService;
@@ -63,42 +63,39 @@ public class CustomerController {
 
 
 
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String getCustomerCart(Model model) {
-        // System.out.println("Controller"+id);
+//    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+//    public String getCustomerCart(Model model) {
+//        // System.out.println("Controller"+id);
+//
+//        Customer customer = new Customer();
+//        Long id = Long.valueOf(String.valueOf(1));
+//
+//        customer = customerService.getCustomerById(id);
+//
+//        System.out.println(" custmer name is" + customer.getFirstName());
+//
+//        // List<ShoppingCartItem> cartItems= shoppingCartService.findAll();
+//        // model.addAttribute("cartItems",shoppingCartService.getCustomerShoppingCart(customer));
+//        List<ShoppingCartItem> cartItems = shoppingCartService.findAll();
+//        double total = 0;
+//        for (ShoppingCartItem i : cartItems) {
+//            total += i.getProduct().getPrice() * i.getQuantity();
+//        }
+//        model.addAttribute("cartItems", cartItems);
+//
+//        model.addAttribute("totalPrice", total);
+//
+//        return "cart";
+//    }
 
-        Customer customer = new Customer();
-        Long id = Long.valueOf(String.valueOf(1));
-
-        customer = customerService.getCustomerById(id);
-
-        System.out.println(" custmer name is" + customer.getFirstName());
-
-        // List<ShoppingCartItem> cartItems= shoppingCartService.findAll();
-        // model.addAttribute("cartItems",shoppingCartService.getCustomerShoppingCart(customer));
-        List<ShoppingCartItem> cartItems = shoppingCartService.findAll();
-        double total = 0;
-        for (ShoppingCartItem i : cartItems) {
-            total += i.getProduct().getPrice() * i.getQuantity();
-        }
-        model.addAttribute("cartItems", cartItems);
-
-        model.addAttribute("totalPrice", total);
-
-        return "cart";
-    }
-
-    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkOut(Model model) {
-        // System.out.println("Controller"+id);
-
-//        List<User> usr= userService.getAllUsers();
-//      model.addAttribute("users",userService.getAllUsers());
-        return "checkout";
-    }
-=======
-        
->>>>>>> origin/master
+//    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+//    public String checkOut(Model model) {
+//        // System.out.println("Controller"+id);
+//
+////        List<User> usr= userService.getAllUsers();
+////      model.addAttribute("users",userService.getAllUsers());
+//        return "checkout";
+//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {

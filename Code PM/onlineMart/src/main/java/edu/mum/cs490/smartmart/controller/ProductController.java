@@ -277,14 +277,6 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-
-    public String initHome(Model model) {
-
-        model.addAttribute("products", productService.getAllProducts());
-
-        return "index";
-    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

@@ -79,34 +79,46 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    
-    
-    <!-- DAO's setter injections -->    
+    <!-- DAO's setter injections -->
+     
+     
     <bean id="hibernateDAO" class="edu.mum.cs490.smartmart.dao.GenericDAOImpl" abstract="true">
         <property name="sf" ref="sessionFactory"/>
-    </bean>    
-    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">     
-    </bean>    
-    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">       
     </bean>
-    <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">       
+    
+    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">
+     
+    </bean>
+
+    <!--      User service injections  
+    -->
+    <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
+
+        <property name="userDAO" ref="userDAO" />
+
+    </bean>
+
+    
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
+     
+    </bean>
+
+    <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">  
+     
     </bean>
     <bean id="productCategoryDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductCategoryDAOImpl" parent="hibernateDAO">
-    </bean>    
-    <bean id="subscriptionRuleDAO" class="edu.mum.cs490.smartmart.dao.impl.SubscriptionRuleDAOImpl" parent="hibernateDAO">
-    </bean>    
-    <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">
-    </bean>    
-    <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
-    </bean>    
         
-    <bean id="orderDAO" class="edu.mum.cs490.smartmart.dao.impl.OrderDAOImpl" parent="hibernateDAO">
+    </bean>
+    
+    <bean id="subscriptionRuleDAO" class="edu.mum.cs490.smartmart.dao.impl.SubscriptionRuleDAOImpl" parent="hibernateDAO">
+     
     </bean>
     
     <bean id="credentialDAO" class="edu.mum.cs490.smartmart.dao.impl.CredentialDAOImpl" parent="hibernateDAO">
      
     </bean>
     
+      
     <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">
     </bean>    
     <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
@@ -143,29 +155,37 @@
         <property  name="encryptionService" ref="encryptionService" />
          <property  name="notificationService" ref="notificationService" />
     </bean>
+
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
         <property  name="encryptionService" ref="encryptionService" />
         <property  name="credentialService" ref="credentialService" />
+        <!--<property  name="shoppingCartService" ref="shoppingCartService" />-->
         <property  name="notificationService" ref="notificationService" />
      
     </bean> 
     <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
         <property name="productCategoryDAO" ref="productCategoryDAO" />
-    </bean> 
+    </bean>
+ 
+ 
     <bean id="subscriptionRuleService" class="edu.mum.cs490.smartmart.serviceImpl.SubscriptionRuleServiceImpl">
         <property name="subscriptionRuleDAO" ref="subscriptionRuleDAO" />
-    </bean>    
+    </bean>
+ 
+ 
+ <bean id="credentialService" class="edu.mum.cs490.smartmart.serviceImpl.CredentialServiceImpl">
+        <property name="credentialDAO" ref="credentialDAO" />
+    </bean>
+ 
+    <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
+    </bean>
+    
     <bean id="productService" class="edu.mum.cs490.smartmart.serviceImpl.ProductServiceImpl">
         <property name="productDAO" ref="productDAO"/>
         <property name="productCategoryDAO" ref="productCategoryDAO"/>
         <property name="vendorDAO" ref="vendorDAO"/>       
     </bean>
- 
- 
-    <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
-    </bean>
-    
        <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
            <property name="orderDAO" ref="orderDAO"/> 
     </bean>
@@ -175,6 +195,10 @@
     </bean>
     <bean id="settingsService" class="edu.mum.cs490.smartmart.serviceImpl.SettingsServiceImpl">
            <property name="settingsDAO" ref="settingsDAO"/> 
+    </bean>
+    
+    <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
+           <property name="shoppingcartDAO" ref="shoppingcartDAO"/> 
     </bean>
      
      <!--Email Service--> 
@@ -238,15 +262,4 @@ Administrator @SM.
     
     
     <!--Email Service-->   
-</beans>
-    <bean id="salesDetailService" class="edu.mum.cs490.smartmart.serviceImpl.SalesDetailServiceImpl">
-           <property name="salesDetailDAO" ref="salesDetailDAO"/> 
-    </bean>
-    <bean id="settingsService" class="edu.mum.cs490.smartmart.serviceImpl.SettingsServiceImpl">
-           <property name="settingsDAO" ref="settingsDAO"/> 
-    </bean>
-    
-    
-    
-    
 </beans>
