@@ -50,12 +50,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -287,10 +292,58 @@ public class ProductController {
 
         return "cart";
     }
-
+    
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+        return "checkout";
+    }
+     
+     
+//    @RequestMapping(value = "/validation", method = RequestMethod.POST)
+//     public String validation(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
+//        
+//        if (!result.hasErrors()) {
+//            customerService.addCustomer(customer);
+//            flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
+//
+//        } else {
+//            for (FieldError err : result.getFieldErrors()) {
+//                System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
+//            }
+//            return "redirect:/checkout";
+//        }
+//        return "redirect:/cardValidation";
+//        }
+
+     
+     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+     public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
+         System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
+         RestTemplate restTemplate = new RestTemplate();
+         String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/123/1234/1000";
+         boolean resualt=restTemplate.getForObject(url, Boolean.class);
+          System.out.println(resualt+"1111111111111111111111111111111111111");
+          if(resualt){
+              return "index";
+          }
+        return "index";
+        
+                }
+     
+      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
+     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
+         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+    RestTemplate restTemplate = new RestTemplate();
+   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
+   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
+          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
+         return "index";
+     }
+
+    
+    @RequestMapping(value = "/checkout2", method = RequestMethod.GET)
     // public String checkout(@ModelAttribute Address address,Model model,final RedirectAttributes re, HttpSession session) {
-    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+    public String checkout2(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
         double totalPrice = 0;
         
@@ -350,6 +403,7 @@ public class ProductController {
         }
     }
 
+    
  
     public Order cartItemsToOrderItems(Order order, List<ShoppingCartItem> items) {
 
