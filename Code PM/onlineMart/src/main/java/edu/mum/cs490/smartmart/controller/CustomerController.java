@@ -75,7 +75,7 @@ public class CustomerController {
         String view = "redirect:/";
         if (!result.hasErrors()) {
             customerService.addCustomer(customer);
-            flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
+            flashAttr.addFlashAttribute("successfulSignup", "Customer signed up succesfully. please  log in to proceed");
 
         } else {
             for (FieldError err : result.getFieldErrors()) {

@@ -5,7 +5,6 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-
 import edu.mum.cs490.smartmart.domain.Role;
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
 import edu.mum.cs490.smartmart.dao.ICustomerDAO;
@@ -15,6 +14,7 @@ import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
 import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerDAO customerDAO;
 
     IEncryptionService encryptionService;
-    
+
     private ICredentialDAO credentialDAO;
 
     public ICustomerDAO getCustomerDAO() {
@@ -58,17 +58,23 @@ public class CustomerServiceImpl implements ICustomerService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void addCustomer(Customer customer) {
-        customer.getCredential().setPassword(encryptionService.getEncryptedPassword(customer.getCredential().getPassword()));
+        
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(customer.getCredential().getPassword());
+        customer.getCredential().setPassword(hashedPassword);
+        
         customer.getCredential().setRole(Role.ROLE_CUSTOMER);
+        customer.getCredential().setActive(true);
+        System.out.println("Name: "+customer.getFirstName()+" password "+customer.getCredential().getPassword());
         customerDAO.save(customer);
     }
-    
-       @Transactional(propagation = Propagation.REQUIRED)
+
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public boolean checkUserName(String userName) {
-        Credential cred=new Credential();
+        Credential cred = new Credential();
         cred.setUsername(userName);
-        if (credentialDAO.findByExample(cred,new String[]{}) != null) {
+        if (credentialDAO.findByExample(cred, new String[]{}) != null) {
             return true;
         }
         return false;
@@ -77,7 +83,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Customer getCustomerById(Long id) {
-        
+
         return customerDAO.findByPrimaryKey(id);
     }
 
@@ -105,7 +111,5 @@ public class CustomerServiceImpl implements ICustomerService {
     public void notifyCustomer(Customer customer, String message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-   
 
 }
