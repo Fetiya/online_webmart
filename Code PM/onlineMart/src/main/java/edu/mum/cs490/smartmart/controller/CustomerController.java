@@ -61,42 +61,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-
-
-//    @RequestMapping(value = "/cart", method = RequestMethod.GET)
-//    public String getCustomerCart(Model model) {
-//        // System.out.println("Controller"+id);
-//
-//        Customer customer = new Customer();
-//        Long id = Long.valueOf(String.valueOf(1));
-//
-//        customer = customerService.getCustomerById(id);
-//
-//        System.out.println(" custmer name is" + customer.getFirstName());
-//
-//        // List<ShoppingCartItem> cartItems= shoppingCartService.findAll();
-//        // model.addAttribute("cartItems",shoppingCartService.getCustomerShoppingCart(customer));
-//        List<ShoppingCartItem> cartItems = shoppingCartService.findAll();
-//        double total = 0;
-//        for (ShoppingCartItem i : cartItems) {
-//            total += i.getProduct().getPrice() * i.getQuantity();
-//        }
-//        model.addAttribute("cartItems", cartItems);
-//
-//        model.addAttribute("totalPrice", total);
-//
-//        return "cart";
-//    }
-
-//    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-//    public String checkOut(Model model) {
-//        // System.out.println("Controller"+id);
-//
-////        List<User> usr= userService.getAllUsers();
-////      model.addAttribute("users",userService.getAllUsers());
-//        return "checkout";
-//    }
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         // System.out.println("Controller"+id);
@@ -203,15 +167,8 @@ public class CustomerController {
 
         ShoppingCartItem item = shoppingCartService.getShoppingCart(id);
 
-        //use this after login is done
-        //Customer customer = (Customer) session.getAttribute("loggedUser");
-        Customer customer = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-        customer.getShoppingCart().remove(item);
-
         shoppingCartService.deleteShoppingCartItem(item);
 
-        //cartService.updateCart(customer.getShoppingCart());
-        //cartService.deleteShoppingCartItem(customer.getShoppingCart(), item);
         return "redirect:/cart";
     }
 }
