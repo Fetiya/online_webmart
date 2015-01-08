@@ -250,7 +250,7 @@ public class VendorController {
             result.addError(f);
         }
         if (!result.hasErrors()) {
-            credential.setRole(Role.VENDORADMIN);
+            credential.setRole(Role.ROLE_VENDORADMIN);
             credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
             credential.setActive(false);
             session.setAttribute("credential", credential);

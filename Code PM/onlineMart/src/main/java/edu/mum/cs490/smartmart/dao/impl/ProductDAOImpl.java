@@ -46,7 +46,7 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
         System.out.println("i m in product dao");
         List<Product> product;
         Query query = getSf().getCurrentSession().createQuery(" from Product p where p.name=:name");
-          query.setParameter("name", name);
+        query.setParameter("name", name);
 
         System.out.println("hereeee" + query.list());
         //query.setString("theName",name);
@@ -90,38 +90,27 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
 
     @Override
     public List<Product> getAllAvailalbleProducts() {
-       
-    Query query=getSf().getCurrentSession().createQuery("select p from Product p where p.quantity > 0");
-    
-    List<Product> products=query.list();
-    
-    return products;
-    
-    
-    public List<ProductSales> getPrductsSalesByVendor(long vendorId,Calendar startDate, Calendar endDate) {
-//        Query query = getSf().getCurrentSession().createQuery(
-//                "SELECT new ProductSales(o.product.id, o.product.name, o.product.quantity , sum(o.quantity) as qtySold, sum(o.price) as totalPrice, sum(o.salesDetail.profitToVendor) as totalNetIncome)"
-//                + " FROM OrderItem o"
-//                + " WHERE o.product.vendor.id= " + vendorId
-//                + " GROUP BY o.product.id");
-//        List<ProductSales> result = query.list();
 
-//        EntityManager em = emf.createEntityManager();
-//        List<ProductSales> result=em.createQuery("SELECT new ProductSales(o.product.id, o.product.name, o.product.quantity , sum(o.quantity) as qtySold, sum(o.price) as totalPrice, sum(o.salesDetail.profitToVendor) as totalNetIncome)"
-//                + " FROM OrderItem o"
-//                + " WHERE o.product.vendor.id= " + vendorId
-//                + " GROUP BY o.product.id", ProductSales.class).getResultList();
-        //.getResultList()
+        Query query = getSf().getCurrentSession().createQuery("select p from Product p where p.quantity > 0");
+
+        List<Product> products = query.list();
+
+        return products;
+
+    }
+
+    public List<ProductSales> getPrductsSalesByVendor(long vendorId, Calendar startDate, Calendar endDate) {
+
         String sql = "SELECT p.id as productId, p.name as productName, p.quantity as qtyInStock , sum(o.quantity) as qtySold, sum(o.price * o.quantity) as totalPrice, sum(s.profitToVendor) as totalNetIncome"
                 + " FROM orderitem o,product p,salesdetail s, order_table ot"
-                + " WHERE o.product_id=p.id and o.id=s.`orderItem_id` and p.vendor_id = v.id and v.id="+vendorId+" and ot.`orderDate` >= '"+startDate+"' AND ot.`orderDate` < '"+endDate+"' "
+                + " WHERE o.product_id=p.id and o.id=s.`orderItem_id` and p.vendor_id = v.id and v.id=" + vendorId + " and ot.`orderDate` >= '" + startDate + "' AND ot.`orderDate` < '" + endDate + "' "
                 + " GROUP BY p.id";
         Query query = getSf().getCurrentSession().createSQLQuery(sql);
         List<Object[]> listResult = query.list();
         List<ProductSales> result = new ArrayList<>();
 
         for (Object[] aRow : listResult) {
-            ProductSales productSales = new ProductSales(((BigInteger)aRow[0]).longValue(), (String) aRow[1], (Integer)aRow[2], ((BigDecimal)aRow[3]).intValue(), (Double)aRow[4], (Double)aRow[5]);
+            ProductSales productSales = new ProductSales(((BigInteger) aRow[0]).longValue(), (String) aRow[1], (Integer) aRow[2], ((BigDecimal) aRow[3]).intValue(), (Double) aRow[4], (Double) aRow[5]);
             result.add(productSales);
         }
         return result;

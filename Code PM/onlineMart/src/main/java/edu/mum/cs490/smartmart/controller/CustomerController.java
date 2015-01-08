@@ -151,7 +151,7 @@ public class CustomerController {
         }
         if (!result.hasErrors()) {
             Customer c = (Customer) session.getAttribute("loggedUser");
-            credential.setRole(Role.CUSTOMER);
+            credential.setRole(Role.ROLE_CUSTOMER);
             credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
             credential.setActive(true);
             session.setAttribute("credential", credential);

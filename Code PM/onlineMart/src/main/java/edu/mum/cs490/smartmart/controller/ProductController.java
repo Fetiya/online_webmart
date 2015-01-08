@@ -252,22 +252,22 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-
-    public String initHome(Model model, HttpSession session) {
-
-        model.addAttribute("products", productService.getAllProducts());
-
-        if (session.getAttribute("guestShoppingCart") == null) {
-
-            List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
-
-            session.setAttribute("guestShoppingCart", guestShoppingCart);
-
-        }
-        model.addAttribute("productCategory", categoryService.getAllProductCategory());
-        return "index";
-    }
+//    @RequestMapping(value = "/index", method = RequestMethod.GET)
+//
+//    public String initHome(Model model, HttpSession session) {
+//
+//        model.addAttribute("products", productService.getAllProducts());
+//
+//        if (session.getAttribute("guestShoppingCart") == null) {
+//
+//            List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
+//
+//            session.setAttribute("guestShoppingCart", guestShoppingCart);
+//
+//        }
+//        model.addAttribute("productCategory", categoryService.getAllProductCategory());
+//        return "index";
+//    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
