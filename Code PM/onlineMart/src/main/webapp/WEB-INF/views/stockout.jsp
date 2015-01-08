@@ -11,20 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
-            function confirmComplete() {
-                alert("confirmComplete");
-                var answer = confirm("Are you sure you want to delete the item from the shopping cart?");
-                if (answer == true)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        </script>
+    
     </head>
 
     <body>
@@ -60,7 +47,7 @@
 
                             <c:forEach var="cartItem" items="${stockOutItems}" varStatus="loopStatus" >
                                 <tr >
-                                    <form:form  commandName="cartCheckout" action="${pageContext.request.contextPath}/cart/edit/${cartItem.id}" method="post" enctype="multipart/form-data" >
+                                    <form:form  commandName="cartCheckout" action="${pageContext.request.contextPath}/cart/edit/${cartItem.product.id}" method="post" enctype="multipart/form-data" >
 
 
                                         <td class="cart_product">
@@ -84,7 +71,7 @@
                                         <td><input class="btn btn-primary" type="submit" value="Update" />
                                         </td>
                                         <td class="cart_delete">
-                                            <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/cart/delete/${cartItem.id}"><i class="fa fa-times"></i></a>
+                                            <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/cart/delete/${cartItem.product.id}"><i class="fa fa-times"></i></a>
                                         </td>
                                     </form:form>
                                 </tr>

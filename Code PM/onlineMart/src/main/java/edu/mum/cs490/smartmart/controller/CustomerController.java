@@ -162,13 +162,5 @@ public class CustomerController {
         return view;
     }
 
-    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
-    public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
-
-        ShoppingCartItem item = shoppingCartService.getShoppingCart(id);
-
-        shoppingCartService.deleteShoppingCartItem(item);
-
-        return "redirect:/cart";
-    }
+   
 }

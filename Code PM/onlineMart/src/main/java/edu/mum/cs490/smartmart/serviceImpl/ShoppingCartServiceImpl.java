@@ -105,4 +105,10 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
        shoppingcartDAO.clearCustomerShoppingCart(customer);
     
     }
+
+    @Override
+    public ShoppingCartItem getShoppingCartByProduct(Long id) {
+        
+        return shoppingcartDAO.getShoppingCartByProduct(id);
+    }
 }

@@ -224,12 +224,11 @@ public class ProductController {
 
     @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
     public String productDelete(Model model, @PathVariable long id) {
-       
-        Product product=productService.getProduct(id);
+
+        Product product = productService.getProduct(id);
         productService.deleteProduct(product);
         return "redirect:/products";
     }
-  
 
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {
@@ -244,18 +243,20 @@ public class ProductController {
             ex.printStackTrace();
         }
     }
-    
-  
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
 
     public String initHome(Model model, HttpSession session) {
 
         model.addAttribute("products", productService.getAllProducts());
-        List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
 
-        session.setAttribute("guestShoppingCart", guestShoppingCart);
+        if (session.getAttribute("guestShoppingCart") == null) {
 
+            List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
+
+            session.setAttribute("guestShoppingCart", guestShoppingCart);
+
+        }
         return "index";
     }
 
@@ -343,7 +344,7 @@ public class ProductController {
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     public String getCustomerCart(@ModelAttribute("cartUpdate") ShoppingCartItem cartItem, Model model, HttpSession session) {
 
-        List<ShoppingCartItem> cartItems= new ArrayList<ShoppingCartItem>();
+        List<ShoppingCartItem> cartItems = new ArrayList<ShoppingCartItem>();
         if (session.getAttribute("loggedUser") != null) {
 
             Customer customer = new Customer();
@@ -358,17 +359,17 @@ public class ProductController {
             cartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
 
         }
-        if (cartItems==null|| cartItems.isEmpty() ) {
-            
+        if (cartItems == null || cartItems.isEmpty()) {
+
             model.addAttribute("message", "Your cart is empty");
-            
+
         } else {
-            
+
             double total = 0;
             for (ShoppingCartItem i : cartItems) {
                 total += i.getProduct().getPrice() * i.getQuantity();
             }
-            
+
             model.addAttribute("cartItems", cartItems);
 
             model.addAttribute("totalPrice", total);
@@ -377,13 +378,12 @@ public class ProductController {
 
         return "cart";
     }
-    
+
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         return "checkout";
     }
-     
-     
+
 //    @RequestMapping(value = "/validation", method = RequestMethod.POST)
 //     public String validation(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
 //        
@@ -399,57 +399,49 @@ public class ProductController {
 //        }
 //        return "redirect:/cardValidation";
 //        }
-
-     
-     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
-     public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
-         System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
-         boolean result;
-         RestTemplate restTemplate = new RestTemplate();
-         Payment  payment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+cardNumber+"/"+securityNumber+"/"+totalAmount, Payment.class); 
-         if(payment.getId()!=null){
-             result=true;
-         }
-         else{
-             result=false;
-         }
-         model.addAttribute("result",result);
+    @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+    public String Cardvalidation(String cardNumber, String securityNumber, String totalAmount, Model model, HttpSession session) {
+        System.out.println("values from cardvalidation controler" + cardNumber + securityNumber + totalAmount);
+        boolean result;
+        RestTemplate restTemplate = new RestTemplate();
+        Payment payment = restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/" + cardNumber + "/" + securityNumber + "/" + totalAmount, Payment.class);
+        if (payment.getId() != null) {
+            result = true;
+        } else {
+            result = false;
+        }
+        model.addAttribute("result", result);
 //         boolean result=restTemplate.getForObject(payment, );
-         System.out.println("+++++++++++"+payment.getCardNumber());
-//         System.out.println("+++++++"+payment.getSecurityNumber());
-//          System.out.println(result+"1111111111111111111111111111111111111");
-//          if(payment){
-//              return "index";
-//          }
-         if(result){
-             // it will be redarected to checkout2
-             return "index";
-         }
-         else{
-           return "redirect:/checkout";  
-         }
-          }
-     
-//      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
-//     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
-//         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
-//    RestTemplate restTemplate = new RestTemplate();
-//   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
-//   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
-//          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
-//         return "index";
-//     }
+        System.out.println("+++++++++++" + payment.getCardNumber());
 
-    
-    @RequestMapping(value = "/checkout2", method = RequestMethod.GET)
-    // public String checkout(@ModelAttribute Address address,Model model,final RedirectAttributes re, HttpSession session) {
-    public String checkout2(Model model, final RedirectAttributes re, HttpSession session) {
+        if (result) {
+            // it will be redarected to checkout2
+            return "redirect:placeOrder";
+        } else {
+            return "redirect:/checkout";
+        }
+    }
+
+    @RequestMapping(value = "/placeOrder", method = RequestMethod.GET)
+    public String processOrder(Model model, final RedirectAttributes re, HttpSession session) {
+
         String message = "";
+        Customer customer = new Customer();
+        List<ShoppingCartItem> currentCartItems = new ArrayList<ShoppingCartItem>();
 
-        // Customer c = (Customer) session.getAttribute("loggedUser");
-        //------------------------------------------
-        Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-        List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
+        if (session.getAttribute("loggedUser") != null) {
+
+            // Customer c = (Customer) session.getAttribute("loggedUser");
+            //------------------------------------------
+            Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+            currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
+        } else {
+              
+            currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+            
+            //create the guest customer here;
+
+        }
 
         if (currentCartItems.isEmpty()) {
             message = "Your shopping cart is Empty";
@@ -465,7 +457,9 @@ public class ProductController {
                         + " do not have available stock right now. Please edit your quantity accordingly or remove them from cart.");
                 return "stockout";
             } else {
+
                 double totalPrice = 0;
+
                 for (ShoppingCartItem item : currentCartItems) {
                     //calculate total price
 
@@ -479,9 +473,9 @@ public class ProductController {
                 order.setOrderDate(timeNow);
                 order.setOrderItem(oi);
                 order = cartItemsToOrderItems(order, currentCartItems);
-                order.setCustomer(c);
+                order.setCustomer(customer);
 
-                c.getOrder().add(order);
+                customer.getOrder().add(order);
 
                 //save order
                 orderService.addOrder(order);
@@ -494,14 +488,17 @@ public class ProductController {
                 }
 
                 saveSalesDetail(order);
-                shoppingCartService.clearCustomerShoppingCart(c);
-
+                
+                shoppingCartService.clearCustomerShoppingCart(customer);
+                                
+                clearGuestShoppingCart(session);
+                
                 message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
                         + "receive order confirmation email shortly";
                 model.addAttribute("message", message);
                 model.addAttribute("order", order);
 
-                customerService.notifyCustomerCheckout(c, order);
+                customerService.notifyCustomerCheckout(customer, order);
 
             }
         }
@@ -648,11 +645,7 @@ public class ProductController {
 
     }
 
-//    @RequestMapping(value = "productByVendor")
-//    public String  listOfVendor(Model model, HttpSession session) {
-//        model.addAttribute("productlist", session.getAttribute("productlist"));
-//        return "productByVendor";       
-//    }
+
     @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
     public String getProductByVendor(Model model, @PathVariable long vid, HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
@@ -691,21 +684,84 @@ public class ProductController {
     @RequestMapping(value = "/cart/edit/{id}", method = RequestMethod.POST)
     public String editCart(Model model, @PathVariable long id, String quantity, HttpSession session) {
 
-        ShoppingCartItem cart = shoppingCartService.getShoppingCart(id);
-
         try {
-            cart.setQuantity(Integer.valueOf(quantity));
-            session.setAttribute("message", "");
+            Integer.valueOf(quantity);
+
+            int qty = Integer.valueOf(quantity);
 
         } catch (Exception e) {
 
-            session.setAttribute("message", "Error: Your shoppingcart is not updated. '" + quantity + "' is not a valid quantity");
+            session.setAttribute("message", "Error: Your shopping cart is not updated. '" + quantity + "' is not a valid quantity");
             return "redirect:/cart";
         }
-        shoppingCartService.updateCart(cart);
-        System.out.println("current quantity is " + quantity);
+        session.setAttribute("message", "");
+
+        ShoppingCartItem cart = new ShoppingCartItem();
+
+        if (session.getAttribute("loggedUser") != null) {
+
+            cart = shoppingCartService.getShoppingCartByProduct(id);
+
+            cart.setQuantity(Integer.valueOf(quantity));
+
+            shoppingCartService.updateCart(cart);
+
+        } else {
+
+            List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+
+            for (ShoppingCartItem cartItem : items) {
+
+                if (cartItem.getProduct().getId() == id) {
+
+                    cart = cartItem;
+
+                    cart.setQuantity(Integer.valueOf(quantity));
+
+                    break;
+
+                }
+            }
+        }
+
         return "redirect:/cart";
 
     }
 
+    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
+    public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
+
+        if (session.getAttribute("loggedUser") != null) {
+            
+            ShoppingCartItem item = shoppingCartService.getShoppingCartByProduct(id);
+
+            shoppingCartService.deleteShoppingCartItem(item);
+            
+        } else {
+            List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+
+            for (ShoppingCartItem cartItem : items) {
+
+                if (cartItem.getProduct().getId() == id) {
+
+                    items.remove(cartItem);
+
+                    break;
+
+                }
+            }
+
+        }
+
+        return "redirect:/cart";
+    }
+
+    
+    public void clearGuestShoppingCart(HttpSession session)
+    {
+        List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+        items.clear();
+
+    }
 }
+

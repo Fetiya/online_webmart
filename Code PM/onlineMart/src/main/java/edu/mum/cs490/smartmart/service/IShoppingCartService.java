@@ -31,5 +31,7 @@ public interface IShoppingCartService {
     public void addShoppingCart(ShoppingCartItem item);
     
     public void clearCustomerShoppingCart(Customer customer);
+    
+    public ShoppingCartItem getShoppingCartByProduct(Long id);
    
 }
