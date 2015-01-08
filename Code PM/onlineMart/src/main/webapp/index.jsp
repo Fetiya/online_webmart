@@ -27,5 +27,7 @@
         <a href="addProductCategory" >Add Product Category</a><br/>
         <a href="viewCategory" >View Product Category </a><br/>
         
+        <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
+        
     </body>
 </html>

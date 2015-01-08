@@ -24,7 +24,7 @@
        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     
     <aop:aspectj-autoproxy/>
- 
+    
    
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -147,7 +147,9 @@
     <bean id="settingsService" class="edu.mum.cs490.smartmart.serviceImpl.SettingsServiceImpl">
         <property name="settingsDAO" ref="settingsDAO"/> 
     </bean>
-    
+    <bean id="jasperReportService" class="edu.mum.cs490.smartmart.serviceImpl.JasperReportServiceImpl">
+        <property name="productDAO" ref="productDAO"/> 
+    </bean>
     
     
     
@@ -164,11 +166,13 @@
         <sec:intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <!--<sec:intercept-url pattern="/contact-us" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
         
-        <sec:intercept-url pattern="/addCustomer" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>
+        <sec:intercept-url pattern="/addCustomer" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
         <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+        <sec:intercept-url pattern="/report" access="ROLE_VENDORADMIN"/>
         
         <!--        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
         <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
@@ -197,4 +201,14 @@
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <constructor-arg name="strength" value="11" />
     </bean>
+    <!--Spring Security End-->
+    
+    <!--Jasper Report-->
+    <import resource="jasper-view.xml"/>
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/jasper-view.xml"/>
+        <property name="order" value="0"/>
+    </bean>
+    <!--Jasper Report-->
+    
 </beans>

@@ -10,6 +10,8 @@ import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.report.entity.ProductSales;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -21,5 +23,6 @@ public interface IProductDAO   extends IGenericDAO<Product, Long>{
      public List<Product> getProductByCatId(long categoryId );
      public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c);
      public List<Product> getProductByVendor(Vendor v);
+     public List<ProductSales> getPrductsSalesByVendor(long vendorId,Calendar startDate, Calendar endDate);
      
 }

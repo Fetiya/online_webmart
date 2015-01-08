@@ -11,9 +11,19 @@ import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.report.entity.ProductSales;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IProductDAO {
 
+//    EntityManagerFactory emf = Persistence.createEntityManagerFactory("edu.mum.cs490_onlineMart_war_1.0-SNAPSHOTPU");
     public ProductDAOImpl() {
         super(Product.class);
     }
@@ -75,6 +86,35 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
         product = query.list();
         System.out.println("size of product Array: " + product.size());
         return product;
+    }
+
+    public List<ProductSales> getPrductsSalesByVendor(long vendorId,Calendar startDate, Calendar endDate) {
+//        Query query = getSf().getCurrentSession().createQuery(
+//                "SELECT new ProductSales(o.product.id, o.product.name, o.product.quantity , sum(o.quantity) as qtySold, sum(o.price) as totalPrice, sum(o.salesDetail.profitToVendor) as totalNetIncome)"
+//                + " FROM OrderItem o"
+//                + " WHERE o.product.vendor.id= " + vendorId
+//                + " GROUP BY o.product.id");
+//        List<ProductSales> result = query.list();
+
+//        EntityManager em = emf.createEntityManager();
+//        List<ProductSales> result=em.createQuery("SELECT new ProductSales(o.product.id, o.product.name, o.product.quantity , sum(o.quantity) as qtySold, sum(o.price) as totalPrice, sum(o.salesDetail.profitToVendor) as totalNetIncome)"
+//                + " FROM OrderItem o"
+//                + " WHERE o.product.vendor.id= " + vendorId
+//                + " GROUP BY o.product.id", ProductSales.class).getResultList();
+        //.getResultList()
+        String sql = "SELECT p.id as productId, p.name as productName, p.quantity as qtyInStock , sum(o.quantity) as qtySold, sum(o.price * o.quantity) as totalPrice, sum(s.profitToVendor) as totalNetIncome"
+                + " FROM orderitem o,product p,salesdetail s, order_table ot"
+                + " WHERE o.product_id=p.id and o.id=s.`orderItem_id` and p.vendor_id = v.id and v.id="+vendorId+" and ot.`orderDate` >= '"+startDate+"' AND ot.`orderDate` < '"+endDate+"' "
+                + " GROUP BY p.id";
+        Query query = getSf().getCurrentSession().createSQLQuery(sql);
+        List<Object[]> listResult = query.list();
+        List<ProductSales> result = new ArrayList<>();
+
+        for (Object[] aRow : listResult) {
+            ProductSales productSales = new ProductSales(((BigInteger)aRow[0]).longValue(), (String) aRow[1], (Integer)aRow[2], ((BigDecimal)aRow[3]).intValue(), (Double)aRow[4], (Double)aRow[5]);
+            result.add(productSales);
+        }
+        return result;
     }
 
 }

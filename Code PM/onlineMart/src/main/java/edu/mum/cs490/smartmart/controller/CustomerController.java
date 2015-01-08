@@ -66,12 +66,13 @@ public class CustomerController {
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
     public String addCustomer(@ModelAttribute("customer") Customer customer) {
+        System.out.println("Customer controllerrrrrrrrrrr Get");
         return "customerRegisteration";
     }
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
     public String add(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
-
+System.out.println("Customer controllerrrrrrrrrrr Post");
         String view = "redirect:/";
         if (!result.hasErrors()) {
             customerService.addCustomer(customer);
