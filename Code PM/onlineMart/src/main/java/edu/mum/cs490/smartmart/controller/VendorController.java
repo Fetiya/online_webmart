@@ -10,6 +10,7 @@ import edu.mum.cs490.smartmart.domain.Credential;
 import edu.mum.cs490.smartmart.domain.Role;
 import edu.mum.cs490.smartmart.domain.SubscriptionRule;
 import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.domain.VendorStatus;
 import edu.mum.cs490.smartmart.domain.VendorAdmin;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
@@ -24,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -64,6 +66,45 @@ public class VendorController {
     public ISubscriptionRuleService getSubscriptionRuleService() {
         return subscriptionRuleService;
     }
+    
+     @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
+    public String getPendingVendors(Model model, HttpSession session) {
+        model.addAttribute("pendingVendors",vendorService.getAllPendingVendors());
+         return "viewPendingVendors";
+    }
+    
+     @RequestMapping(value = "/approveVendors/{id}", method = RequestMethod.POST)
+    public String approveVendors(@PathVariable Long id, String Status, Model model, HttpSession session) {
+         System.out.println("approveVendor controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       Vendor vendor = vendorService.getVendorById(id);
+        if (Status.equalsIgnoreCase("ACTIVE")) {
+            vendor.setStatus(VendorStatus.ACTIVE);
+        } else {
+            vendor.setStatus(VendorStatus.REJECTED);
+        }
+        vendorService.update(vendor);
+         System.out.println("vendor "+ vendor.getId());
+         return "redirect:/viewPendingVendors";
+    }
+    
+    @RequestMapping(value = "/VendorsForUnsubscribe", method = RequestMethod.GET)
+    public String getVendorsForUnsubscribe(Model model, HttpSession session) {
+        model.addAttribute("vendors",vendorService.getAllActiveVendor());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
+         return "vendorUnsubscribe";
+    }
+    
+    @RequestMapping(value = "/unsubscribeVendors/{id}", method = RequestMethod.POST)
+    public String unsubscribeVendors(@PathVariable Long id, String Status, Model model, HttpSession session) {
+         System.out.println("unsubscribeVendors controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       Vendor vendor = vendorService.getVendorById(id);
+       if (Status.equalsIgnoreCase("DEACTIVATE")) {
+            vendor.setStatus(VendorStatus.DEACTIVATE);
+        vendorService.update(vendor);
+         System.out.println("vendor "+ vendor.getId());
+             }
+       return "redirect:/VendorsForUnsubscribe";
+    }
 
     public void setSubscriptionRuleService(ISubscriptionRuleService subscriptionRuleService) {
         this.subscriptionRuleService = subscriptionRuleService;
@@ -85,17 +126,17 @@ public class VendorController {
         this.customerService = customerService;
     }
 
-    @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
-    public String getPendingVendors(Model model, HttpSession session) {
-        // if (session.getAttribute("pendingVendors") == null) {
-//            List<Vendor> pendingVendors = new ArrayList();
-//            pendingVendors=vendorService.getAllVendors();
-        model.addAttribute("pendingVendors", vendorService.getAllVendors());
-        //session.setAttribute("pendingVendors", vendorService.getAllVendors());
-        //  }
-
-        return "viewPendingVendors";
-    }
+//    @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
+//    public String getPendingVendors(Model model, HttpSession session) {
+//        // if (session.getAttribute("pendingVendors") == null) {
+////            List<Vendor> pendingVendors = new ArrayList();
+////            pendingVendors=vendorService.getAllVendors();
+//        model.addAttribute("pendingVendors", vendorService.getAllVendors());
+//            //session.setAttribute("pendingVendors", vendorService.getAllVendors());
+//        //  }
+//
+//        return "viewPendingVendors";
+//    }
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.GET)
     public String addVendor(@ModelAttribute("vendor") Vendor vendor, Model model) {

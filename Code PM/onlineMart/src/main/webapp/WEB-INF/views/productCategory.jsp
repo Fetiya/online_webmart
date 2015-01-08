@@ -12,32 +12,35 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <table> 
-            <thead>
+        <section id="cart_items">
+            <div class="table-responsive cart_info">
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <th>id</th>
+                            <th>Category Name</th>
+                            <th>Category Description</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="c" items="${categories}" varStatus="loopStatus" >
 
-                <tr>
-                    <th>id</th>
-                
-                    <th>Category Name</th>
-                    <th>Category Description</th>
+                        <td>${c.id}</td>
 
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="c" items="${categories}" varStatus="loopStatus" >
+                        <td width="20%">${c.name}</td>
 
-                <td>${c.id}</td>
-                
-                <td width="20%">${c.name}</td>
+                        <td> ${c.description}     </td>
+                        <td><a href="productCategoryEdit/${c.id}"> Edit Product Category</a></td>
+                        <td><a href="productCategoryDelete/${c.id}">DELETE</a></td>
 
-                <td> ${c.description}     </td>
-                <td><a href="productCategoryEdit/${c.id}"> Edit Product Category</a></td>
-                   <td><a href="productCategoryDelete/${c.id}">DELETE</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
-            </tr>
-        </c:forEach>
-    </tbody>
-</table>
-        <h1>Hello World!</h1>
     </body>
 </html>

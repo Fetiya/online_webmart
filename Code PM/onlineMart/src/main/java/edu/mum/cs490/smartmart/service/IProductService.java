@@ -41,7 +41,9 @@ public interface IProductService {
 
     public void deleteProduct(Product product);
 
-    public Product getProduct(int id);
+
+    
+   
 
     public List<Product> getProductByCategoryId(long categoryId);
 

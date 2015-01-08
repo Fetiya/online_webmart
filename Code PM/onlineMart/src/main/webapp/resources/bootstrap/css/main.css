@@ -316,6 +316,7 @@ ul.sub-menu {
 
 .navbar-nav li ul.sub-menu li a{
   color: #fff;
+  background:none;
 }
 
 .navbar-nav li ul.sub-menu li a:hover{
@@ -693,7 +694,7 @@ ul.sub-menu {
 	margin-left: -65px;
 }
 
-h2.title:before{
+h2.title:before, p.title:before{
 	content: " ";
 	position: absolute;
 	background: #fff;
@@ -841,6 +842,17 @@ h2.title {
   margin: 0 15px;
   text-transform: uppercase;
   margin-bottom: 30px;
+  position: relative;
+}
+
+p.title {
+  color: #FE980F;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
   position: relative;
 }
 
@@ -1626,7 +1638,7 @@ h2.title {
 
 .cart_product {
   display: block;
-  margin: 15px -70px 10px 25px;
+ 
 }
 
 .cart_quantity_button a {
@@ -2517,6 +2529,21 @@ h2.title {
 
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
+}
+.register .sub-menu a {
+    background-color: none!important;
+}
+.col-sm-form {
+    width: 100%;
+}
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px;
+}
+.col-sm-form table .td-label{
+    width:200px;
+}
+.col-sm-form table .td-input{
+    width:300px;
 }
 
 
