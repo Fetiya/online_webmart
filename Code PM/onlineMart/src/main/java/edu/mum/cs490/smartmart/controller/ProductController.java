@@ -432,7 +432,7 @@ public class ProductController {
              }
            else
              {
-            double totalPrice = 0;
+             totalPrice = 0;
             for (ShoppingCartItem item : currentCartItems) {
                 //calculate total price
                
