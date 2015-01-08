@@ -57,12 +57,12 @@ public class VendorServiceImpl implements IVendorService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void addVendor(Vendor vendor) {
-        vendor.getVendorAdmin().getCredential().setPassword(encryptionService.getEncryptedPassword(vendor.getVendorAdmin().getCredential().getPassword()));
-        vendor.getVendorAdmin().getCredential().setRole(Role.ROLE_VENDORADMIN);
+//        vendor.getVendorAdmin().getCredential().setPassword(encryptionService.getEncryptedPassword(vendor.getVendorAdmin().getCredential().getPassword()));
+//        vendor.getVendorAdmin().getCredential().setRole(Role.VENDORADMIN);
 //        vendor.getVendorAdmin().setCredential(credential);
 //        vendor.getVendorAdmin().setAddress(address);
         vendor.setStatus(VendorStatus.PENDING);
-        vendor.getVendorAdmin().setVendor(vendor);
+//        vendor.getVendorAdmin().setVendor(vendor);
         vendorDAO.save(vendor);
     }
 
