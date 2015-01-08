@@ -374,6 +374,8 @@ public class ProductController {
 
             model.addAttribute("totalPrice", total);
 
+            session.setAttribute("cartAmount", total);
+
         }
 
         return "cart";
@@ -423,7 +425,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/placeOrder", method = RequestMethod.GET)
-    public String processOrder(Model model, final RedirectAttributes re, HttpSession session) {
+    public String placeOrder(Model model, final RedirectAttributes re, HttpSession session) {
 
         String message = "";
         Customer customer = new Customer();
@@ -436,10 +438,11 @@ public class ProductController {
             Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
             currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
         } else {
-              
+
             currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
-            
-            //create the guest customer here;
+            customer = (Customer) session.getAttribute("guestUser");
+            //persist customer, here or after orderbvalidation??
+            customerService.addCustomer(customer);
 
         }
 
@@ -468,6 +471,7 @@ public class ProductController {
                 Date timeNow = new Date();
 
                 List<OrderItem> oi = new ArrayList<OrderItem>();
+                
                 Order order = new Order();
                 order.setTotalAmount(totalPrice);
                 order.setOrderDate(timeNow);
@@ -488,11 +492,15 @@ public class ProductController {
                 }
 
                 saveSalesDetail(order);
-                
+
                 shoppingCartService.clearCustomerShoppingCart(customer);
-                                
-                clearGuestShoppingCart(session);
+
+                if (session.getAttribute("loggedUser") == null) {
+
+                    clearGuestShoppingCart(session);
                 
+
+                }
                 message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
                         + "receive order confirmation email shortly";
                 model.addAttribute("message", message);
@@ -645,7 +653,6 @@ public class ProductController {
 
     }
 
-
     @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
     public String getProductByVendor(Model model, @PathVariable long vid, HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
@@ -732,11 +739,11 @@ public class ProductController {
     public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
 
         if (session.getAttribute("loggedUser") != null) {
-            
+
             ShoppingCartItem item = shoppingCartService.getShoppingCartByProduct(id);
 
             shoppingCartService.deleteShoppingCartItem(item);
-            
+
         } else {
             List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
 
@@ -756,12 +763,9 @@ public class ProductController {
         return "redirect:/cart";
     }
 
-    
-    public void clearGuestShoppingCart(HttpSession session)
-    {
+    public void clearGuestShoppingCart(HttpSession session) {
         List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
         items.clear();
 
     }
 }
-
