@@ -46,7 +46,7 @@ public class Vendor implements Serializable {
     // commenting bcs of path error
 //    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
 //    private List<VendorAdmin> admins;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "vendor", cascade = CascadeType.ALL)
     private VendorAdmin vendorAdmin; //= new VendorAdmin();
 
     public Vendor() {

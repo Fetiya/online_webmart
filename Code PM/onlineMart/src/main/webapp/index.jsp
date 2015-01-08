@@ -12,6 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <jsp:forward page="WEB-INF/views/index.jsp"></jsp:forward>
         <h1>Welcome to SmartMart</h1>
 
         <a href="viewUsers" >View Users </a></br>

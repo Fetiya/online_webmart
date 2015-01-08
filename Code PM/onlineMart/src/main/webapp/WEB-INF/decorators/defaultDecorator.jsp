@@ -73,8 +73,8 @@
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
                                         <ul  class="sub-menu">
-                                            <li><a  href="addVendor">Vendor</a></li><br>
-                                            <li><a href="addCustomer">Customer</a></li>
+                                            <li><a  href="addAdminCredential">Vendor</a></li><br>
+                                            <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
 <!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->

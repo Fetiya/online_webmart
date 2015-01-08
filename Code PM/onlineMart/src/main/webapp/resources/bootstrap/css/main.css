@@ -671,7 +671,7 @@ ul.sub-menu {
   z-index:3;
 }
 
-.left-sidebar h2:after, h2.title:after, p.title:after{
+.left-sidebar h2:after, h2.title:after{
 	content: " ";
 	position: absolute;
 	border: 1px solid #f5f5f5;
@@ -850,7 +850,7 @@ p.title {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: 400;
-  margin: 0 15px;
+  margin: 0 5px;
   text-transform: uppercase;
   margin-bottom: 20px;
   position: relative;
@@ -2532,6 +2532,18 @@ p.title {
 }
 .register .sub-menu a {
     background-color: none!important;
+}
+.col-sm-form {
+    width: 100%;
+}
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px;
+}
+.col-sm-form table .td-label{
+    width:200px;
+}
+.col-sm-form table .td-input{
+    width:300px;
 }
 
 

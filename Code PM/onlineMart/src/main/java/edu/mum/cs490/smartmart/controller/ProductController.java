@@ -263,7 +263,7 @@ public class ProductController {
     public String initHome(Model model) {
 
         model.addAttribute("products", productService.getAllProducts());
-
+        model.addAttribute("productCategory", categoryService.getAllProductCategory());
         return "index";
     }
 
@@ -338,7 +338,7 @@ public class ProductController {
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
-        double totalPrice = 0;
+        
 
         //........................change back to this
         // Customer c = (Customer) session.getAttribute("loggedUser");
@@ -598,6 +598,12 @@ public class ProductController {
         shoppingCartService.updateCart(cart);
         System.out.println("current quantity is " + quantity);
         return "redirect:/cart";
+    }
+    @RequestMapping(value = "productBycat/{id}", method = RequestMethod.GET)
+    public String ProductByCatId(Model model, @PathVariable long id) {
+        List<Product> productList = productService.getProductByCategoryId(id);
+        model.addAttribute("productList", productList);
+        return "index";
     }
     
   

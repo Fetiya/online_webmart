@@ -89,18 +89,18 @@
 
                                                     </p>
                                                 </td>
-                                                
+
                                                 <td><input class="btn btn-primary" type="submit" value="Update" />
                                                 </td>
-                                              <td class="cart_delete">
+                                                <td class="cart_delete">
                                                     <a class="cart_quantity_delete" href="${pageContext.request.contextPath}/cart/delete/${cartItem.id}"><i class="fa fa-times"></i></a>
                                                 </td>
 
-                                        
-                                    </form:form>
-                                    </tr>
 
-                                </c:forEach>
+                                            </form:form>
+                                        </tr>
+
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -124,7 +124,7 @@
                                         <li>Shipping Cost <span>Free</span></li>
                                         <li>Total <span>$ <c:out value="${totalPrice}"/></span></li>
                                     </ul>
-                                  
+
                                     <a class="btn btn-default check_out" href="checkout">Check Out</a>
 
                                 </div>

@@ -15,42 +15,49 @@
         <title>Company Address Information</title>
     </head>
     <body>
-        <form:form commandName="comapnyAddress" action="companyAddressInformation" method="POST" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>Please provide Company address information</td>
-                </tr>
-                <tr>
-                    <td>Country :</td>
-                    <td><form:input type="text" path="country" /> </td>
-                    <td><form:errors path="country" cssClass="error" /> </td>
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <form:form commandName="comapnyAddress" action="companyAddressInformation" method="POST" enctype="multipart/form-data">
+                        <table>
+                            <p class="title ">Please provide Company address information</p>
+                            
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Country :</td>
+                                <td class="td-input"><form:input type="text" path="country" class="form-control" placeholder="Country" /> </td>
+                                <td><form:errors path="country" cssClass="error" /> </td>
 
-                </tr>
-
-
-                <tr>
-                    <td>City :</td>
-                    <td><form:input type="text" path="city" /> </td>
-                    <td><form:errors path="city" cssClass="error"/> </td>
-                </tr>
+                            </tr>
 
 
-                <tr>
-                    <td>Street :</td>
-                    <td><form:input type="text" path="street" /> </td>
-                    <td><form:errors path="street" cssClass="error"/> </td>
-                </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">City :</td>
+                                <td class="td-input"><form:input type="text" path="city" class="form-control" placeholder="City" /> </td>
+                                <td><form:errors path="city" cssClass="error"/> </td>
+                            </tr>
 
 
-                <tr>
-                    <td>Zip Code :</td>
-                    <td><form:input type="text" path="zip" /> </td>
-                    <td><form:errors path="zip" cssClass="error"/> </td>
-                </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Street :</td>
+                                <td class="td-input"><form:input type="text" path="street" class="form-control" placeholder="Street" /> </td>
+                                <td><form:errors path="street" cssClass="error"/> </td>
+                            </tr>
 
 
-            </table>
-            <form:button >Next</form:button>
-        </form:form>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Zip Code :</td>
+                                <td class="td-input"><form:input type="text" path="zip" class="form-control" placeholder="Zip" /> </td>
+                                <td><form:errors path="zip" cssClass="error"/> </td>
+                            </tr>
+
+                            <tr class="form-group col-md-12">
+                                <td class="td-label"><form:button class="btn btn-primary" >Next</form:button></td>
+                            </tr>
+                        </table>
+                        
+                    </form:form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

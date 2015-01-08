@@ -15,25 +15,35 @@
         <title>Vendor Registeration</title>
     </head>
     <body>
-        <form:form commandName="vendor" action="addVendor" method="POST" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>Please provide Company Information</td>
-                </tr>
-                <tr>
-                    <td>======Company Name :</td>
-                    <td><form:input type="text" path="companyName" /> </td>
-                    <td><form:errors path="companyName" cssClass="error" /> </td>
-                </tr>
-                <tr>
-                    <td>Account Number :</td>
-                    <td><form:input type="text" path="accountNum" /> </td>
-                    <td><form:errors path="accountNum" cssClass="error"/> </td>
-                </tr>
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <form:form commandName="vendor" action="addVendor" method="POST" enctype="multipart/form-data">
+                        <table>
 
-            </table>
+                            <p class="title ">Please provide Company Information</p>
 
-            <form:button >Sign up</form:button>
-        </form:form>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Company Name :</td>
+                                <td class="td-input"><form:input type="text" path="companyName" class="form-control" placeholder="Company Name" /> </td>
+                                <td><form:errors path="companyName" cssClass="error" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Account Number :</td>
+                                <td class="td-input"><form:input type="text" path="accountNum" class="form-control" placeholder="Account Num" /> </td>
+                                <td><form:errors path="accountNum" cssClass="error"/> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">
+                                    <form:button class="btn btn-primary" >Sign up</form:button>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                    </form:form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

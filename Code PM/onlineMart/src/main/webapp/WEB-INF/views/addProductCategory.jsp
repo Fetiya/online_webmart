@@ -12,24 +12,32 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h2>Add Product Category</h2>
-        <form:form commandName="category" action="addProductCategory" method="Post">
-            <form:errors path="*" cssClass="alert alert-danger" element="div"/> 
-            <table>
-                <tr>
-                    <td>Category Name : </td>
-                    <td><form:input type="text" path="name" /> </td>  
-                    <td><form:errors path="name" cssClass="error" /> </td>
-                </tr
-                <tr>
-                    <td>Category Description : </td>
-                    <td><form:input type="text" path="description" /> </td>
-                    <td><form:errors path="description" cssClass="error" /> </td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Add Product Category"/></td>
-                </tr>
-        </table>
-    </form:form>
-</body>
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <h2 class="title text-center">Product Category</h2>
+
+                    <form:form commandName="category" action="addProductCategory" method="Post">
+                        <form:errors path="*" cssClass="alert alert-danger" element="div"/> 
+                        <table>
+                            <p class="title ">Add Product Category</p>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Category Name : </td>
+                                <td class="td-input"><form:input type="text" path="name" class="form-control" placeholder="Category Name" /> </td>  
+                                <td><form:errors path="name" cssClass="error" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Category Description : </td>
+                                <td class="td-input"><form:input type="text" path="description"  class="form-control" placeholder="Category Description"/> </td>
+                                <td><form:errors path="description" cssClass="error" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label"><input type="submit" value="Add Product Category" class="btn btn-primary"/></td>
+                            </tr>
+                        </table>
+                    </form:form>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
