@@ -55,6 +55,18 @@ public class ShoppingCartItemDAOImpl extends GenericDAOImpl<ShoppingCartItem, Lo
                // cartItem.delete();
             }
         }
-    
+
+    @Override
+    public ShoppingCartItem getShoppingCartByProduct(Long productId) {
+        
+        ShoppingCartItem cart;
+        Query query = getSf().getCurrentSession().createQuery("select ci from ShoppingCartItem  ci where ci.product.id=:productId");
+        
+        query.setParameter("productId", productId);
+        
+        cart=(ShoppingCartItem) query.uniqueResult();
+        
+        return cart;
+    }
     
 }

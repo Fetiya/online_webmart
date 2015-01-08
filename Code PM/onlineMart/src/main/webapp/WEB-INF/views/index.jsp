@@ -15,9 +15,6 @@
     </head>
     <body>
 
-
-
-
         <div class="features_items"><!--features_items-->
             <h2 class="title text-center">Features Items</h2>
 
@@ -53,7 +50,7 @@
 
         </div><!--features_items-->
 
-        <div class="category-tab"><!--category-tab-->
+<!--        <div class="category-tab">category-tab
             <div class="col-sm-12">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tshirt" data-toggle="tab">T-Shirt</a></li>
@@ -339,32 +336,20 @@
                     </div>
                 </div>
             </div>
-        </div><!--/category-tab-->
+        </div>/category-tab
+-->
 
 
 
-
-        <div class="recommended_items"><!--recommended_items-->
+        <!--<div class="recommended_items">
             <h2 class="title text-center">recommended items</h2>
 
             <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="item active">
-                        <c:forEach var="product" items="${products}"  >
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="resources/bootstrap/images/productImages/${product.id}.jpg" alt="" />
-                                            <h2>$ ${product.price}</h2>
-                                            <p>${product.name}</p>
-                                            <a href="addToCart/${product.id}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                      
+                            
+                       
 
                     </div>
                     <div class="item">	
@@ -416,7 +401,7 @@
                     <i class="fa fa-angle-right"></i>
                 </a>			
             </div>
-        </div><!--/recommended_items-->
+        </div>--><!--/recommended_items-->
 
 
 

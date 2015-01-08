@@ -70,8 +70,15 @@
                         </div>
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
-                                <ul class="nav navbar-nav">                                    
-                                    <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                                <ul class="nav navbar-nav">
+                                    <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
+                                        <ul  class="sub-menu">
+                                            <li><a  href="addAdminCredential">Vendor</a></li><br>
+                                            <li><a href="addCredential">Customer</a></li>
+                                        </ul>
+                                    </li>
+<!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
+                                   
                                     <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                         <c:choose>   
@@ -109,28 +116,24 @@
                                     <li><a href="${pageContext.request.contextPath}/index" class="active">Home</a></li>
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.html">Products</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/productDetail">Product Details</a></li> 
+                                            <li><a href="products">Products</a></li>
                                             <li><a href="${pageContext.request.contextPath}/checkout">Checkout</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/login">Login</a></li> 
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
+                                    <li class="dropdown"><a href="blogPage">Blog</i></a>
+<!--                                        <ul role="menu" class="sub-menu">
                                             <li><a href="blog.html">Blog List</a></li>
                                             <li><a href="blog-single.html">Blog Single</a></li>
-                                        </ul>
+                                        </ul>-->
                                     </li> 
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="contact-us.html">Contact</a></li>
+
+                                    <li><a href="contactUs">Contact</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <!--                            <div class="search_box pull-right">
-                                                            <input type="text" placeholder="Search"/>
-                                                        </div>-->
 
                             <c:import url="/searchProduct"/>
 
@@ -178,8 +181,8 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="companyinfo">
-                                <h2><span>e</span>-shopper</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+                                <h2><span>S</span>MART MART</h2>
+                                <p>Buy Your Stuff  easily. Free Shopping World Wide</p>
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -194,7 +197,7 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
 
@@ -209,7 +212,7 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
 
@@ -224,7 +227,7 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
 
@@ -239,14 +242,14 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="address">
                                 <img src="resources/bootstrap/images/home/map.png" alt="" />
-                                <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+                                <p>FairField IA 52557</p>
                             </div>
                         </div>
                     </div>
@@ -322,8 +325,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                        <p class="pull-left">Copyright © 2015 SMART MART Inc. All rights reserved.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href="#">SMART MART</a></span></p>
                     </div>
                 </div>
             </div>

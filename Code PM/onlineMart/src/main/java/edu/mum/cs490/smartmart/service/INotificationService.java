@@ -7,7 +7,8 @@ package edu.mum.cs490.smartmart.service;
 
 import edu.mum.cs490.smartmart.domain.Admin;
 import edu.mum.cs490.smartmart.domain.Customer;
-import java.util.List;
+import edu.mum.cs490.smartmart.domain.Order;
+import edu.mum.cs490.smartmart.domain.Vendor;
 
 /**
  *
@@ -16,8 +17,11 @@ import java.util.List;
 public interface INotificationService {
 
     
-    public void notifyCustomer(Customer customer, String message) ;
+    public void notifyCustomerSignUp(Customer customer, String message) ;
+    
+    public void notifyVendorSignUp(Vendor vendor, String message) ;
 
     public void contactAdmin(Admin admin, String message);
-
+    
+    public void notifyCustomerCheckout(Customer customer, String message) ;
 }

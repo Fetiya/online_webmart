@@ -16,7 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -29,21 +31,22 @@ public class Vendor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
+    @NotBlank (message = "{NotBlank.Vendor.companyName.validation}")
     private String companyName;
     @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
+    private @Valid Address address;
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     private List<Product> productlist;
     @OneToOne
     private SubscriptionRule subscriptionRule;
+    @NotBlank(message = "{NotBlank.Vendor.accountNum.validation}")
     private String accountNum;
     @Enumerated(EnumType.STRING)
     private VendorStatus status;
     // commenting bcs of path error
 //    @OneToMany (mappedBy = "vendor", cascade = CascadeType.ALL)
 //    private List<VendorAdmin> admins;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "vendor", cascade = CascadeType.ALL)
     private VendorAdmin vendorAdmin; //= new VendorAdmin();
 
     public Vendor() {

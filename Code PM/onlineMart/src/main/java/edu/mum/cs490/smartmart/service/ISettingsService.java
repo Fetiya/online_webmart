@@ -5,6 +5,9 @@
  */
 package edu.mum.cs490.smartmart.service;
 
+import edu.mum.cs490.smartmart.domain.Settings;
+import java.util.List;
+
 /**
  *
  * @author Fetiya
@@ -12,4 +15,9 @@ package edu.mum.cs490.smartmart.service;
 public interface ISettingsService {
    
     public String getSettingsValueByName(String name);
+    public void addSetting(Settings setting);
+    public void  updateSettings(Settings setting);
+    public List<Settings> getAllSettings();
+    public Settings getSetting(long id);
+    public void deleteSetting(Settings setting);
 }

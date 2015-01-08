@@ -22,7 +22,10 @@ public interface IProductDAO   extends IGenericDAO<Product, Long>{
      public List<Product> getProductByName(String name);
      public List<Product> getProductByCatId(long categoryId );
      public List<Product> getProductByVendorCategoryId(Vendor v, ProductCategory c);
+     
      public List<Product> getProductByVendor(Vendor v);
      public List<ProductSales> getPrductsSalesByVendor(long vendorId,Calendar startDate, Calendar endDate);
+     
+     public List<Product> getAllAvailalbleProducts();
      
 }

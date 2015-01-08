@@ -12,33 +12,36 @@
         <title></title>
     </head>
     <body>
-        <div id="sidebar">
-            <div class="navlist security">
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <h2 class="title text-center">LOGIN</h2>
 
-                <div class="signupSuccess">${successfulSignup}</div>
+                    <div class="signupSuccess">${successfulSignup}</div>
 
-                <h1>Login Page</h1>
+                    <c:if test="${error eq true}">
+                        <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+                    </c:if>
+                    <table>
+                        <form method="post" action="j_spring_security_check" />
+                        <tr class="form-group col-md-12">
+                            <td class="td-label">User: </td>
+                            <td class="td-input"><input name="j_username" class="form-control" placeholder="User Name" /> </td>
+                        </tr>
+                        <tr class="form-group col-md-12">
+                            <td class="td-label">Password: </td>
+                            <td class="td-input"><input type="password" name='j_password'class="form-control" placeholder="Password" />  </td>
+                        </tr>
+                        <tr class="form-group col-md-12">
+                            <td class="td-label">      
+                                <input type="submit" value="Login"  class="btn btn-primary" />
+                            </td>
+                        </tr>
 
-                <c:if test="${error eq true}">
-                    <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
-                </c:if>
-
-                <form method="post" action="j_spring_security_check" >
-                    User: <input name="j_username" /> <br />
-                    Pass: <input type="password" name='j_password' /> <br />
-                    Remember me: <input type="checkbox" name="_spring_security_remember_me" /> <br />
-                    <input type="submit" value="Login" />
-
-                </form>
-            </div>
-            <!--    <p> sample text.</p>
-                <div class="navlist">
-                  <ul>
-                    <li><a href="#">Link one</a></li>
-                    <li><a href="#">Link two</a></li>
-                  </ul>
+                        </form>
+                    </table>
                 </div>
-                <p>Sample text </p>-->
+            </div>
         </div>
     </body>
 </html>

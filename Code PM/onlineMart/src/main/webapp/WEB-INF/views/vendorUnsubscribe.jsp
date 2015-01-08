@@ -14,7 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>List of vendors </h1>
+        <h1>List of Active vendors </h1>
                 
                 <c:if test="${vendors.isEmpty()}" >
             <p>
@@ -36,7 +36,7 @@
                             <td class="tg-bsv2">${vendor.email}</td>
                             <td class="tg-bsv2">${vedor.subscriptionRule}</td>
                              <td class="tg-bsv2">${vendor.accountNum}</td>
-                            <td class="tg-bsv2">  <form action="approveVendors/${vendor.id}" method="post">
+                            <td class="tg-bsv2">  <form action="unsubscribeVendors/${vendor.id}" method="post">
                     <input type="radio" name="Status" value="DEACTIVATE" /> Unsubscribe
                     <input type="submit" value="Apply" />
                                 </form></td>

@@ -8,6 +8,7 @@ package edu.mum.cs490.smartmart.serviceImpl;
 import edu.mum.cs490.smartmart.dao.IShoppingCartItemDAO;
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
+import edu.mum.cs490.smartmart.service.INotificationService;
 import edu.mum.cs490.smartmart.service.IShoppingCartService;
 import java.util.List;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class ShoppingCartServiceImpl implements IShoppingCartService {
 
     private IShoppingCartItemDAO shoppingcartDAO;
+    
+   
 
+    
     public IShoppingCartItemDAO getShoppingcartDAO() {
         return shoppingcartDAO;
     }
@@ -100,5 +104,11 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
     public void clearCustomerShoppingCart(Customer customer) {
        shoppingcartDAO.clearCustomerShoppingCart(customer);
     
+    }
+
+    @Override
+    public ShoppingCartItem getShoppingCartByProduct(Long id) {
+        
+        return shoppingcartDAO.getShoppingCartByProduct(id);
     }
 }

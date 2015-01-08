@@ -45,8 +45,8 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
     public List<Product> getProductByName(String name) {
         System.out.println("i m in product dao");
         List<Product> product;
-        Query query = getSf().getCurrentSession().createQuery(" from Product p where p.name=name");
-        //  query.setParameter("name", name);
+        Query query = getSf().getCurrentSession().createQuery(" from Product p where p.name=:name");
+          query.setParameter("name", name);
 
         System.out.println("hereeee" + query.list());
         //query.setString("theName",name);
@@ -88,6 +88,16 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
         return product;
     }
 
+    @Override
+    public List<Product> getAllAvailalbleProducts() {
+       
+    Query query=getSf().getCurrentSession().createQuery("select p from Product p where p.quantity > 0");
+    
+    List<Product> products=query.list();
+    
+    return products;
+    
+    
     public List<ProductSales> getPrductsSalesByVendor(long vendorId,Calendar startDate, Calendar endDate) {
 //        Query query = getSf().getCurrentSession().createQuery(
 //                "SELECT new ProductSales(o.product.id, o.product.name, o.product.quantity , sum(o.quantity) as qtySold, sum(o.price) as totalPrice, sum(o.salesDetail.profitToVendor) as totalNetIncome)"

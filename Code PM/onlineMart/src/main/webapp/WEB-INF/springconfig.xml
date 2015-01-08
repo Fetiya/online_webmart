@@ -79,22 +79,46 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    
-    
-    <!-- DAO's setter injections -->    
+    <!-- DAO's setter injections -->
+     
+     
     <bean id="hibernateDAO" class="edu.mum.cs490.smartmart.dao.GenericDAOImpl" abstract="true">
         <property name="sf" ref="sessionFactory"/>
-    </bean>    
-    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">     
-    </bean>    
-    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">       
     </bean>
-    <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">       
+    
+    <bean id="userDAO" class="edu.mum.cs490.smartmart.dao.impl.UserDAOImpl" parent="hibernateDAO">
+     
+    </bean>
+
+    <!--      User service injections  
+    -->
+    <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
+
+        <property name="userDAO" ref="userDAO" />
+
+    </bean>
+
+    
+    <bean id="vendorDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorDAOImpl" parent="hibernateDAO">  
+     
+    </bean>
+
+    <bean id="customerDAO" class="edu.mum.cs490.smartmart.dao.impl.CustomerDAOImpl" parent="hibernateDAO">  
+     
     </bean>
     <bean id="productCategoryDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductCategoryDAOImpl" parent="hibernateDAO">
-    </bean>    
+        
+    </bean>
+    
     <bean id="subscriptionRuleDAO" class="edu.mum.cs490.smartmart.dao.impl.SubscriptionRuleDAOImpl" parent="hibernateDAO">
-    </bean>    
+     
+    </bean>
+    
+    <bean id="credentialDAO" class="edu.mum.cs490.smartmart.dao.impl.CredentialDAOImpl" parent="hibernateDAO">
+     
+    </bean>
+    
+      
     <bean id="productDAO" class="edu.mum.cs490.smartmart.dao.impl.ProductDAOImpl" parent="hibernateDAO">
     </bean>    
     <bean id="shoppingcartDAO" class="edu.mum.cs490.smartmart.dao.impl.ShoppingCartItemDAOImpl" parent="hibernateDAO">
@@ -108,37 +132,62 @@
     
     <bean id="settingsDAO" class="edu.mum.cs490.smartmart.dao.impl.SettingsDAOImpl" parent="hibernateDAO">
     </bean>
-    <!-- service injection -->
-
-    <bean id="userService" class="edu.mum.cs490.smartmart.serviceImpl.UserSerivceImpl">
-        <property name="userDAO" ref="userDAO" />
+    
+     <!-- Email Service injections --> 
+    <bean id="emailAdvice" class="edu.mum.cs490.smartmart.aop.EmailAdvice">
+        <property name="notificationService" ref="notificationService"/>
+    </bean> 
+    
+    <bean id="notificationService" class="edu.mum.cs490.smartmart.serviceImpl.NotificationServiceImpl">
+        <property name="javaMailSender" ref="javaMailSender"/>
+        <property name="toVendorTemplate" ref="toVendorTemplate"/> 
+        <property name="toCustomersTemplate" ref="toCustomersTemplate"/> 
     </bean>
-    <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">        
+    
+ 
+    <!-- vendor service injection -->
+ 
+    <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
+        
         <property name="vendorDAO" ref="vendorDAO" />
+         <!--<property name="customerService" ref="customerService" />-->
+         <!--<property  name="credentialService" ref="credentialService" />-->
         <property  name="encryptionService" ref="encryptionService" />
+         <property  name="notificationService" ref="notificationService" />
     </bean>
+
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
         <property name="customerDAO" ref="customerDAO" />
         <property  name="encryptionService" ref="encryptionService" />
+        <property  name="credentialService" ref="credentialService" />
+        <!--<property  name="shoppingCartService" ref="shoppingCartService" />-->
+        <property  name="notificationService" ref="notificationService" />
+     
     </bean> 
     <bean id="categoryService" class="edu.mum.cs490.smartmart.serviceImpl.ProductCategoryServiceImpl">
         <property name="productCategoryDAO" ref="productCategoryDAO" />
-    </bean> 
+    </bean>
+ 
+ 
     <bean id="subscriptionRuleService" class="edu.mum.cs490.smartmart.serviceImpl.SubscriptionRuleServiceImpl">
         <property name="subscriptionRuleDAO" ref="subscriptionRuleDAO" />
-    </bean>    
+    </bean>
+ 
+ 
+ <bean id="credentialService" class="edu.mum.cs490.smartmart.serviceImpl.CredentialServiceImpl">
+        <property name="credentialDAO" ref="credentialDAO" />
+    </bean>
+ 
+    <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
+    </bean>
+    
     <bean id="productService" class="edu.mum.cs490.smartmart.serviceImpl.ProductServiceImpl">
         <property name="productDAO" ref="productDAO"/>
         <property name="productCategoryDAO" ref="productCategoryDAO"/>
         <property name="vendorDAO" ref="vendorDAO"/>       
     </bean>
-    <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
-        <property name="shoppingcartDAO" ref="shoppingcartDAO" />
-    </bean>
-    <bean id="encryptionService" class="edu.mum.cs490.smartmart.serviceImpl.EncryptionServiceImpl">
-    </bean>
-    <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
-        <property name="orderDAO" ref="orderDAO"/> 
+       <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
+           <property name="orderDAO" ref="orderDAO"/> 
     </bean>
     
     <bean id="salesDetailService" class="edu.mum.cs490.smartmart.serviceImpl.SalesDetailServiceImpl">
@@ -151,6 +200,68 @@
         <property name="productDAO" ref="productDAO"/> 
     </bean>
     
+    <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
+           <property name="shoppingcartDAO" ref="shoppingcartDAO"/>
+            
+    </bean>
+     
+     <!--Email Service--> 
+    <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com" />
+        <property name="port" value="587" />
+        <property name="username" value="mum.smartmart@gmail.com" />
+        <property name="password" value="Pmsmartmart" /> 
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>                                
+                <prop key="mail.smtp.auth">true</prop>
+            </props>
+        </property>
+    </bean>
+  
+    <bean id="toCustomersTemplate"
+          class="org.springframework.mail.SimpleMailMessage"> 
+        <property name="from" value="mum.smartmart@gmail.com" />
+        <property name="to" value="komal.ashraf2012@gmail.com" />
+        <property name="subject" value="Smart Mart: Notification" />
+        <property name="text">
+        <value>
+		<![CDATA[
+Dear %1$s,
+
+%2$s
+
+Regards,
+Smart Mart
+Tel - (111)111-2222
+Administrator @SM.
+		]]>
+            </value>
+        </property>
+    </bean>
+    
+    
+       <bean id="toVendorTemplate"
+          class="org.springframework.mail.SimpleMailMessage"> 
+        <property name="from" value="mum.smartmart@gmail.com" />
+        <property name="to" value="komal.ashraf2012@gmail.com" />
+        <property name="subject" value="Smart Mart: Notification" />
+        <property name="text">
+            <value>
+		<![CDATA[
+Dear %1$s,
+
+%2$s
+
+Regards,
+Smart Mart
+Tel - (111)111-2222
+Administrator @SM.
+		]]>
+            </value>
+        </property>
+    </bean>
     
     
     

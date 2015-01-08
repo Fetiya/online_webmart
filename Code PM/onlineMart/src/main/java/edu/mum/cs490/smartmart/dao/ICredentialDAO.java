@@ -7,12 +7,14 @@
 package edu.mum.cs490.smartmart.dao;
 
 import edu.mum.cs490.smartmart.domain.Credential;
-import java.util.List;
+
 
 /**
  *
  * @author Senai
  */
 public interface ICredentialDAO   extends IGenericDAO<Credential, Long>{
+    
+ 
     
 }

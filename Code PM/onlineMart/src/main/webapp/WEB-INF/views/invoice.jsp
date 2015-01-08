@@ -14,8 +14,16 @@
         <title>invoice</title>
     </head>
     <body>
-        <h1>"YOUR IN VOICE"</h1>
-        <p>${message}</p>    
 
-    </body>
-</html>
+        <c:choose>
+            <c:when test="${empty order}">
+                <p>${message}</p>          
+            </c:when>
+            <c:otherwise>
+
+                <h5 class="label-info"> Invoice</h5>
+                <p>${message}</p>    
+            </c:otherwise>
+        </c:choose>
+            </body>
+        </html>

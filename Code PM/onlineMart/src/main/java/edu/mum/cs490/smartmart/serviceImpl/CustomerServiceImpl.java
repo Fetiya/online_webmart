@@ -5,14 +5,14 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
-import edu.mum.cs490.smartmart.domain.Role;
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
 import edu.mum.cs490.smartmart.dao.ICustomerDAO;
-import edu.mum.cs490.smartmart.domain.Credential;
 import edu.mum.cs490.smartmart.domain.Customer;
-import edu.mum.cs490.smartmart.domain.Users;
+import edu.mum.cs490.smartmart.domain.Order;
+import edu.mum.cs490.smartmart.service.ICredentialService;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
+import edu.mum.cs490.smartmart.service.INotificationService;
 import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -28,8 +28,13 @@ public class CustomerServiceImpl implements ICustomerService {
     ICustomerDAO customerDAO;
 
     IEncryptionService encryptionService;
-
-    private ICredentialDAO credentialDAO;
+    
+    ICredentialDAO credentialDAO;
+    
+    INotificationService notificationService;
+    
+    ICredentialService credentialService;
+    
 
     public ICustomerDAO getCustomerDAO() {
         return customerDAO;
@@ -55,31 +60,82 @@ public class CustomerServiceImpl implements ICustomerService {
         this.credentialDAO = credentialDAO;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Override
-    public void addCustomer(Customer customer) {
-        
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(customer.getCredential().getPassword());
-        customer.getCredential().setPassword(hashedPassword);
-        
-        customer.getCredential().setRole(Role.ROLE_CUSTOMER);
-        customer.getCredential().setActive(true);
-        System.out.println("Name: "+customer.getFirstName()+" password "+customer.getCredential().getPassword());
-        customerDAO.save(customer);
+    public INotificationService getNotificationService() {
+        return notificationService;
+    }
+
+    public void setNotificationService(INotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    public void setCredentialService(ICredentialService credentialService) {
+        this.credentialService = credentialService;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
+    public void addCustomer(Customer customer) {
+        System.out.println("customer is" + customer);
+//        System.out.println("inside impl:" + customer.getCredential().getPassword());
+//        if(customer.getCredential().getPassword()!=null)
+//        {
+//        customer.getCredential().setPassword(encryptionService.getEncryptedPassword(customer.getCredential().getPassword()));
+//        customer.getCredential().setRole(Role.CUSTOMER);
+//        }
+        System.out.println("m imp here");
+        customerDAO.save(customer);
+    }
+    
+//       @Transactional(propagation = Propagation.REQUIRED)
+//    @Override
+//    public boolean checkUserName(String userName) {
+//        Credential cred=new Credential();
+//        cred.setUsername(userName);
+//        System.out.println("DAO is " + credentialDAO);
+//        System.out.println("-----is " + credentialDAO.findByExample(cred,new String[]{}));
+//        if (credentialDAO.findByExample(cred,new String[]{}) != null)
+//        credentialDAO.getCredentialByUserName(userName) != null
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+
+        @Transactional(propagation = Propagation.REQUIRED)
+    @Override
     public boolean checkUserName(String userName) {
-        Credential cred = new Credential();
-        cred.setUsername(userName);
-        if (credentialDAO.findByExample(cred, new String[]{}) != null) {
+//        if (credentialDAO. != null) {
+        if(credentialService.getCredentialByUserName(userName) !=null)
+        {
             return true;
         }
         return false;
     }
 
+//    @Transactional(propagation = Propagation.REQUIRED)
+//    @Override
+//    public Users getUserByUsername(String username) {
+//        List<Credential>  credential = credentialDAO.findAll(0, 10);
+//        Credential cr = null;
+//        for (Credential crd: credential)
+//        {
+//            if(crd.getUsername().equals(username))
+//              cr= crd;
+//        }
+//
+//        Users user = null;
+//        if (cr != null) {
+//            user = cr.getUser();
+//
+//        }
+//        return user;
+//    }
+    
+    
+    
+    
+    
+    
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Customer getCustomerById(Long id) {
@@ -102,14 +158,20 @@ public class CustomerServiceImpl implements ICustomerService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public Users getUserByUsername(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
 
     @Override
     public void notifyCustomer(Customer customer, String message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void notifyCustomerCheckout(Customer customer, Order o) {
+       
+    
+    System.out.println("send notification email");
+    }
+
+   
 
 }

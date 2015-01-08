@@ -5,9 +5,13 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
+import edu.mum.cs490.smartmart.domain.Address;
+import edu.mum.cs490.smartmart.domain.Credential;
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.Role;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.service.ICustomerService;
+import edu.mum.cs490.smartmart.service.IEncryptionService;
 import edu.mum.cs490.smartmart.service.IShoppingCartService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -22,7 +26,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -36,6 +39,11 @@ public class CustomerController {
 
     @Autowired
     IShoppingCartService shoppingCartService;
+
+    @Autowired
+    IEncryptionService encryptionService;
+
+
 
     public ICustomerService getCustomerService() {
         return customerService;
@@ -53,8 +61,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-        
-
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         // System.out.println("Controller"+id);
@@ -65,46 +71,96 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
-    public String addCustomer(@ModelAttribute("customer") Customer customer) {
-        System.out.println("Customer controllerrrrrrrrrrr Get");
+    public String addCustomer(@ModelAttribute("customer") Customer customer, Model model) {
+        model.addAttribute("customer", customer);
+//        if(customer!=null)
         return "customerRegisteration";
+//        else
+//        {
+//            System.out.println("error is here");
+//            return "addressRegisteration";
+//        }
+
     }
 
-    @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
-    public String add(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
-System.out.println("Customer controllerrrrrrrrrrr Post");
-        String view = "redirect:/";
+    @RequestMapping(value = "/addAddress", method = RequestMethod.GET)
+    public String addAddress(@ModelAttribute("address") Address address, Model model) {
+        model.addAttribute("address", address);
+        return "addressRegisteration";
+    }
+
+    @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
+    public String addTest(@Valid Address address, BindingResult result, HttpSession session) {
+
+        String view = "redirect:/addCustomer";
+
         if (!result.hasErrors()) {
-            customerService.addCustomer(customer);
-            flashAttr.addFlashAttribute("successfulSignup", "Customer signed up succesfully. please  log in to proceed");
+
+            session.setAttribute("address", address);
 
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
             }
-            view = "addCustomer";
+            view = "addressRegisteration";
         }
         return view;
     }
 
-    
-    
-    
-    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
-    public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
+    @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
+    public String add(@Valid Customer customer, BindingResult result, HttpSession session, Model model) {
 
-        ShoppingCartItem item = shoppingCartService.getShoppingCart(id);
-        
-        //use this after login is done
-        //Customer customer = (Customer) session.getAttribute("loggedUser");
-          Customer customer= customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
-        customer.getShoppingCart().remove(item);
+        String view = "redirect:/";
 
-        shoppingCartService.deleteShoppingCartItem(item);
+        if (!result.hasErrors()) {
+//            if(customer.getAddress()==null)
+            System.out.println("Customer object is:" + customer);
+            System.out.println("Customer :" + customer.getFirstName());
+            Credential credential = (Credential) session.getAttribute("credential");
+            Address address = (Address) session.getAttribute("address");
+            customer.setCredential(credential);
+            customer.setAddress(address);
+//                 cust = customer;   
+            customerService.addCustomer(customer);
+            session.removeAttribute("credential");
+            session.removeAttribute("address");
 
-        //cartService.updateCart(customer.getShoppingCart());
-
-        //cartService.deleteShoppingCartItem(customer.getShoppingCart(), item);
-        return "redirect:/cart";
+        } else {
+            for (FieldError err : result.getFieldErrors()) {
+                System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
+            }
+            view = "customerRegisteration";
+        }
+        return view;
     }
+
+    @RequestMapping(value = "/addCredential", method = RequestMethod.GET)
+    public String addCredential(@ModelAttribute("credential") Credential credential) {
+//        credential
+        return "addCredential";
+    }
+
+    @RequestMapping(value = "/addCredential", method = RequestMethod.POST)
+    public String addCredential(@Valid Credential credential, BindingResult result, HttpSession session) {
+        String view = "redirect:/addAddress";
+        //dumb fix
+        boolean used = customerService.checkUserName(credential.getUsername());
+        if (used) {
+            FieldError f = new FieldError("credential", "userName", credential.getUsername(), false, null, null, "Username : " + credential.getUsername() + " already in use");
+            result.addError(f);
+        }
+        if (!result.hasErrors()) {
+            Customer c = (Customer) session.getAttribute("loggedUser");
+            credential.setRole(Role.CUSTOMER);
+            credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
+            credential.setActive(true);
+            session.setAttribute("credential", credential);
+
+        } else {
+            view = "addCredential";
+        }
+        return view;
+    }
+
+   
 }
