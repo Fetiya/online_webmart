@@ -9,6 +9,9 @@ package edu.mum.cs490.smartmart.dao.impl;
 import edu.mum.cs490.smartmart.dao.GenericDAOImpl;
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
 import edu.mum.cs490.smartmart.domain.Credential;
+import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,5 +27,8 @@ public class CredentialDAOImpl extends GenericDAOImpl<Credential, Long> implemen
         super(Credential.class);
     }
 
+    
+    
+    
 }
 

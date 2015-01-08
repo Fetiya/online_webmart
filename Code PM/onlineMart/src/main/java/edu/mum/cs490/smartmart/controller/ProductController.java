@@ -262,7 +262,7 @@ public class ProductController {
 
     public String initHome(Model model) {
 
-        model.addAttribute("products", productService.getAllAvailalbleProducts());
+        model.addAttribute("products", productService.getAllProducts());
 
         return "index";
     }
@@ -338,6 +338,7 @@ public class ProductController {
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
     public String checkout(@ModelAttribute("cartCheckout") ShoppingCartItem cartItem, Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
+        double totalPrice = 0;
 
         //........................change back to this
         // Customer c = (Customer) session.getAttribute("loggedUser");
@@ -496,17 +497,31 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/searchProduct", method = RequestMethod.POST)
-    public String searchProduct(RedirectAttributes re, Model model, @Valid String productName) {
+    public String searchProduct(RedirectAttributes re, Model model, @Valid String productName, HttpSession session) {
         System.out.println("Produdtc Name : " + productName);
         List<Product> products = productService.getProductByName(productName);
-        System.out.println(products.size());
-        if (products.size() > 0) {  //searched product found           
-            model.addAttribute("products", products);
-            return "productResult";
+        System.out.println("size of product " + products.size());
+        if (products.size() > 0) {  //searched product found
+            System.out.println("i m inside after product is saerched");
+
+            session.setAttribute("searchProducts", products);
+            return "redirect:/productResult";
         } else {
-            re.addFlashAttribute("msgs", "Product not found, please try again");
-            return "notFound";
+            session.setAttribute("msgs", "Product not found, please try again");
+            return "redirect:/notFound";
         }
+    }
+    
+    @RequestMapping(value = "/notFound")
+    public String searchResult(Model model,HttpSession session) {
+        model.addAttribute("msgs", session.getAttribute("msgs"));
+        return "notFound";
+    }
+    
+    @RequestMapping(value = "/productResult")
+    public String resultNotFound(Model model,HttpSession session) {
+        model.addAttribute("products", session.getAttribute("searchProducts"));
+        return "productResult";
     }
 
     @RequestMapping(value = "/navigation", method = RequestMethod.GET)
@@ -517,22 +532,33 @@ public class ProductController {
     }
 
     @RequestMapping(value = "getProductsByVendor/{vid}/{cid}", method = RequestMethod.GET)
-    public String getProductByVendor(Model model, @PathVariable long vid, @PathVariable long cid) {
+    public String getProductByVendor(Model model, @PathVariable long vid, @PathVariable long cid, HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
         ProductCategory c = categoryService.getProductCategoryById(cid);
         List<Product> productList = productService.getProductByVendorCategoryId(v, c);
-        model.addAttribute("productlist", productList);
-        return "productByVendor";
+        session.setAttribute("productlist", productList);
+        return "redirect:/productByVendor";
 
     }
+    
+//    @RequestMapping(value = "productByVendor")
+//    public String  listOfVendor(Model model, HttpSession session) {
+//        model.addAttribute("productlist", session.getAttribute("productlist"));
+//        return "productByVendor";       
+//    }
 
     @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
-    public String getProductByVendor(Model model, @PathVariable long vid) {
+    public String getProductByVendor(Model model, @PathVariable long vid,HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
         List<Product> productList = productService.getProductByVendor(v);
-        model.addAttribute("productlist", productList);
-        return "productByVendor";
+        session.setAttribute("productlist", productList);
+        return "redirect:/productByVendor";
 
+    }
+    @RequestMapping(value="/productByVendor")
+    public String productByVendor(Model model, HttpSession session) {
+            model.addAttribute("productlist", session.getAttribute("productlist"));
+            return "productByVendor";
     }
 
     @RequestMapping(value = "/brands", method = RequestMethod.GET)

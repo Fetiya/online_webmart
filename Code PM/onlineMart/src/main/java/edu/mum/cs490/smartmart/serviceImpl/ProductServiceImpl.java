@@ -178,10 +178,7 @@ public class ProductServiceImpl implements IProductService {
         return p;
     }
 
-    @Override
-    public Product getProduct(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     @Override
     public List<Product> getAllAvailalbleProducts() {
