@@ -13,6 +13,7 @@ import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
 import edu.mum.cs490.smartmart.domain.Finance;
 import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.domain.OrderItem;
+import edu.mum.cs490.smartmart.domain.Payment;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.SalesDetail;
@@ -45,6 +46,8 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -220,12 +223,13 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/productDelete/{id}", method = RequestMethod.GET)
-    public String deleteProduct(Model model, @PathVariable long id) {
-        // ProductCategory c = productService.getProductById(id);
-        Product product = productService.getProduct(id);
+    public String productDelete(Model model, @PathVariable long id) {
+       
+        Product product=productService.getProduct(id);
         productService.deleteProduct(product);
         return "redirect:/products";
     }
+  
 
     @RequestMapping(value = "/productImage/{id}", method = RequestMethod.GET)
     public void getProductImage(Model model, @PathVariable int id, HttpServletResponse response) {
@@ -234,13 +238,14 @@ public class ProductController {
             if (p != null) {
                 OutputStream out = response.getOutputStream();
                 out.write(p.getImage());
-
                 response.flushBuffer();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+    
+  
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
 
@@ -372,9 +377,73 @@ public class ProductController {
 
         return "cart";
     }
-
+    
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-    public String checkout(@ModelAttribute("cartCheckout") ShoppingCartItem cartItem, Model model, final RedirectAttributes re, HttpSession session) {
+     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+        return "checkout";
+    }
+     
+     
+//    @RequestMapping(value = "/validation", method = RequestMethod.POST)
+//     public String validation(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
+//        
+//        if (!result.hasErrors()) {
+//            customerService.addCustomer(customer);
+//            flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
+//
+//        } else {
+//            for (FieldError err : result.getFieldErrors()) {
+//                System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
+//            }
+//            return "redirect:/checkout";
+//        }
+//        return "redirect:/cardValidation";
+//        }
+
+     
+     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+     public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
+         System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
+         boolean result;
+         RestTemplate restTemplate = new RestTemplate();
+         Payment  payment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+cardNumber+"/"+securityNumber+"/"+totalAmount, Payment.class); 
+         if(payment.getId()!=null){
+             result=true;
+         }
+         else{
+             result=false;
+         }
+         model.addAttribute("result",result);
+//         boolean result=restTemplate.getForObject(payment, );
+         System.out.println("+++++++++++"+payment.getCardNumber());
+//         System.out.println("+++++++"+payment.getSecurityNumber());
+//          System.out.println(result+"1111111111111111111111111111111111111");
+//          if(payment){
+//              return "index";
+//          }
+         if(result){
+             // it will be redarected to checkout2
+             return "index";
+         }
+         else{
+           return "redirect:/checkout";  
+         }
+          }
+     
+//      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
+//     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
+//         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+//    RestTemplate restTemplate = new RestTemplate();
+//   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
+//   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
+//          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
+//         return "index";
+//     }
+
+    
+    @RequestMapping(value = "/checkout2", method = RequestMethod.GET)
+    // public String checkout(@ModelAttribute Address address,Model model,final RedirectAttributes re, HttpSession session) {
+    public String checkout2(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
 
         // Customer c = (Customer) session.getAttribute("loggedUser");
