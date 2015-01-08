@@ -407,6 +407,7 @@ public class ProductController {
     // public String checkout(@ModelAttribute Address address,Model model,final RedirectAttributes re, HttpSession session) {
     public String checkout2(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
+        
         double totalPrice = 0;
 
         //........................change back to this
