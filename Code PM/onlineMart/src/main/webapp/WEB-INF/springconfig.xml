@@ -308,51 +308,48 @@ Administrator @SM.
         <sec:intercept-url pattern="/cart/delete" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/addVendor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
          
-         
-         
+        <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+        <sec:intercept-url pattern="/report" access="ROLE_VENDORADMIN"/>
+        
+        <!--        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />-->
+        <!--<sec:intercept-url pattern="/viewProducts**" access="ROLE_VENDORADMIN" />-->
+        
+        <sec:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>  
+        <sec:intercept-url pattern="/**" access="ROLE_CUSTOMER,ROLE_ADMIN,ROLE_VENDORADMIN"/>
+        
+        <sec:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginFail"/>
+        <sec:logout delete-cookies="true" invalidate-session="true" logout-success-url="/"/>
     </sec:http>
-    <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-    <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
-    <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-    <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        
-    <sec:intercept-url pattern="/report" access="ROLE_VENDORADMIN"/>
-        
-    <!--        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
-    <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
-    <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
-    <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
-    <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />-->
-    <!--<sec:intercept-url pattern="/viewProducts**" access="ROLE_VENDORADMIN" />-->
-        
-    <sec:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>  
-    <sec:intercept-url pattern="/**" access="ROLE_CUSTOMER,ROLE_ADMIN,ROLE_VENDORADMIN"/>
-        
-    <sec:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginFail"/>
-    <sec:logout delete-cookies="true" invalidate-session="true" logout-success-url="/"/>
-</sec:http>
-<sec:authentication-manager>
-    <sec:authentication-provider>
-        <sec:user-service>
-            <sec:user name="test" password="test" authorities="ROLE_CUSTOMER"/>
-        </sec:user-service>
-    </sec:authentication-provider>
-    <sec:authentication-provider >
-        <sec:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, active=1 enabled from credential where username=?" authorities-by-username-query="select username, role as authority from credential where username=?"/>
-        <sec:password-encoder ref="encoder" />
-    </sec:authentication-provider>
-</sec:authentication-manager>
-<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-    <constructor-arg name="strength" value="11" />
-</bean>
-<!--Spring Security End-->
+    <sec:authentication-manager>
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="test" password="test" authorities="ROLE_CUSTOMER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+        <sec:authentication-provider >
+            <sec:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, active=1 enabled from credential where username=?" authorities-by-username-query="select username, role as authority from credential where username=?"/>
+            <sec:password-encoder ref="encoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg name="strength" value="11" />
+    </bean>
+    <!--Spring Security End-->
     
-<!--Jasper Report-->
-<import resource="jasper-view.xml"/>
-<bean class="org.springframework.web.servlet.view.XmlViewResolver">
-    <property name="location" value="/WEB-INF/jasper-view.xml"/>
-    <property name="order" value="0"/>
-</bean>
-<!--Jasper Report-->
+    <!--Jasper Report-->
+    <import resource="jasper-view.xml"/>
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/jasper-view.xml"/>
+        <property name="order" value="0"/>
+    </bean>
+    <!--Jasper Report-->
     
 </beans>
