@@ -184,7 +184,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public Product getProduct(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return productDAO.findByPrimaryKey(id);
+    
     }
 
 }

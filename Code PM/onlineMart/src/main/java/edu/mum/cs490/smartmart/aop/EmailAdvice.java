@@ -6,6 +6,7 @@
 package edu.mum.cs490.smartmart.aop;
 
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.service.INotificationService;
 import org.aspectj.lang.JoinPoint;
@@ -49,5 +50,16 @@ public class EmailAdvice {
         String text = "Welcome to Smart Mart.Your request is pending to approve.\n We will get back you to soon.";
 
         notificationService.notifyVendorSignUp(v, text);
+    }
+    
+      @AfterReturning(pointcut = "execution(* edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl.notifyCustomerCheckout(..))")
+    public void checkoutEmailNotification(JoinPoint jp) {
+        Order order = (Order) jp.getArgs()[1];
+ Customer customer=(Customer) jp.getArgs()[0];
+         String text = "we received your SmartMart's order! \n\n\n Thanks for your SmartMart's order—check out the details below!"
+                + "We'll email additional info, like shipping & tracking details, as your order is processed. \n\n Order # " + order.getId() 
+                + "\nOrder Date" + order.getOrderDate();
+
+        notificationService.notifyCustomerCheckout(customer, text);
     }
 }

@@ -11,6 +11,6 @@ package edu.mum.cs490.smartmart.domain;
  */
 public enum Role {
     
-    VENDORADMIN, ADMIN, CUSTOMER;
+    ROLE_VENDORADMIN, ROLE_ADMIN, ROLE_CUSTOMER;
     
 }

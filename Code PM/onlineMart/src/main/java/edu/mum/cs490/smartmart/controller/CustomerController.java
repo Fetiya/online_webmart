@@ -17,6 +17,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +43,6 @@ public class CustomerController {
 
     @Autowired
     IEncryptionService encryptionService;
-
-
 
     public ICustomerService getCustomerService() {
         return customerService;
@@ -150,9 +149,10 @@ public class CustomerController {
             result.addError(f);
         }
         if (!result.hasErrors()) {
-            Customer c = (Customer) session.getAttribute("loggedUser");
-            credential.setRole(Role.CUSTOMER);
-            credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
+            credential.setRole(Role.ROLE_CUSTOMER);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(credential.getPassword());
+            credential.setPassword(hashedPassword);
             credential.setActive(true);
             session.setAttribute("credential", credential);
 
@@ -162,13 +162,4 @@ public class CustomerController {
         return view;
     }
 
-    @RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
-    public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
-
-        ShoppingCartItem item = shoppingCartService.getShoppingCart(id);
-
-        shoppingCartService.deleteShoppingCartItem(item);
-
-        return "redirect:/cart";
-    }
 }

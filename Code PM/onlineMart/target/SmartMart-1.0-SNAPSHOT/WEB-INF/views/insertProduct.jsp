@@ -12,75 +12,83 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Add Product</title>
-        
+
     </head>
     <body>
-        
-        <h2> Insert Product</h2>
-        <form:form commandName="product" action="addProduct" method="post" enctype="multipart/form-data">
-            
-            <table>
-                <tr>
-                    <td>Name: </td>
-                    <td> <form:input path="name" /> </td>
-                    <td><form:errors path="name" cssClass="error" /> </td>
-                </tr>
-                
-                
-                
-                
-                <tr>
-                    <td>Categories: </td>
-                    <td>
-                        <form:select path="productCategory" >
-                            <form:options items="${categories}"  itemLabel="name" itemValue="id"/>
-                            
-                        </form:select>
-                        
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>Vendor: </td>
-                    <td>
-                        <form:select path="vendor" >
-                            <form:options items="${vendors}"  itemLabel="companyName" itemValue="id"/>
-                            
-                        </form:select>
-                        
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>Price: </td>
-                    <td><form:input path="price" /></td>
-                    <td><form:errors path="price" cssClass="error" /> </td>
-                </tr>
-                <tr>
-                    <td>Quantity: </td>
-                    <td><form:input path="quantity" /> </td>
-                    <td><form:errors path="quantity" cssClass="error"/> </td>
-                </tr>
-                
-                <tr>
-                    <td>Description: </td>
-                    <td><form:textarea path="description" rows="5" cols="40"></form:textarea></td>
-                    <td><form:errors path="description" cssClass="error" /> </td>
-                </tr>
-                
-                <tr>
-                    <td>Image:</td>
-                    <td><input type="file" name="file"/> </td>
-                </tr>
-                
-                
-                
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <h2 class="title text-center">Product</h2>
 
-                
-            </table>
-                
-               <input type="submit" value="Insert"/>
 
-        </form:form>
-    </body>
-</html>
+                    <p class="title ">Add Product</p>
+                    <form:form commandName="product" action="addProduct" method="post" enctype="multipart/form-data">
+
+                        <table>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Name: </td>
+                                <td class="td-input"> <form:input path="name" class="form-control" placeholder="Name" /> </td>
+                                <td><form:errors path="name" cssClass="error" /> </td>
+                            </tr>
+
+
+
+
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Categories: </td>
+                                <td class="td-input" >
+                                    <form:select path="productCategory" >
+                                        <form:options items="${categories}"  itemLabel="name" itemValue="id" class="form-control" />
+
+                                    </form:select>
+
+                                </td>
+                            </tr>
+
+                            <tr class="form-group col-md-12">
+                                <td class="td-label" >Vendor: </td>
+                                <td class="td-input">
+                                    <form:select path="vendor" >
+                                        <form:options items="${vendors}"  itemLabel="companyName" itemValue="id" class="form-control" />
+
+                                    </form:select>
+
+                                </td>
+                            </tr>
+
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Price: </td>
+                                <td class="td-input">
+                                    <form:input path="price" class="form-control" placeholder="Price"  />
+                                </td>
+                                <td><form:errors path="price" cssClass="error" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Quantity: </td>
+                                <td class="td-input"><form:input path="quantity" class="form-control" placeholder="Quantity"  /> </td>
+                                <td><form:errors path="quantity" cssClass="error"/> </td>
+                            </tr>
+
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Description: </td>
+                                <td class="td-input"><form:textarea path="description" rows="5" cols="40" class="form-control" placeholder="Description"></form:textarea></td>
+                                <td><form:errors path="description" cssClass="error" /> </td>
+                            </tr>
+
+                            <tr class="form-group col-md-12">
+                                <td>Image:</td>
+                                <td class="td-input"><input type="file" name="file"  /> </td>
+                            </tr>
+
+                            <tr class="form-group col-md-12">
+
+                                <td><input type="submit" value="Insert" class="btn btn-primary"/></td>
+                            </tr>
+
+                        </table>
+
+
+
+                    </form:form>
+                    </body>
+                    </html>

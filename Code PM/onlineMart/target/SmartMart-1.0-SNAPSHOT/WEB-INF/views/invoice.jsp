@@ -17,11 +17,11 @@
 
         <c:choose>
             <c:when test="${empty order}">
-                <h3 style="font:red">${message}</h3>          
+                <p>${message}</p>          
             </c:when>
             <c:otherwise>
 
-                <h1>YOUR IN VOICE</h1>
+                <h5 class="label-info"> Invoice</h5>
                 <p>${message}</p>    
             </c:otherwise>
         </c:choose>

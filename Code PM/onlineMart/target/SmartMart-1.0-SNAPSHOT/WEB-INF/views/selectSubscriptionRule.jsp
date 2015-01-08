@@ -13,30 +13,39 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form:form commandName="subscriptionRule" action="selectSubscriptionRule" method="POST" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>==========Subscription Rule</td>
-                </tr>    
-                <tr>
-                    <td>ProductRange-Fee</td>
-                </tr>
-                <!--<tbody>-->
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <form:form commandName="subscriptionRule" action="selectSubscriptionRule" method="POST" enctype="multipart/form-data">
+                        <table>
+                            <p class="title ">Subscription Rule</p>
 
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">ProductRange-Fee</td>
+                                <td class="td-label">
+                                    <c:forEach var="u" items="${rule}" varStatus="loopStatus"    >
+                                    <tr class="form-group col-md-12">
 
+                                        <td class="td-input"><form:radiobutton path="id"  value="${u.id}"  /></td>
+                                        <td class="td-input"><c:out value="${u.rangeProduct}-${u.fee}" /></td>
+                                        <td class="td-input"><form:errors path="id" cssClass="error"/> </td>
+                                    </tr>
+                                    </c:forEach>
+                                </td>    
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">
+                                    <form:button  class="btn btn-primary">Next</form:button>
+                                </td>
+                            </tr>
+                        </table>
 
-                <c:forEach var="u" items="${rule}" varStatus="loopStatus"    >
-                    <tr>
+                        
+                    </form:form>
+                </div>
+            </div>
+        </div>
 
-                        <td><form:radiobutton path="id"  value="${u.id}"  /></td>
-                        <td><c:out value="${u.rangeProduct}-${u.fee}" /></td>
-                        <td><form:errors path="id" cssClass="error"/> </td>
-                    </tr>
-                </c:forEach>
-            </table>
-
-            <form:button >Next</form:button>
-        </form:form>
     </body>
 </html>
 

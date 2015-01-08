@@ -37,6 +37,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class VendorController {
 
+    
+    Credential cred = new Credential();
+    Address add= new Address();
     public VendorController() {
     }
 
@@ -137,6 +140,7 @@ public class VendorController {
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.GET)
     public String addVendor(@ModelAttribute("vendor") Vendor vendor, Model model) {
+        model.addAttribute("vendor",vendor);
 //        subscriptionRule = subscriptionRuleService.getAllSubscriptionRules();
 //        model.addAttribute("subscriptionRule", subscriptionRuleService.getAllSubscriptionRules());
         return "vendorRegisteration";
@@ -144,34 +148,36 @@ public class VendorController {
 
     @RequestMapping(value = "/addVendor", method = RequestMethod.POST)
     public String add(@Valid Vendor vendor, BindingResult result, HttpSession session, RedirectAttributes flashAttr) {
-        String view = "redirect:/";
+        String view = "redirect:/companyAddressInformation";
         if (!result.hasErrors()) {
 
-            Credential credential = (Credential) session.getAttribute("credential");
-            Address address = (Address) session.getAttribute("adminAddress");
-            Address companyAddress = (Address) session.getAttribute("comapnyAddress");
-            SubscriptionRule subscriptionRule = (SubscriptionRule) session.getAttribute("subscriptionRule");
-            VendorAdmin vendorAdmin = (VendorAdmin) session.getAttribute("vendorAdmin");
-            vendor.setAddress(companyAddress);
-            vendor.setSubscriptionRule(subscriptionRule);
+//            Credential credential = (Credential) session.getAttribute("credential");
+//            Address address = (Address) session.getAttribute("adminAddress");
+            
+            //Commenting
+//            Address companyAddress = (Address) session.getAttribute("comapnyAddress");
+//            SubscriptionRule subscriptionRule = (SubscriptionRule) session.getAttribute("subscriptionRule");
+//            VendorAdmin vendorAdmin = (VendorAdmin) session.getAttribute("vendorAdmin");
+//            vendor.setAddress(companyAddress);
+//            vendor.setSubscriptionRule(subscriptionRule);
+            
+            
+           session.setAttribute("vendor", vendor);
+            
 //            VendorAdmin vendoradmin = new VendorAdmin();
+//            vendorAdmin.setCredential(credential);
 //            vendorAdmin.setAddress(address);
-//            vendoradmin.setFirstName(vendorAdmin.getFirstName());
-//            vendoradmin.setLastName(vendorAdmin.getLastName());
-//            vendoradmin.setMiddleName(vendorAdmin.getMiddleName());
-//            vendoradmin.setTelnum(vendorAdmin.getTelnum());
-//            vendoradmin.setGender(vendorAdmin.getGender());
-            vendor.setVendorAdmin(vendorAdmin);
+//            vendor.setVendorAdmin(vendorAdmin);
 
 //            vendor.getVendorAdmin().setCredential(credential);
 //            vendor.getVendorAdmin().setAddress(address);
 
-            vendorService.addVendor(vendor);
-            session.removeAttribute("credential");
-            session.removeAttribute("address");
-            session.removeAttribute("subscriptionRule");
-            session.removeAttribute("companyAddress");
-            session.removeAttribute("vendorAdmin");
+//            vendorService.addVendor(vendor);
+//            session.removeAttribute("credential");
+//            session.removeAttribute("address");
+//            session.removeAttribute("subscriptionRule");
+//            session.removeAttribute("companyAddress");
+//            session.removeAttribute("vendorAdmin");
             
             flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
 
@@ -196,10 +202,10 @@ public class VendorController {
     @RequestMapping(value = "/addAdminAddress", method = RequestMethod.POST)
     public String addAdAddress(@Valid Address adminAddress, BindingResult result, HttpSession session) {
 
-        String view = "redirect:/companyAddressInformation";
+        String view = "redirect:/addVendorAdmin";
 
         if (!result.hasErrors()) {
-
+            add = adminAddress;
             session.setAttribute("adminAddress", adminAddress);
 
         } else {
@@ -213,7 +219,8 @@ public class VendorController {
 
     //Company Address
     @RequestMapping(value = "/companyAddressInformation", method = RequestMethod.GET)
-    public String addCompanyAddress(@ModelAttribute("comapnyAddress") Address comapnyAddress) {
+    public String addCompanyAddress(@ModelAttribute("companyAddress") Address comapnyAddress,Model model) {
+        model.addAttribute("companyAddress",comapnyAddress);
         return "companyAddressInformation";
     }
 
@@ -224,7 +231,7 @@ public class VendorController {
 
         if (!result.hasErrors()) {
 
-            session.setAttribute("comapnyAddress", comapnyAddress);
+            session.setAttribute("companyAddress", comapnyAddress);
 
         } else {
             for (FieldError err : result.getFieldErrors()) {
@@ -237,22 +244,25 @@ public class VendorController {
 
     // Add Credetial Information
     @RequestMapping(value = "/addAdminCredential", method = RequestMethod.GET)
-    public String addCredential(@ModelAttribute("credential") Credential credential) {
+    public String addCredential(@ModelAttribute("credential") Credential credential, Model model) {
+        model.addAttribute("credential", credential);
         return "addAdminCredential";
     }
 
     @RequestMapping(value = "/addAdminCredential", method = RequestMethod.POST)
     public String addCredential(@Valid Credential credential, BindingResult result, HttpSession session) {
-        String view = "redirect:/addVendorAdmin";
+        String view = "redirect:/addAdminAddress";
         boolean used = customerService.checkUserName(credential.getUsername());
         if (used) {
             FieldError f = new FieldError("credential", "userName", credential.getUsername(), false, null, null, "Username : " + credential.getUsername() + " already in use");
             result.addError(f);
         }
         if (!result.hasErrors()) {
-            credential.setRole(Role.VENDORADMIN);
+            credential.setRole(Role.ROLE_VENDORADMIN);
             credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
             credential.setActive(false);
+            cred = credential;
+            
             session.setAttribute("credential", credential);
 
         } else {
@@ -267,13 +277,14 @@ public class VendorController {
     public String showSubscriptionRule(@ModelAttribute("subscriptionRule") SubscriptionRule subscriptionRule, Model model) {
         List<SubscriptionRule> subscriptionRuleList = subscriptionRuleService.getAllSubscriptionRules();
         model.addAttribute("rule", subscriptionRuleList);
+        model.addAttribute("subscriptionRule", subscriptionRule);
         return "selectSubscriptionRule";
     }
 
     @RequestMapping(value = "/selectSubscriptionRule", method = RequestMethod.POST)
     public String addSubscriptionRule(@Valid SubscriptionRule subscriptionRule, BindingResult result, HttpSession session) {
 
-        String view = "redirect:/addVendor";
+        String view = "redirect:/addAdminCredential";
 
         if (!result.hasErrors()) {
 
@@ -290,8 +301,8 @@ public class VendorController {
 
 //     Personal Information
     @RequestMapping(value = "/addVendorAdmin", method = RequestMethod.GET)
-    public String addCustomer(@ModelAttribute("vendorAdmin") VendorAdmin vendoradmin, Model model) {
-        model.addAttribute("vendorAdmin", vendoradmin);
+    public String addCustomer(@ModelAttribute("vendorAdmin") VendorAdmin vendorAdmin, Model model) {
+        model.addAttribute("vendorAdmin", vendorAdmin);
         return "adminRegisteration";
 
     }
@@ -299,10 +310,27 @@ public class VendorController {
        @RequestMapping(value = "/addVendorAdmin", method = RequestMethod.POST)
     public String add(@Valid VendorAdmin vendorAdmin, BindingResult result, HttpSession session, Model model) {
 
-        String view = "redirect:/addAdminAddress";
+        String view = "redirect:/";
 
-        if (!result.hasErrors()) {    
-            session.setAttribute("vedorAdminInformation", vendorAdmin);
+        if (!result.hasErrors()) { 
+            Credential credential = (Credential) session.getAttribute("credential");
+            Address address = (Address) session.getAttribute("adminAddress");
+            Address companyAddress = (Address) session.getAttribute("companyAddress");
+            Vendor vendor = (Vendor) session.getAttribute("vendor");
+            SubscriptionRule subscriptionRule = (SubscriptionRule) session.getAttribute("subscriptionRule");
+            vendorAdmin.setVendor(vendor);
+            vendorAdmin.setCredential(credential);
+            vendorAdmin.setAddress(address);
+            vendor.setVendorAdmin(vendorAdmin);
+            vendor.setAddress(companyAddress);
+            vendor.setSubscriptionRule(subscriptionRule);
+            session.setAttribute("vedorAdmin", vendorAdmin);
+            vendorService.addVendor(vendor);
+            session.removeAttribute("credential");
+            session.removeAttribute("adminAddress");
+            session.removeAttribute("companyAddress");
+            session.removeAttribute("vendor");
+            session.removeAttribute("subscriptionRule");
 
         } else {
             for (FieldError err : result.getFieldErrors()) {

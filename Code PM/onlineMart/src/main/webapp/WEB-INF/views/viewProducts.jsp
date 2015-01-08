@@ -15,13 +15,11 @@
     <body>
 
 
-
+        <p class="title">Products</p>
         <section id="cart_items">
             <div class="table-responsive cart_info">
                 <table class="table table-condensed">
                     <thead>
-
-
                         <tr class="cart_menu">
                             <th>id</th>
                             <th>Image</th>
@@ -31,7 +29,8 @@
                             <th>Quantity</th>
                             <th>Category</th>
                             <th>Vendor</th>
-
+                            <th>Edit</th>
+                            <th>Delete</th>
 
                         </tr>
                     </thead>
@@ -63,11 +62,11 @@
                 </table>
             </div>
         </section>
-                <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-                <script src="https://code.jquery.com/jquery.js"></script>
-                <!-- Include all compiled plugins (below), or include individual files 
-                      as needed -->
-                <script src="SmartMart/resources/js/bootstrap.min.js"></script>
-                </body>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files 
+              as needed -->
+        <script src="SmartMart/resources/js/bootstrap.min.js"></script>
+    </body>
 
-                </html>
+</html>

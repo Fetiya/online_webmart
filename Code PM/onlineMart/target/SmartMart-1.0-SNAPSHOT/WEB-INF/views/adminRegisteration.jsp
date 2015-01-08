@@ -14,48 +14,54 @@ v<%--
         <title>JSP Page</title>
     </head>
     <body>
-        <form:form commandName="vendorAdmin" action="addVendorAdmin" method="POST" enctype="multipart/form-data">
-            <table>
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <h2 class="title text-center">Vendor Registration</h2>
+                    <form:form commandName="vendorAdmin" action="addVendorAdmin" method="POST" enctype="multipart/form-data">
+                        <table>
 
-                <tr>
-                    <td>Please fill up your Personal Information</td>
-                </tr>
-                <tr>
-                    <td>First Name :</td>
-                    <td><form:input type="text" path="firstName" /> </td>
-                    <td><form:errors path="firstName" cssClass="error" element="div" /> </td>
-                </tr>
-                <tr>
-                    <td>Middle Name :</td>
-                    <td><form:input type="text" path="middleName" /> </td>
-                    <td><form:errors path="middleName" cssClass="error" /> </td>
+                            <p class="title ">Please fill up your Personal Information</p>
 
-                </tr>
-                <tr>
-                    <td>Last Name :</td>
-                    <td><form:input type="text" path="lastName" /> </td>
-                    <td><form:errors path="lastName" cssClass="error" /> </td>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">First Name :</td>
+                                <td class="td-input"><form:input type="text" path="firstName" class="form-control" placeholder="First Name" /> </td>
+                                <td><form:errors path="firstName" cssClass="error" element="div" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Middle Name :</td>
+                                <td class="td-input"><form:input type="text" path="middleName" class="form-control" placeholder="Middle Name"/> </td>
+                                <td><form:errors path="middleName" cssClass="error" /> </td>
 
-                </tr>
-                <tr>
-                    <td>Telephone Number :</td>
-                    <td><form:input type="text" path="telnum" /> </td>
-                    <td><form:errors path="telnum" cssClass="error" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Last Name :</td>
+                                <td class="td-input"><form:input type="text" path="lastName" class="form-control" placeholder="Last Name" /> </td>
+                                <td><form:errors path="lastName" cssClass="error" /> </td>
 
-                </tr>
-                <tr>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Telephone Number :</td>
+                                <td class="td-input"><form:input type="text" path="telnum" class="form-control" placeholder="Telephone" /> </td>
+                                <td><form:errors path="telnum" cssClass="error" /> </td>
 
-                <tr>
-                    <td>Gender</td>
-                    <td><form:radiobutton path="gender"  value="Male" label="Male" /></td>
-                    <td><form:radiobutton path="gender"  value="Female" label="Female"  /></td>
-                    <td><form:errors path="gender" cssClass="error" /> </td>
+                            </tr>
 
-                    </td>
-                </tr>
-            </table>
 
-            <form:button >Next</form:button>
-        </form:form>
-    </body>
-</html>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Gender</td>
+                                <td style="width:150px"><form:radiobutton path="gender"  value="Male" label="Male" /></td>
+                                <td style="width:150px"><form:radiobutton path="gender"  value="Female" label="Female"  /></td>
+                                <td><form:errors path="gender" cssClass="error" /> </td>
+                           </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">
+                                    <form:button class="btn btn-primary" >Next</form:button>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                    </form:form>
+                    </body>
+                    </html>
