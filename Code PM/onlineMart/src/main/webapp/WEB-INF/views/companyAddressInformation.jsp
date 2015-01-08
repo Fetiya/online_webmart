@@ -15,7 +15,7 @@
         <title>Company Address Information</title>
     </head>
     <body>
-        <form:form commandName="comapnyAddress" action="companyAddressInformation" method="POST" enctype="multipart/form-data">
+        <form:form commandName="companyAddress" action="companyAddressInformation" method="POST" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td>Please provide Company address information</td>

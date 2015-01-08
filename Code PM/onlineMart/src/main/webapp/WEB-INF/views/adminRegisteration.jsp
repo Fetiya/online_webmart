@@ -55,7 +55,7 @@ v<%--
                 </tr>
             </table>
 
-            <form:button >Next</form:button>
+            <form:button >Sign Up</form:button>
         </form:form>
     </body>
 </html>

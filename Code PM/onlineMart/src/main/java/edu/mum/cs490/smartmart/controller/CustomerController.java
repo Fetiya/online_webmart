@@ -150,10 +150,9 @@ public class CustomerController {
             result.addError(f);
         }
         if (!result.hasErrors()) {
-            Customer c = (Customer) session.getAttribute("loggedUser");
             credential.setRole(Role.CUSTOMER);
             credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
-            credential.setActive(true);
+            credential.setActive(false);
             session.setAttribute("credential", credential);
 
         } else {

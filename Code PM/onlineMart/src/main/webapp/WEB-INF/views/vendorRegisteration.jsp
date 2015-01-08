@@ -33,7 +33,7 @@
 
             </table>
 
-            <form:button >Sign up</form:button>
+            <form:button >Next</form:button>
         </form:form>
     </body>
 </html>
