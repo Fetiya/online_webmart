@@ -171,8 +171,8 @@
                     <div class="row">
                         <div class="col-sm-2">
                             <div class="companyinfo">
-                                <h2><span>e</span>-shopper</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+                                <h2><span>S</span>MART MART</h2>
+                                <p>Buy Your Stuff  easily. Free Shopping World Wide</p>
                             </div>
                         </div>
                         <div class="col-sm-7">
@@ -187,7 +187,7 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
 
@@ -202,7 +202,7 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
 
@@ -217,7 +217,7 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
 
@@ -232,14 +232,14 @@
                                         </div>
                                     </a>
                                     <p>Circle of Hands</p>
-                                    <h2>24 DEC 2014</h2>
+                                    <h2>1 JAN 2015</h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="address">
                                 <img src="resources/bootstrap/images/home/map.png" alt="" />
-                                <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
+                                <p>FairField IA 52557</p>
                             </div>
                         </div>
                     </div>
@@ -315,8 +315,8 @@
             <div class="footer-bottom">
                 <div class="container">
                     <div class="row">
-                        <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                        <p class="pull-left">Copyright © 2015 SMART MART Inc. All rights reserved.</p>
+                        <p class="pull-right">Designed by <span><a target="_blank" href="#">SMART MART</a></span></p>
                     </div>
                 </div>
             </div>

@@ -29,7 +29,8 @@
                             <th>Quantity</th>
                             <th>Category</th>
                             <th>Vendor</th>
-
+                            <th>Edit</th>
+                            <th>Delete</th>
 
                         </tr>
                     </thead>
