@@ -7,6 +7,7 @@
 package edu.mum.cs490.smartmart.service;
 
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.domain.Users;
 import java.util.List;
@@ -32,6 +33,8 @@ public interface ICustomerService {
     public boolean checkUserName(String userName); 
     
     public void notifyCustomer(Customer customer, String message);
+    
+    public void notifyCustomerCheckout(Customer customer, Order o);
     
    
 }

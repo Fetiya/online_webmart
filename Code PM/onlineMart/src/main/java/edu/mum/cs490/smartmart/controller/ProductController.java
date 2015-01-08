@@ -18,19 +18,13 @@ import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.SalesDetail;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorPropertyEditor;
+import edu.mum.cs490.smartmart.service.INotificationService;
 import edu.mum.cs490.smartmart.service.IOrderService;
 import edu.mum.cs490.smartmart.service.IProductCategoryService;
-import edu.mum.cs490.smartmart.service.IProductService;
 import edu.mum.cs490.smartmart.service.IVendorService;
-import java.beans.PropertyEditor;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,19 +37,9 @@ import edu.mum.cs490.smartmart.service.ISettingsService;
 import edu.mum.cs490.smartmart.service.IShoppingCartService;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import javax.json.JsonArray;
-import javax.json.JsonString;
-import javax.json.JsonValue;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
@@ -82,14 +66,6 @@ public class ProductController {
     @Autowired
     private IVendorService vendor;
 
-    public IProductCategoryService getCategoryService() {
-        return categoryService;
-    }
-
-    public void setCategoryService(IProductCategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
-
     @Autowired
     private IProductCategoryService productCategoryService;
 
@@ -110,6 +86,14 @@ public class ProductController {
 
     @Autowired
     ISettingsService settingsService;
+
+    public IProductCategoryService getCategoryService() {
+        return categoryService;
+    }
+
+    public void setCategoryService(IProductCategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     public ISettingsService getSettingsService() {
         return settingsService;
@@ -260,9 +244,12 @@ public class ProductController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
 
-    public String initHome(Model model) {
+    public String initHome(Model model, HttpSession session) {
 
         model.addAttribute("products", productService.getAllProducts());
+        List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
+
+        session.setAttribute("guestShoppingCart", guestShoppingCart);
 
         return "index";
     }
@@ -276,10 +263,25 @@ public class ProductController {
     @RequestMapping(value = "/addToCart/{id}", method = RequestMethod.GET)
     public String addToCart(@PathVariable int id, Model model, final RedirectAttributes re, HttpSession session) {
 
+        Product product = productService.getProduct(Long.valueOf(String.valueOf(id)));
+
+        if (session.getAttribute("loggedUser") != null) {
+
+            addToCustomerCart(product, session);
+        } // handle guest
+        else {
+            addToGuestCart(product, session);
+        }
+        String message = product.getName() + " has been added to shopping cart!";
+        re.addFlashAttribute("message", message);
+        return "redirect:/cart";
+    }
+
+    public void addToCustomerCart(Product product, HttpSession session) {
         //Customer customer = (Customer) session.getAttribute("loggedUser");
         Customer customer = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
         int quantity = 1;
-        Product product = productService.getProduct(Long.valueOf(String.valueOf(id)));
+
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
@@ -304,43 +306,77 @@ public class ProductController {
 
         }
 
-        String message = product.getName() + " has been added to shopping cart!";
-        re.addFlashAttribute("message", message);
-        return "redirect:/cart";
+    }
+
+    public void addToGuestCart(Product product, HttpSession session) {
+
+        int quantity = 1;
+
+        ShoppingCartItem cartItem = new ShoppingCartItem();
+        cartItem.setProduct(product);
+        cartItem.setQuantity(quantity);
+
+        boolean flag = true;
+
+        List<ShoppingCartItem> currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+        for (ShoppingCartItem item : currentCartItems) {
+
+            if (item.getProduct().getId() == product.getId()) {
+                item.setQuantity(item.getQuantity() + quantity);
+
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            List<ShoppingCartItem> gcart = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+            gcart.add(cartItem);
+        }
 
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public String getCustomerCart(@ModelAttribute("cartUpdate") ShoppingCartItem cartItem, Model model) {
-        // System.out.println("Controller"+id);
+    public String getCustomerCart(@ModelAttribute("cartUpdate") ShoppingCartItem cartItem, Model model, HttpSession session) {
 
-        Customer customer = new Customer();
-        Long id = Long.valueOf(String.valueOf(1));
+        List<ShoppingCartItem> cartItems= new ArrayList<ShoppingCartItem>();
+        if (session.getAttribute("loggedUser") != null) {
 
-        customer = customerService.getCustomerById(id);
+            Customer customer = new Customer();
+            Long id = Long.valueOf(String.valueOf(1));
 
-        List<ShoppingCartItem> cartItems = shoppingCartService.findAll();
-        if (cartItems.isEmpty()) {
-            model.addAttribute("message", "Your cart is empty");
+            customer = customerService.getCustomerById(id);
+
+            cartItems = shoppingCartService.findAll();
+
         } else {
+
+            cartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+
+        }
+        if (cartItems==null|| cartItems.isEmpty() ) {
+            
+            model.addAttribute("message", "Your cart is empty");
+            
+        } else {
+            
             double total = 0;
             for (ShoppingCartItem i : cartItems) {
                 total += i.getProduct().getPrice() * i.getQuantity();
             }
+            
             model.addAttribute("cartItems", cartItems);
 
             model.addAttribute("totalPrice", total);
 
         }
+
         return "cart";
     }
 
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
     public String checkout(@ModelAttribute("cartCheckout") ShoppingCartItem cartItem, Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
-        double totalPrice = 0;
 
-        //........................change back to this
         // Customer c = (Customer) session.getAttribute("loggedUser");
         //------------------------------------------
         Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
@@ -362,7 +398,7 @@ public class ProductController {
             } else {
                 double totalPrice = 0;
                 for (ShoppingCartItem item : currentCartItems) {
-                //calculate total price
+                    //calculate total price
 
                     totalPrice += item.getQuantity() * item.getProduct().getPrice();
                 }
@@ -392,9 +428,11 @@ public class ProductController {
                 shoppingCartService.clearCustomerShoppingCart(c);
 
                 message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
-                        + "receive order confirmation email recently";
+                        + "receive order confirmation email shortly";
                 model.addAttribute("message", message);
                 model.addAttribute("order", order);
+
+                customerService.notifyCustomerCheckout(c, order);
 
             }
         }
@@ -511,15 +549,15 @@ public class ProductController {
             return "redirect:/notFound";
         }
     }
-    
+
     @RequestMapping(value = "/notFound")
-    public String searchResult(Model model,HttpSession session) {
+    public String searchResult(Model model, HttpSession session) {
         model.addAttribute("msgs", session.getAttribute("msgs"));
         return "notFound";
     }
-    
+
     @RequestMapping(value = "/productResult")
-    public String resultNotFound(Model model,HttpSession session) {
+    public String resultNotFound(Model model, HttpSession session) {
         model.addAttribute("products", session.getAttribute("searchProducts"));
         return "productResult";
     }
@@ -540,25 +578,25 @@ public class ProductController {
         return "redirect:/productByVendor";
 
     }
-    
+
 //    @RequestMapping(value = "productByVendor")
 //    public String  listOfVendor(Model model, HttpSession session) {
 //        model.addAttribute("productlist", session.getAttribute("productlist"));
 //        return "productByVendor";       
 //    }
-
     @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
-    public String getProductByVendor(Model model, @PathVariable long vid,HttpSession session) {
+    public String getProductByVendor(Model model, @PathVariable long vid, HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
         List<Product> productList = productService.getProductByVendor(v);
         session.setAttribute("productlist", productList);
         return "redirect:/productByVendor";
 
     }
-    @RequestMapping(value="/productByVendor")
+
+    @RequestMapping(value = "/productByVendor")
     public String productByVendor(Model model, HttpSession session) {
-            model.addAttribute("productlist", session.getAttribute("productlist"));
-            return "productByVendor";
+        model.addAttribute("productlist", session.getAttribute("productlist"));
+        return "productByVendor";
     }
 
     @RequestMapping(value = "/brands", method = RequestMethod.GET)
