@@ -15,7 +15,8 @@
     </head>
     <body>
 
-
+        <h1>validation controller result</h1>
+        ${result}
 
 
         <div class="features_items"><!--features_items-->

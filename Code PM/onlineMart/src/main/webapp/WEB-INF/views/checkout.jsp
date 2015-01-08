@@ -67,7 +67,7 @@
 						<div class="bill-to">
 							<p>Bill To</p>
 							<div class="form-one">
-                                                            <form action="dispUser/{cardNumber}" method="post"> 
+                                                            <form action="cardValidation" method="post"> 
                                                                     
                                                                         <input type="text" placeholder="First Name *">
 									<input type="text" placeholder="Middle Name">

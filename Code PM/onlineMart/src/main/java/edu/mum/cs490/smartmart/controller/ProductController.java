@@ -13,6 +13,7 @@ import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
 import edu.mum.cs490.smartmart.domain.Finance;
 import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.domain.OrderItem;
+import edu.mum.cs490.smartmart.domain.Payment;
 import edu.mum.cs490.smartmart.domain.Product;
 import edu.mum.cs490.smartmart.domain.ProductCategory;
 import edu.mum.cs490.smartmart.domain.SalesDetail;
@@ -363,26 +364,41 @@ public class ProductController {
      @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
      public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
          System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
+         boolean result;
          RestTemplate restTemplate = new RestTemplate();
-         String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/123/1234/1000";
-         boolean resualt=restTemplate.getForObject(url, Boolean.class);
-          System.out.println(resualt+"1111111111111111111111111111111111111");
-          if(resualt){
-              return "index";
+         Payment  payment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+cardNumber+"/"+securityNumber+"/"+totalAmount, Payment.class); 
+         if(payment.getId()!=null){
+             result=true;
+         }
+         else{
+             result=false;
+         }
+         model.addAttribute("result",result);
+//         boolean result=restTemplate.getForObject(payment, );
+         System.out.println("+++++++++++"+payment.getCardNumber());
+//         System.out.println("+++++++"+payment.getSecurityNumber());
+//          System.out.println(result+"1111111111111111111111111111111111111");
+//          if(payment){
+//              return "index";
+//          }
+         if(result){
+             // it will be redarected to checkout2
+             return "index";
+         }
+         else{
+           return "redirect:/checkout";  
+         }
           }
-        return "index";
-        
-                }
      
-      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
-     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
-         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
-    RestTemplate restTemplate = new RestTemplate();
-   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
-   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
-          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
-         return "index";
-     }
+//      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
+//     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
+//         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+//    RestTemplate restTemplate = new RestTemplate();
+//   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
+//   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
+//          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
+//         return "index";
+//     }
 
     
     @RequestMapping(value = "/checkout2", method = RequestMethod.GET)
