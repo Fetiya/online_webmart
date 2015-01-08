@@ -67,42 +67,20 @@
 						<div class="bill-to">
 							<p>Bill To</p>
 							<div class="form-one">
-                                                            <form action="cardValidation" method="post"> 
+                                                            <form action="cardValidation" commandName="payment" method="post" > 
                                                                     
-                                                                        <input type="text" placeholder="First Name *">
-									<input type="text" placeholder="Middle Name">
-									<input type="text" placeholder="Last Name *">
-									<input type="text" placeholder="Email*">
-                                                                        <input type="text" placeholder="Address 1 *">
-									<input type="text" placeholder="Address 2">
-                                                                        <input type="text" placeholder="Zip / Postal Code *">
-                                                                        <select>
-										<option>-- Country --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
-                                                                        <select>
-										<option>-- State / Province / Region --</option>
-										<option>United States</option>
-										<option>Bangladesh</option>
-										<option>UK</option>
-										<option>India</option>
-										<option>Pakistan</option>
-										<option>Ucrane</option>
-										<option>Canada</option>
-										<option>Dubai</option>
-									</select>
-                                                                        <input type="text" name="Phone" placeholder="Phone *">
-                                                                        <input type="text" name="cardNumber" placeholder="Card Number">
-                                                                        <input type="text" name="securityNumber" placeholder="Card Security Number">
+                                                                        <input type="text" name="name" placeholder="First Name and Last Name *">
+                                                                        <select  name="cardType" placeholder="Card Type *">
+                                                                                <option>Visa </option>
+										<option>Master Card</option>
+                                                                        </select>
+                                                                        <input type="text" name="cardNumber" placeholder="Card Number *">
+                                                                        <input type="text" name="securityNumber" placeholder="Card Security Number *">
+                                                                        <input type="text" name="expiryDate" placeholder="Expiry Date *">
                                                                          <input type="text" name="totalAmount" >
 						                       <button class="btn btn-primary" type="submit">Place Order </button>
+									
+                                                                        
 						                                                                           	
                                                                        </form>
 							</div>

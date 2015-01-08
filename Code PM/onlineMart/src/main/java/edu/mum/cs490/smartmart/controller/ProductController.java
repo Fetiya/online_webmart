@@ -362,28 +362,60 @@ public class ProductController {
 //        return "redirect:/cardValidation";
 //        }
 
+//     
+//     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+//     public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
+//         System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
+//         boolean result;
+//         RestTemplate restTemplate = new RestTemplate();
+//         Payment  payment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+cardNumber+"/"+securityNumber+"/"+totalAmount, Payment.class); 
+//         if(payment.getId()!=null){
+//             result=true;
+//         }
+//         else{
+//             result=false;
+//         }
+//         model.addAttribute("result",result);
+////         boolean result=restTemplate.getForObject(payment, );
+//         System.out.println("+++++++++++"+payment.getCardNumber());
+////         System.out.println("+++++++"+payment.getSecurityNumber());
+////          System.out.println(result+"1111111111111111111111111111111111111");
+////          if(payment){
+////              return "index";
+////          }
+//         if(result){
+//             // it will be redarected to checkout2
+//             return "index";
+//         }
+//         else{
+//           return "redirect:/checkout";  
+//         }
+//          }
      
+     
+     
+      
      @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
-     public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
-         System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
-         boolean result;
-         RestTemplate restTemplate = new RestTemplate();
-         Payment  payment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+cardNumber+"/"+securityNumber+"/"+totalAmount, Payment.class); 
-         if(payment.getId()!=null){
-             result=true;
+     public String Cardvalidation(@ModelAttribute(value="payment") @Valid Payment payment,BindingResult result,Model model, HttpSession session) {
+         if(result.hasErrors()){
+             return "checkout";
          }
          else{
-             result=false;
+         System.out.println("values from cardvalidation controler"+ payment.getCardNumber()+payment.getSecurityNumber()+payment.getAmount());
+         boolean validationResult=false;
+         RestTemplate restTemplate = new RestTemplate();
+         Payment  validPayment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getAmount(), Payment.class); 
+         if(validPayment.getId()!=null){
+             validationResult=true;
          }
-         model.addAttribute("result",result);
-//         boolean result=restTemplate.getForObject(payment, );
-         System.out.println("+++++++++++"+payment.getCardNumber());
-//         System.out.println("+++++++"+payment.getSecurityNumber());
-//          System.out.println(result+"1111111111111111111111111111111111111");
-//          if(payment){
-//              return "index";
-//          }
-         if(result){
+         
+         model.addAttribute("validationResult",validationResult);
+         
+         System.out.println("+++++++++++"+validPayment.getCardNumber());
+
+         if(validationResult){
+             session.setAttribute("payment", "payment");
+             System.out.println("session payment object "+ session.getAttribute("payment"));
              // it will be redarected to checkout2
              return "index";
          }
@@ -391,7 +423,7 @@ public class ProductController {
            return "redirect:/checkout";  
          }
           }
-     
+        }
 //      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
 //     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
 //         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
