@@ -8,7 +8,6 @@ package edu.mum.cs490.smartmart.controller;
 import edu.mum.cs490.smartmart.domain.Customer;
 import edu.mum.cs490.smartmart.domain.ShoppingCartItem;
 import edu.mum.cs490.smartmart.service.ICustomerService;
-
 import edu.mum.cs490.smartmart.domain.CategoryPropertyEditor;
 import edu.mum.cs490.smartmart.domain.Finance;
 import edu.mum.cs490.smartmart.domain.Order;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import edu.mum.cs490.smartmart.service.IProductService;
 import edu.mum.cs490.smartmart.service.ISalesDetailService;
 import edu.mum.cs490.smartmart.service.ISettingsService;
@@ -162,6 +160,16 @@ public class ProductController {
         this.orderService = orderService;
     }
 
+    // take it to product controller???
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String initalHome(Model model) {
+        System.out.println("Controller");
+
+        // List<Product> usr= userService.getAllUsers();
+        model.addAttribute("products", productService.getAllProducts());
+        return "index";
+    }
+    
     @RequestMapping(value = "/addProduct", method = RequestMethod.POST)
     public String addProduct(Product product, @RequestParam("file") MultipartFile file) {
 
@@ -244,21 +252,22 @@ public class ProductController {
         }
     }
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-
-    public String initHome(Model model, HttpSession session) {
-
-        model.addAttribute("products", productService.getAllProducts());
-
-        if (session.getAttribute("guestShoppingCart") == null) {
-
-            List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
-
-            session.setAttribute("guestShoppingCart", guestShoppingCart);
-
-        }
-        return "index";
-    }
+//    @RequestMapping(value = "/index", method = RequestMethod.GET)
+//
+//    public String initHome(Model model, HttpSession session) {
+//
+//        model.addAttribute("products", productService.getAllProducts());
+//
+//        if (session.getAttribute("guestShoppingCart") == null) {
+//
+//            List<ShoppingCartItem> guestShoppingCart = new ArrayList<ShoppingCartItem>();
+//
+//            session.setAttribute("guestShoppingCart", guestShoppingCart);
+//
+//        }
+//        model.addAttribute("productCategory", categoryService.getAllProductCategory());
+//        return "index";
+//    }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

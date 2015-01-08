@@ -1,4 +1,5 @@
 edu\mum\cs490\smartmart\domain\ShoppingCartItem.class
+edu\mum\cs490\smartmart\serviceImpl\JasperReportServiceImpl.class
 edu\mum\cs490\smartmart\serviceImpl\SettingsServiceImpl.class
 edu\mum\cs490\smartmart\dao\ISettingsDAO.class
 edu\mum\cs490\smartmart\dao\impl\SubscriptionRuleDAOImpl.class
@@ -44,6 +45,8 @@ edu\mum\cs490\smartmart\service\INotificationService.class
 edu\mum\cs490\smartmart\dao\impl\UserDAOImpl.class
 edu\mum\cs490\smartmart\dao\IVendorDAO.class
 edu\mum\cs490\smartmart\service\IOrderService.class
+edu\mum\cs490\smartmart\service\IReportService.class
+edu\mum\cs490\smartmart\controller\ReportController.class
 edu\mum\cs490\smartmart\dao\IOrderDAO.class
 edu\mum\cs490\smartmart\service\ICreditCartService.class
 edu\mum\cs490\smartmart\dao\IOrderItemDAO.class
@@ -77,6 +80,7 @@ edu\mum\cs490\smartmart\domain\Product.class
 edu\mum\cs490\smartmart\validators\UniqueUserNameValidator.class
 edu\mum\cs490\smartmart\service\IProductService.class
 edu\mum\cs490\smartmart\serviceImpl\UserSerivceImpl.class
+edu\mum\cs490\smartmart\filter\MyFilter.class
 edu\mum\cs490\smartmart\service\IUserService.class
 edu\mum\cs490\smartmart\validators\annotations\FieldMatch$List.class
 edu\mum\cs490\smartmart\controller\ProductCategoryController.class
@@ -92,6 +96,7 @@ edu\mum\cs490\smartmart\dao\impl\CredentialDAOImpl.class
 edu\mum\cs490\smartmart\domain\Address.class
 edu\mum\cs490\smartmart\service\IVendorAdminService.class
 edu\mum\cs490\smartmart\dao\ISubscriptionRuleDAO.class
+edu\mum\cs490\smartmart\report\entity\ProductSales.class
 edu\mum\cs490\smartmart\service\IAdminService.class
 edu\mum\cs490\smartmart\aop\EmailAdvice.class
 edu\mum\cs490\smartmart\dao\impl\ShoppingCartItemDAOImpl.class

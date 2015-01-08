@@ -29,7 +29,7 @@ public class SalesDetail implements Serializable {
     @NotNull
     private double profitToSmartmart;
     @NotNull
-    private double profitToVendor;
+    private double profitToVendor;//should be changed to incomeToVendor
     @OneToOne
     private OrderItem orderItem;
     

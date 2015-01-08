@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -19,7 +19,7 @@ import org.springframework.web.client.HttpClientErrorException;
  *
  * @author Stella
  */
-@RestController
+//@RestController
 public class validationController {
      
       @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)

@@ -24,7 +24,7 @@
        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     
     <aop:aspectj-autoproxy/>
- 
+    
    
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
@@ -127,13 +127,13 @@
     <bean id="orderDAO" class="edu.mum.cs490.smartmart.dao.impl.OrderDAOImpl" parent="hibernateDAO">
     </bean>
     
-     <bean id="salesDetailDAO" class="edu.mum.cs490.smartmart.dao.impl.SalesDetailDAOImpl" parent="hibernateDAO">
+    <bean id="salesDetailDAO" class="edu.mum.cs490.smartmart.dao.impl.SalesDetailDAOImpl" parent="hibernateDAO">
     </bean>
     
-     <bean id="settingsDAO" class="edu.mum.cs490.smartmart.dao.impl.SettingsDAOImpl" parent="hibernateDAO">
+    <bean id="settingsDAO" class="edu.mum.cs490.smartmart.dao.impl.SettingsDAOImpl" parent="hibernateDAO">
     </bean>
     
-     <!-- Email Service injections --> 
+    <!-- Email Service injections --> 
     <bean id="emailAdvice" class="edu.mum.cs490.smartmart.aop.EmailAdvice">
         <property name="notificationService" ref="notificationService"/>
     </bean> 
@@ -150,10 +150,10 @@
     <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
         
         <property name="vendorDAO" ref="vendorDAO" />
-         <!--<property name="customerService" ref="customerService" />-->
-         <!--<property  name="credentialService" ref="credentialService" />-->
+        <!--<property name="customerService" ref="customerService" />-->
+        <!--<property  name="credentialService" ref="credentialService" />-->
         <property  name="encryptionService" ref="encryptionService" />
-         <property  name="notificationService" ref="notificationService" />
+        <property  name="notificationService" ref="notificationService" />
     </bean>
 
     <bean id="customerService" class="edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl">
@@ -174,7 +174,7 @@
     </bean>
  
  
- <bean id="credentialService" class="edu.mum.cs490.smartmart.serviceImpl.CredentialServiceImpl">
+    <bean id="credentialService" class="edu.mum.cs490.smartmart.serviceImpl.CredentialServiceImpl">
         <property name="credentialDAO" ref="credentialDAO" />
     </bean>
  
@@ -186,23 +186,26 @@
         <property name="productCategoryDAO" ref="productCategoryDAO"/>
         <property name="vendorDAO" ref="vendorDAO"/>       
     </bean>
-       <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
-           <property name="orderDAO" ref="orderDAO"/> 
+    <bean id="orderService" class="edu.mum.cs490.smartmart.serviceImpl.OrderServiceImpl">
+        <property name="orderDAO" ref="orderDAO"/> 
     </bean>
     
     <bean id="salesDetailService" class="edu.mum.cs490.smartmart.serviceImpl.SalesDetailServiceImpl">
-           <property name="salesDetailDAO" ref="salesDetailDAO"/> 
+        <property name="salesDetailDAO" ref="salesDetailDAO"/> 
     </bean>
     <bean id="settingsService" class="edu.mum.cs490.smartmart.serviceImpl.SettingsServiceImpl">
-           <property name="settingsDAO" ref="settingsDAO"/> 
+        <property name="settingsDAO" ref="settingsDAO"/> 
+    </bean>
+    <bean id="jasperReportService" class="edu.mum.cs490.smartmart.serviceImpl.JasperReportServiceImpl">
+        <property name="productDAO" ref="productDAO"/> 
     </bean>
     
     <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
-           <property name="shoppingcartDAO" ref="shoppingcartDAO"/>
+        <property name="shoppingcartDAO" ref="shoppingcartDAO"/>
             
     </bean>
      
-     <!--Email Service--> 
+    <!--Email Service--> 
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.gmail.com" />
         <property name="port" value="587" />
@@ -223,7 +226,7 @@
         <property name="to" value="komal.ashraf2012@gmail.com" />
         <property name="subject" value="Smart Mart: Notification" />
         <property name="text">
-        <value>
+            <value>
 		<![CDATA[
 Dear %1$s,
 
@@ -239,7 +242,7 @@ Administrator @SM.
     </bean>
     
     
-       <bean id="toVendorTemplate"
+    <bean id="toVendorTemplate"
           class="org.springframework.mail.SimpleMailMessage"> 
         <property name="from" value="mum.smartmart@gmail.com" />
         <property name="to" value="komal.ashraf2012@gmail.com" />
@@ -262,5 +265,91 @@ Administrator @SM.
     
     
     
-    <!--Email Service-->   
+    <!-- Spring Security-->
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+    <sec:global-method-security secured-annotations="enabled"/>
+    <sec:http auto-config="true">
+        <sec:intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/loginFail" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/notFound" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <!--<sec:intercept-url pattern="/contact-us" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
+        
+        <sec:intercept-url pattern="/addCustomer" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addAddress" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addCredential" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+         
+        <sec:intercept-url pattern="/contactUs" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/blogPage" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/blog" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+         
+        <sec:intercept-url pattern="/addGuest" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/blogPage" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/blog" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+        <sec:intercept-url pattern="/viewCategory" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+        <sec:intercept-url pattern="/products" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/viewProducts" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/productImage" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addToCart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/cardValidation" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/placeOrder" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/searchProduct" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/productResult" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/navigation" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/getProductsByVendor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/getProductByVendorOnly" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/productByVendor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/brands" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/cart/edit" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/cart/delete" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addVendor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+         
+        <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
+        <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
+        <sec:intercept-url pattern="/report" access="ROLE_VENDORADMIN"/>
+        
+        <!--        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
+        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />-->
+        <!--<sec:intercept-url pattern="/viewProducts**" access="ROLE_VENDORADMIN" />-->
+        
+        <sec:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>  
+        <sec:intercept-url pattern="/**" access="ROLE_CUSTOMER,ROLE_ADMIN,ROLE_VENDORADMIN"/>
+        
+        <sec:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginFail"/>
+        <sec:logout delete-cookies="true" invalidate-session="true" logout-success-url="/"/>
+    </sec:http>
+    <sec:authentication-manager>
+        <sec:authentication-provider>
+            <sec:user-service>
+                <sec:user name="test" password="test" authorities="ROLE_CUSTOMER"/>
+            </sec:user-service>
+        </sec:authentication-provider>
+        <sec:authentication-provider >
+            <sec:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username,password, active=1 enabled from credential where username=?" authorities-by-username-query="select username, role as authority from credential where username=?"/>
+            <sec:password-encoder ref="encoder" />
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg name="strength" value="11" />
+    </bean>
+    <!--Spring Security End-->
+    
+    <!--Jasper Report-->
+    <import resource="jasper-view.xml"/>
+    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/jasper-view.xml"/>
+        <property name="order" value="0"/>
+    </bean>
+    <!--Jasper Report-->
+    
 </beans>

@@ -1,7 +1,7 @@
 <%-- 
     Document   : login
-    Created on : oct 17, 2014, 4:15:49 PM
-    Author     : Weldu
+    Created on : JAN 4, 2015, 4:15:49 PM
+    Author     : Senai
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,11 +17,11 @@
         </c:if>
         <form method="post" action="<c:url value='j_spring_security_check' />">
             User: <input name="j_username" value='<c:if test="${not empty param.login_error}"><c:out value="${SPRING_SECURITY_LAST_USERNAME}"/></c:if>'/> <br />
-            Pass: <input type="password" name='j_password' /> <br />
-            Remember me: <input type="checkbox" name="_spring_security_remember_me" /> <br />
-            <input type="hidden" name="<c:out value="${_csrf.parameterName}"/>" value="<c:out value="${_csrf.token}"/>"/>
+                Pass: <input type="password" name='j_password' /> <br />
+                Remember me: <input type="checkbox" name="_spring_security_remember_me" /> <br />
+                <input type="hidden" name="<c:out value="${_csrf.parameterName}"/>" value="<c:out value="${_csrf.token}"/>"/>
             <input type="submit" />
             <a href="addCredential">sign up</a>
         </form>
-            <div style="color:red">login Failure, please check username/password</div>
+        <div style="color:red">login Failure, please check username/password</div>
     </body>

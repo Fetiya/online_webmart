@@ -14,35 +14,38 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form:form commandName="credential" action="addCredential" method="POST" enctype="multipart/form-data">
-            <table>
+        <div class="row">  	
+            <div class="col-sm-form">
+                <div class="contact-form">
+                    <h2 class="title text-center">Customer Registration</h2>
+                    <form:form commandName="credential" action="addCredential" method="POST" enctype="multipart/form-data">
+                        <table>
+                            <p class="title ">Please provide your Credential Information</p>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Email id :</td>
+                                <td class="td-input"><form:input type="text" path="username" class="form-control" placeholder="User Name" /> </td>
+                                <td><form:errors path="username" cssClass="error" /> </td>
 
-                <tr>
-                    <td>Please provide your Credential Information</td>
-                </tr>
-                <tr>
-                    <td>Email id :</td>
-                    <td><form:input type="text" path="username" /> </td>
-                    <td><form:errors path="username" cssClass="error" /> </td>
+                            </tr>
 
-                </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Password :</td>
+                                <td class="td-input"><form:password path="password" class="form-control" placeholder="Password" /> </td>
+                                <td><form:errors path="password" cssClass="error" /> </td>
 
-                <tr>
-                    <td>Password :</td>
-                    <td><form:password path="password" /> </td>
-                    <td><form:errors path="password" cssClass="error" /> </td>
+                            </tr>
 
-                </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Confirm Password :</td>
+                                <td class="td-input"><form:password path="confirmPassword" class="form-control" placeholder="Confirm Password"  /> </td>
+                                <td><form:errors path="confirmPassword" cssClass="error" /> </td>
 
-                <tr>
-                    <td>Confirm Password :</td>
-                    <td><form:password path="confirmPassword" /> </td>
-                    <td><form:errors path="confirmPassword" cssClass="error" /> </td>
-
-                </tr>
-
-            </table>
-            <form:button >Next</form:button>
-        </form:form>
-    </body>
-</html>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-input"> <form:button  class="btn btn-primary">Next</form:button> </td>
+                            </tr>
+                        </table>
+                        
+                    </form:form>
+                    </body>
+                    </html>

@@ -45,7 +45,7 @@ public class Order implements Serializable {
     private PaymentInfo paymentInfo;
    
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
     public Order() {

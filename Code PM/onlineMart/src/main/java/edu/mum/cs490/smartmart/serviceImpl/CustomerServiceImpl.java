@@ -1,10 +1,9 @@
-/*
+        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package edu.mum.cs490.smartmart.serviceImpl;
-
 
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
 import edu.mum.cs490.smartmart.dao.ICustomerDAO;
@@ -15,6 +14,7 @@ import edu.mum.cs490.smartmart.service.ICustomerService;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
 import edu.mum.cs490.smartmart.service.INotificationService;
 import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -139,7 +139,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public Customer getCustomerById(Long id) {
-        
+
         return customerDAO.findByPrimaryKey(id);
     }
 
