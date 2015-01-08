@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-<!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -198,7 +198,8 @@
     </bean>
     
     <bean id="shoppingCartService" class="edu.mum.cs490.smartmart.serviceImpl.ShoppingCartServiceImpl">
-           <property name="shoppingcartDAO" ref="shoppingcartDAO"/> 
+           <property name="shoppingcartDAO" ref="shoppingcartDAO"/>
+            
     </bean>
      
      <!--Email Service--> 
@@ -241,7 +242,7 @@ Administrator @SM.
        <bean id="toVendorTemplate"
           class="org.springframework.mail.SimpleMailMessage"> 
         <property name="from" value="mum.smartmart@gmail.com" />
-        <property name="to" value="wel.berhe@gmail.com" />
+        <property name="to" value="komal.ashraf2012@gmail.com" />
         <property name="subject" value="Smart Mart: Notification" />
         <property name="text">
             <value>

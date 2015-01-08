@@ -23,20 +23,22 @@ public class Settings implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-//    @NotNull
-//    private int profitpercentage;
-//    private String accountNum;
+  
 
-    public Settings() {
-    }
+    
     @NotNull
     private String name;
     
     private String value;
+    
+     public Settings() {
+    }
 
     public String getName() {
         return name;
     }
+    
+   
 
     public void setName(String name) {
         this.name = name;
@@ -61,6 +63,9 @@ public class Settings implements Serializable {
         this.id = id;
     }
 
+ 
+    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -77,6 +82,7 @@ public class Settings implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
+        
         final Settings other = (Settings) obj;
         if (!Objects.equals(this.name, other.name)) {
             return false;

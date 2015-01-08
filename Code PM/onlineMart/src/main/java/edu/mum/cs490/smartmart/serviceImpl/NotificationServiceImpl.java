@@ -7,6 +7,7 @@ package edu.mum.cs490.smartmart.serviceImpl;
 
 import edu.mum.cs490.smartmart.domain.Admin;
 import edu.mum.cs490.smartmart.domain.Customer;
+import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.service.INotificationService;
 import javax.mail.MessagingException;
@@ -60,8 +61,8 @@ public class NotificationServiceImpl implements INotificationService {
     public void notifyCustomerSignUp(Customer customer, String message) {
         SimpleMailMessage template = getToCustomersTemplate();
         String emailMessage = String.format(template.getText(), customer.getFirstName() + " " + customer.getLastName(), message);
-        System.out.println("+++++++++=========" + customer );
-        System.out.println("+++++++++" + customer.getCredential() );
+        System.out.println("+++++++++=========" + customer);
+        System.out.println("+++++++++" + customer.getCredential());
         sendMail(template.getFrom(), customer.getCredential().getUsername(), template.getSubject(), emailMessage);
 
     }
@@ -76,7 +77,7 @@ public class NotificationServiceImpl implements INotificationService {
     public void notifyVendorSignUp(Vendor vendor, String message) {
         SimpleMailMessage template = getToCustomersTemplate();
         String emailMessage = String.format(template.getText(), vendor.getVendorAdmin().getFirstName() + " " + vendor.getVendorAdmin().getLastName(), message);
-        
+
         sendMail(template.getFrom(), vendor.getVendorAdmin().getCredential().getUsername(), template.getSubject(), emailMessage);
 
     }
@@ -86,8 +87,7 @@ public class NotificationServiceImpl implements INotificationService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-     //Email sending implementation
+    //Email sending implementation
     public void sendMail(String fromEmail, String toEmail, String emailSubject, String emailBody) {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -111,6 +111,14 @@ public class NotificationServiceImpl implements INotificationService {
         }
 
     }
-    
-    
+
+    @Override
+    public void notifyCustomerCheckout(Customer o, String message) {
+        System.out.println("this is under template for email");
+        SimpleMailMessage template = getToCustomersTemplate();
+        String emailMessage = String.format(template.getText(), o.getFirstName() + " " + o.getLastName(), message);
+
+        sendMail(template.getFrom(), o.getCredential().getUsername(), "Your SmartMart's Oder", emailMessage);
+    }
+
 }

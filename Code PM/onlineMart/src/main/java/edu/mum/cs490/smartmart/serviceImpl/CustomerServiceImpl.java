@@ -9,7 +9,7 @@ package edu.mum.cs490.smartmart.serviceImpl;
 import edu.mum.cs490.smartmart.dao.ICredentialDAO;
 import edu.mum.cs490.smartmart.dao.ICustomerDAO;
 import edu.mum.cs490.smartmart.domain.Customer;
-import edu.mum.cs490.smartmart.domain.Role;
+import edu.mum.cs490.smartmart.domain.Order;
 import edu.mum.cs490.smartmart.service.ICredentialService;
 import edu.mum.cs490.smartmart.service.ICustomerService;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
@@ -34,6 +34,7 @@ public class CustomerServiceImpl implements ICustomerService {
     INotificationService notificationService;
     
     ICredentialService credentialService;
+    
 
     public ICustomerDAO getCustomerDAO() {
         return customerDAO;
@@ -162,6 +163,13 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void notifyCustomer(Customer customer, String message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void notifyCustomerCheckout(Customer customer, Order o) {
+       
+    
+    System.out.println("send notification email");
     }
 
    
