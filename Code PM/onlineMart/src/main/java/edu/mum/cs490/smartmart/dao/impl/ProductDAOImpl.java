@@ -34,8 +34,8 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
     public List<Product> getProductByName(String name) {
         System.out.println("i m in product dao");
         List<Product> product;
-        Query query = getSf().getCurrentSession().createQuery(" from Product p where p.name=name");
-        //  query.setParameter("name", name);
+        Query query = getSf().getCurrentSession().createQuery(" from Product p where p.name=:name");
+          query.setParameter("name", name);
 
         System.out.println("hereeee" + query.list());
         //query.setString("theName",name);
@@ -75,6 +75,18 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
         product = query.list();
         System.out.println("size of product Array: " + product.size());
         return product;
+    }
+
+    @Override
+    public List<Product> getAllAvailalbleProducts() {
+       
+    Query query=getSf().getCurrentSession().createQuery("select p from Product p where p.quantity > 0");
+    
+    List<Product> products=query.list();
+    
+    return products;
+    
+    
     }
 
 }

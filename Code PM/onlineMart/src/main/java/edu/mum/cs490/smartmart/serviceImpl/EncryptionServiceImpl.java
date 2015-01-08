@@ -16,11 +16,11 @@ import java.util.logging.Logger;
  *
  * @author Komal
  */
-public class EncryptionServiceImpl implements IEncryptionService{
+public class EncryptionServiceImpl implements IEncryptionService {
 
     @Override
     public String getEncryptedPassword(String textPassword) {
-    MessageDigest md = null;
+        MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException ex) {
@@ -37,7 +37,8 @@ public class EncryptionServiceImpl implements IEncryptionService{
         return byteToString(digest);
     }
 
-    public  String byteToString(byte[] input) {
+    @Override
+    public String byteToString(byte[] input) {
         String hash = "";
         int i = 0;
         for (byte b : input) {
@@ -51,5 +52,4 @@ public class EncryptionServiceImpl implements IEncryptionService{
         return hash;
     }
 
-    
 }

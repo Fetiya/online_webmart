@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -21,6 +22,7 @@ public class SubscriptionRule implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @NotBlank (message = "{NotBlank.SubscriptionRule.id.validation}")
     private Long id;
     private int rangeProduct;
     private double fee;

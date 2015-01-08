@@ -14,9 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.SafeHtml;
 
 /**
  *
@@ -24,23 +22,27 @@ import org.hibernate.validator.constraints.SafeHtml;
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Users{
+public class Users implements Serializable{
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank  
+    @NotBlank(message = "{NotBlank.Users.firstName.validation}")
     private String firstName;
-    @NotBlank  
+//    @NotBlank  (message = "{NotNull.Users.firstName.validation}")
     private String middleName;
-    @NotBlank
+    @NotBlank (message = "{NotBlank.Users.lastName.validation}")
     private String lastName;
-    @NotNull
+    @NotBlank (message = "{NotBlank.Users.telnum.validation}")
     private String telnum;
     
-    @OneToOne(mappedBy="user",cascade = CascadeType.ALL)
+    @NotBlank (message = "{NotBlank.Users.gender.validation}")
+    private String gender;
+   
+    @OneToOne(cascade = CascadeType.ALL)
     private Credential credential;
+//    @NotBlank
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
    
@@ -83,6 +85,14 @@ public class Users{
         return id;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -102,6 +112,8 @@ public class Users{
     public void setAddress(Address address) {
         this.address = address;
     }
+
+  
 
     @Override
     public int hashCode() {

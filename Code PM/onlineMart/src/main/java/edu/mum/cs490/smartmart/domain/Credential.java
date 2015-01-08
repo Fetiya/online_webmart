@@ -5,6 +5,7 @@
  */
 package edu.mum.cs490.smartmart.domain;
 
+import edu.mum.cs490.smartmart.validators.annotations.FieldMatch;
 import edu.mum.cs490.smartmart.validators.annotations.UniqueUserName;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -13,7 +14,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
@@ -26,6 +26,7 @@ import org.hibernate.validator.constraints.SafeHtml;
  * @author dipika
  */
 @Entity
+@FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match")
 public class Credential implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,25 +34,30 @@ public class Credential implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @NotBlank
+    @NotBlank (message = "{NotBlank.Credential.username.validation}")
     @SafeHtml
-    @UniqueUserName(message = "Username must be unique")
+    @UniqueUserName(message = "{UniqueUserName.Credential.username.validation}")
+//    @Pattern(regexp = "((?=.*[@])(?=.*[.]))", message="{Pattern.Credential.username.validation}")
     private String username;
     
-    @NotBlank    
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message="weak password")
+    @NotBlank (message = "{NotBlank.Credential.password.validation}")    
+//    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message="{Pattern.Credential.password.validation}")
+    @SafeHtml
     private String password;
 
     @Transient
+    @SafeHtml
+    @NotBlank (message = "{NotBlank.Credential.confirmPassword.validation}")
+//    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})", message="{Pattern.Credential.password.validation}")
     private String confirmPassword;
     
     private boolean active;
     
-    @NotBlank
+   
     @Enumerated(EnumType.STRING)
     private Role role;
     
-    @OneToOne
+    @OneToOne(mappedBy ="credential")
     private Users user;
     
     public Credential() {

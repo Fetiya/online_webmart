@@ -71,8 +71,14 @@
                         <div class="col-sm-8">
                             <div class="shop-menu pull-right">
                                 <ul class="nav navbar-nav">
-                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                                    <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
+                                        <ul  class="sub-menu">
+                                            <li><a  href="addVendor">Vendor</a></li><br>
+                                            <li><a href="addCustomer">Customer</a></li>
+                                        </ul>
+                                    </li>
+<!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
+                                   
                                     <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                     <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>
@@ -100,28 +106,24 @@
                                     <li><a href="${pageContext.request.contextPath}/index" class="active">Home</a></li>
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
-                                            <li><a href="shop.html">Products</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/productDetail">Product Details</a></li> 
+                                            <li><a href="products">Products</a></li>
                                             <li><a href="${pageContext.request.contextPath}/checkout">Checkout</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/login">Login</a></li> 
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                        <ul role="menu" class="sub-menu">
+                                    <li class="dropdown"><a href="blogPage">Blog</i></a>
+<!--                                        <ul role="menu" class="sub-menu">
                                             <li><a href="blog.html">Blog List</a></li>
                                             <li><a href="blog-single.html">Blog Single</a></li>
-                                        </ul>
+                                        </ul>-->
                                     </li> 
-                                    <li><a href="404.html">404</a></li>
-                                    <li><a href="contact-us.html">Contact</a></li>
+
+                                    <li><a href="contactUs">Contact</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <!--                            <div class="search_box pull-right">
-                                                            <input type="text" placeholder="Search"/>
-                                                        </div>-->
 
                             <c:import url="/searchProduct"/>
 

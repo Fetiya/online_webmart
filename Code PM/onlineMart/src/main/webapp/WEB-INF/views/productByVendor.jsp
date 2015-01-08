@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Product By Vendor</h1>
+        <h1>Products</h1>
         <c:forEach var="product" items="${productlist}"  >
 
 
