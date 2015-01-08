@@ -56,14 +56,14 @@
                                 <div class="form-one">
                                     <form:form  commandName="customer" action="guestRegistration" method="post"> 
 
-                                        <form:input path="firstName" placeholder="First Name" />
-                                        <form:input path="middleName" placeholder="Middle Name"/>
-                                        <form:input path="lastName" placeholder="Last Name *"/>
-                                        <form:input type="text" path="credential.username" placeholder="Email*"/>
-                                        <form:input type="text" path="address.city" placeholder="Address 1 *"/>						
-                                        <form:input type="text" path="address.zip" placeholder="Zip"/>
+                                       First Name: <form:input path="firstName" placeholder="First Name" />
+                                        Middle Name: <form:input path="middleName" placeholder="Middle Name"/>
+                                       Last Name:  <form:input path="lastName" placeholder="Last Name *"/>
+                                       Email: <form:input type="text" path="credential.username" placeholder="Email*"/>
+                                      Address:  <form:input type="text" path="address.city" placeholder="Address  *"/>						
+                                      Zip:  <form:input type="text" path="address.zip" placeholder="Zip"/>
                                        
-                                        <form:input type="text" path="telnum" name="Phone" placeholder="Phone *"/>
+                                      Phone:  <form:input type="text" path="telnum" name="Phone" placeholder="Phone *"/>
 
                                         <form:button class="btn btn-primary" type="submit">Continue </form:button>
 
