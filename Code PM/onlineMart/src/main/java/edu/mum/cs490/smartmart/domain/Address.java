@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -22,13 +24,15 @@ public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
+//    @NotNull(message = "{NotBlank.Address.zip.validation}")
+//    @Size (min = 5, max=5, message = "{Min.Address.zip.validation}")
     private int zip;
-    @NotNull
+    @NotBlank (message = "{NotBlank.Address.city.validation}")
     private String city;
-    @NotNull
+    @NotBlank (message = "{NotBlank.Address.street.validation}")
+    @Size (min = 1, max = 3, message = "{Min.Address.street.validation}")
     private String street;
-    @NotNull
+    @NotBlank (message = "{NotBlank.Address.country.validation}")
     private String country;
 
     public Address() {

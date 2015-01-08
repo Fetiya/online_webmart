@@ -92,13 +92,16 @@ public class ProductCategoryController {
             return "editProduct";
         }
     }
-
+    
+    
     @RequestMapping(value = "/productCategoryDelete/{id}", method = RequestMethod.GET)
     public String deleteProduct(Model model, @PathVariable long id) {
         ProductCategory c = categoryService.getProductCategoryById(id);
         categoryService.deleteCategory(c);
         return "redirect:/viewCategory";
     }
+
+   
     
 
 

@@ -27,7 +27,7 @@ public interface ICustomerService {
     
     public void updateCustomer(int id,Customer customer);
     
-    public Users getUserByUsername(String username);
+//    public Users getUserByUsername(String username);
     
     public boolean checkUserName(String userName); 
     

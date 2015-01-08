@@ -20,7 +20,7 @@
         <a href="VendorsForUnsubscribe" >Vendor Unsubscribe</a><br/>
         <a href="insertProduct">Insert Product</a><br/>
         <a href="viewPendingVendors" >View pending Vendor</a><br/>
-
+        <a href="addSetting">Add Setting</a><br/>
         <a href="viewCategory" >View Product Category </a><br/>
         <a href="addProductCategory" >Add Product Category</a><br/>
     </body>
