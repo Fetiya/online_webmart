@@ -38,7 +38,7 @@ public class SettingController {
     @RequestMapping(value = "/settingEdit/{id}", method = RequestMethod.GET)
     public String getProduct(Model model, @PathVariable long id) {
         Settings setting=settingService.getSetting(id);
-        System.out.println("setting controller"+ setting.getName());
+      //  System.out.println("setting controller"+ setting.getName());
         model.addAttribute("setting",settingService.getSetting(id));
                return "editSetting";
     }

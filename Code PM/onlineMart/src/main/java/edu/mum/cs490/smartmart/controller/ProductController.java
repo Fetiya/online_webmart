@@ -337,7 +337,7 @@ public class ProductController {
         return "cart";
     }
 
-    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkoutFetia", method = RequestMethod.GET)
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         String message = "";
         double totalPrice = 0;
@@ -365,7 +365,7 @@ public class ProductController {
              }
            else
              {
-            double totalPrice = 0;
+           // double totalPrice = 0;
             for (ShoppingCartItem item : currentCartItems) {
                 //calculate total price
                
@@ -603,5 +603,15 @@ public class ProductController {
     }
     
   
-
+ @RequestMapping(value = "checkout", method = RequestMethod.GET)
+    
+    public String editCart(Model model,HttpSession session) {
+        
+        if(session.getAttribute("loggedUser")==null)
+            
+        {
+           return"checkOutSelection";
+        }
+        return "redirect:/checkout";
+    }
 }

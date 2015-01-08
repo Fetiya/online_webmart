@@ -28,31 +28,31 @@ public class Settings implements Serializable {
     private String accountNum;
 
     
-    @NotNull
-    private String name;
+//    @NotNull
+//    private String name;
     
-    private String value;
+//    private String value;
     
      public Settings() {
     }
 
-    public String getName() {
-        return name;
-    }
-    
-   
+//    public String getName() {
+//        return name;
+//    }
+//    
+//   
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
+//    public String getValue() {
+//        return value;
+//    }
+//
+//    public void setValue(String value) {
+//        this.value = value;
+//    }
 
     
     
@@ -86,8 +86,8 @@ public class Settings implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 61 * hash + Objects.hashCode(this.name);
-        hash = 61 * hash + Objects.hashCode(this.value);
+//        hash = 61 * hash + Objects.hashCode(this.name);
+//        hash = 61 * hash + Objects.hashCode(this.value);
         return hash;
     }
 
@@ -100,13 +100,13 @@ public class Settings implements Serializable {
             return false;
         }
         
-        final Settings other = (Settings) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        if (!Objects.equals(this.value, other.value)) {
-            return false;
-        }
+//        final Settings other = (Settings) obj;
+//        if (!Objects.equals(this.name, other.name)) {
+//            return false;
+//        }
+//        if (!Objects.equals(this.value, other.value)) {
+//            return false;
+//        }
         return true;
     }
 

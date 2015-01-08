@@ -23,5 +23,7 @@
         <a href="addSetting">Add Setting</a><br/>
         <a href="viewCategory" >View Product Category </a><br/>
         <a href="addProductCategory" >Add Product Category</a><br/>
+        <a href="guestRegistration"> Guest Registration</a><br/>
+        <a href="checkOutSelection">CheckOut</a><br/>
     </body>
 </html>
