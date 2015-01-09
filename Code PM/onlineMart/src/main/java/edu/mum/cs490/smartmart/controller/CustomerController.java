@@ -109,7 +109,7 @@ public class CustomerController {
     @RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
     public String add(@Valid Customer customer, BindingResult result, HttpSession session, Model model) {
 
-        String view = "redirect:/";
+        String view = "confirmPage";
 
         if (!result.hasErrors()) {
 //            if(customer.getAddress()==null)

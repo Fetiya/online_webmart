@@ -40,10 +40,10 @@ public class guestRegistrationController {
     public String addGuest(Customer customer, HttpSession session) {
         session.setAttribute("guestUser", customer);
         
-        System.out.println("name :++++++++++++++++++++" +customer.getFirstName());
+        System.out.println("name :++++++++++++++++++++" +customer.getEmail());
         System.out.println("City:====================="+customer.getAddress().getCity());
-        System.out.println("Username:=========++++============"+customer.getCredential().getUsername());
-     
+      //  System.out.println("Username:=========++++============"+customer.getCredential().getUsername());
+   
         return "redirect:checkout";
     }
     

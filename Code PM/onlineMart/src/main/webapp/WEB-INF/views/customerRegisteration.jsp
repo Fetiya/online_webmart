@@ -17,6 +17,7 @@
             <div class="col-sm-form">
                 <div class="contact-form">
                     <h2 class="title text-center">Customer Registration</h2>
+                    
                     <form:form commandName="customer" action="addCustomer" method="POST" enctype="multipart/form-data">
                         <table>
 

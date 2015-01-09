@@ -277,7 +277,7 @@ public class VendorController {
        @RequestMapping(value = "/addVendorAdmin", method = RequestMethod.POST)
     public String add(@Valid VendorAdmin vendorAdmin, BindingResult result, HttpSession session, Model model) {
 
-        String view = "redirect:/";
+        String view = "confirmPage";
 
         if (!result.hasErrors()) { 
             Credential credential = (Credential) session.getAttribute("credential");

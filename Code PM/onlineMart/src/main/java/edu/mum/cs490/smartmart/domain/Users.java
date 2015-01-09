@@ -5,6 +5,7 @@
  */
 package edu.mum.cs490.smartmart.domain;
 
+import edu.mum.cs490.smartmart.validators.annotations.UniqueUserName;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 
 /**
  *
@@ -45,9 +47,26 @@ public class Users implements Serializable{
 //    @NotBlank
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;
+    
+   
+    @SafeHtml
+    @UniqueUserName(message = "{UniqueUserName.Credential.username.validation}")
+    private String email;
+    
    
     public Users() {
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
+    
 
     public String getFirstName() {
         return firstName;
