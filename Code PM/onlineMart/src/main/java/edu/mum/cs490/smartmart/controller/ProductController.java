@@ -163,10 +163,9 @@ public class ProductController {
     // take it to product controller???
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String initalHome(Model model) {
-        System.out.println("Controller");
+            
+        model.addAttribute("products", productService.getAllAvailalbleProducts());
 
-        // List<Product> usr= userService.getAllUsers();
-        model.addAttribute("products", productService.getAllProducts());
         return "index";
     }
     
@@ -293,8 +292,9 @@ public class ProductController {
     }
 
     public void addToCustomerCart(Product product, HttpSession session) {
-        //Customer customer = (Customer) session.getAttribute("loggedUser");
-        Customer customer = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+        
+        Customer customer = (Customer) session.getAttribute("loggedUser");
+        //Customer customer = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
         int quantity = 1;
 
         ShoppingCartItem cartItem = new ShoppingCartItem();
@@ -304,6 +304,7 @@ public class ProductController {
         boolean flag = true;
 
         List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(customer);
+        
         for (ShoppingCartItem item : currentCartItems) {
 
             if (item.getProduct().getId() == product.getId()) {
@@ -317,6 +318,7 @@ public class ProductController {
         if (flag) {
             //if the items are of different product
             customer.getShoppingCart().add(cartItem);
+            
             shoppingCartService.addShoppingCart(cartItem);
 
         }
@@ -357,9 +359,8 @@ public class ProductController {
         if (session.getAttribute("loggedUser") != null) {
 
             Customer customer = new Customer();
-            Long id = Long.valueOf(String.valueOf(1));
-
-            customer = customerService.getCustomerById(id);
+          
+            customer = (Customer) session.getAttribute("loggedUser");
 
             cartItems = shoppingCartService.findAll();
 
@@ -382,6 +383,8 @@ public class ProductController {
             model.addAttribute("cartItems", cartItems);
 
             model.addAttribute("totalPrice", total);
+
+            session.setAttribute("cartAmount", total);
 
         }
 
@@ -450,10 +453,9 @@ public class ProductController {
              return "checkout";
          }
          else{
-         System.out.println("values from cardvalidation controler"+ payment.getCardNumber()+payment.getSecurityNumber()+payment.getAmount());
-         boolean validationResult=false;
+        boolean validationResult=false;
          RestTemplate restTemplate = new RestTemplate();
-         Payment  validPayment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getAmount(), Payment.class); 
+         Payment  validPayment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
          if(validPayment.getId()!=null){
              validationResult=true;
          }
@@ -518,7 +520,7 @@ public class ProductController {
 //    }
 
     @RequestMapping(value = "/placeOrder", method = RequestMethod.GET)
-    public String processOrder(Model model, final RedirectAttributes re, HttpSession session) {
+    public String placeOrder(Model model, final RedirectAttributes re, HttpSession session) {
 
         String message = "";
         Customer customer = new Customer();
@@ -526,15 +528,15 @@ public class ProductController {
 
         if (session.getAttribute("loggedUser") != null) {
 
-            // Customer c = (Customer) session.getAttribute("loggedUser");
-            //------------------------------------------
-            Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+            Customer c = (Customer) session.getAttribute("loggedUser");
+           
             currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
         } else {
-              
+
             currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
-            
-            //create the guest customer here;
+            customer = (Customer) session.getAttribute("guestUser");
+            //persist customer, here or after orderbvalidation??
+            customerService.addCustomer(customer);
 
         }
 
@@ -563,6 +565,7 @@ public class ProductController {
                 Date timeNow = new Date();
 
                 List<OrderItem> oi = new ArrayList<OrderItem>();
+                
                 Order order = new Order();
                 order.setTotalAmount(totalPrice);
                 order.setOrderDate(timeNow);
@@ -583,11 +586,15 @@ public class ProductController {
                 }
 
                 saveSalesDetail(order);
-                
+
                 shoppingCartService.clearCustomerShoppingCart(customer);
-                                
-                clearGuestShoppingCart(session);
+
+                if (session.getAttribute("loggedUser") == null) {
+
+                    clearGuestShoppingCart(session);
                 
+
+                }
                 message = "Your order has been successfully processed and $" + totalPrice + " will be deducted from your card. You will "
                         + "receive order confirmation email shortly";
                 model.addAttribute("message", message);
@@ -740,7 +747,6 @@ public class ProductController {
 
     }
 
-
     @RequestMapping(value = " getProductByVendorOnly/{vid}", method = RequestMethod.GET)
     public String getProductByVendor(Model model, @PathVariable long vid, HttpSession session) {
         Vendor v = vendor.getVendorById(vid);
@@ -827,11 +833,11 @@ public class ProductController {
     public String deleteCartItem(@PathVariable Long id, Model model, HttpSession session) {
 
         if (session.getAttribute("loggedUser") != null) {
-            
+
             ShoppingCartItem item = shoppingCartService.getShoppingCartByProduct(id);
 
             shoppingCartService.deleteShoppingCartItem(item);
-            
+
         } else {
             List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
 
@@ -851,13 +857,11 @@ public class ProductController {
         return "redirect:/cart";
     }
 
-    
-    public void clearGuestShoppingCart(HttpSession session)
-    {
+    public void clearGuestShoppingCart(HttpSession session) {
+       
         List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
         items.clear();
 
     }
 }
-
 
