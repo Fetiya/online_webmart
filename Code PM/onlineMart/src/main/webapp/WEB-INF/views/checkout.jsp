@@ -251,10 +251,6 @@
 		</div>
 	</section> <!--/#cart_items-->
 
-	
-
-	
-	
 
 
     <script src="js/jquery.js"></script>

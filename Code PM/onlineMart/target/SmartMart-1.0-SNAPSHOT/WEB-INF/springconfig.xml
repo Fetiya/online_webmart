@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -293,7 +293,7 @@ Administrator @SM.
         
         <sec:intercept-url pattern="/products" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/viewProducts" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <sec:intercept-url pattern="/productImage" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/productImage/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/addToCart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/cardValidation" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/placeOrder" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
@@ -325,7 +325,7 @@ Administrator @SM.
         <sec:intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" method="GET"/>  
         <sec:intercept-url pattern="/**" access="ROLE_CUSTOMER,ROLE_ADMIN,ROLE_VENDORADMIN"/>
         
-        <sec:form-login login-page="/login" default-target-url="/index" authentication-failure-url="/loginFail"/>
+        <sec:form-login login-page="/index" default-target-url="/index" authentication-failure-url="/loginFail"/>
         <sec:logout delete-cookies="true" invalidate-session="true" logout-success-url="/"/>
     </sec:http>
     <sec:authentication-manager>

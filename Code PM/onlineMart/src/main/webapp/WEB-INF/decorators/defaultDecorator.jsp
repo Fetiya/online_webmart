@@ -3,8 +3,7 @@
     Created on : Jan 3, 2015, 8:02:45 AM
     Author     : Fetiya
 --%>
-
-<%@taglib  prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -75,7 +74,7 @@
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
                                         <ul  class="sub-menu">
-                                            <li><a  href="addVendor">Vendor</a></li> <br />
+                                            <li><a  href="addVendor">Vendor</a></li> 
                                             <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
@@ -141,23 +140,23 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                              <h2>Category</h2>
-                                <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                    <c:import  url="/navigation"/>
+<!--                              <h2>Category</h2>
+                                <div class="panel-group category-products" id="accordian">category-productsr
+                                    < c:import  url="/navigation"/>
 
                                 </div>
 
-                                <div class="brands_products"><!--brands_products-->
+                                <div class="brands_products">brands_products
                                     <h2>Brands</h2>
-                                    <c:import  url="/brands"/>
-                                </div><!--/brands_products-->
+                                    < c:import  url="/brands"/>
+                                </div>/brands_products
 
-                                <div class="shipping text-center"><!--shipping-->
+                                <div class="shipping text-center">shipping
                                     <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
-                                </div><!--/shipping-->
+                                </div>/shipping-->
 
 logged user    ${not empty loggedUser}
-                            <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
+                            <security:authorize access="hasRole('ROLE_ANONYMOUS')">
                                 <h2>Category</h2>
                                 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                     <c:import  url="/navigation"/>
@@ -172,9 +171,9 @@ logged user    ${not empty loggedUser}
                                 <div class="shipping text-center"><!--shipping-->
                                     <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
                                 </div><!--/shipping-->
-                            </sec:authorize>
+                            </security:authorize>
 
-                            <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+                            <security:authorize access="hasRole('ROLE_CUSTOMER')">
                                 <h2>Category</h2>
                                 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
                                     <c:import  url="/navigation"/>
@@ -189,33 +188,32 @@ logged user    ${not empty loggedUser}
                                 <div class="shipping text-center"><!--shipping-->
                                     <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
                                 </div><!--/shipping-->
-                            </sec:authorize>
+                            </security:authorize>
 
 
-                            <sec:authorize access="hasRole('ROLE_ADMIN')" >
-
+                            <security:authorize access="hasRole('ROLE_ADMIN')" >
                                 <a href="viewPendingVendors" >View pending Vendor</a><br/>
                                 <a href="VendorsForUnsubscribe" >Vendor Unsubscribe</a><br/>
                                 <a href="addSetting">Add Setting</a><br/>
                                 <a href="viewCategory" >View Product Category </a><br/>
                                 <a href="addProductCategory" >Add Product Category</a><br/>
                                 <a href="viewCategory" >View Product Category </a><br/>
-                            </sec:authorize>
+                            </security:authorize>
 
-                            <sec:authorize access="hasRole('ROLE_VENDORADMIN')" >
+                            <security:authorize access="hasRole('ROLE_VENDORADMIN')" >
 
                                 <a href="insertProduct">Insert Product</a><br/>         
 
                                 <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
 
-                            </sec:authorize>
+                            </security:authorize>
 
 
                         </div>
                     </div>
 
                     <div class="col-sm-9 padding-right">
-                        <sitemesh:write property='body' />
+                        <sitemesh:write property='body'/>
                     </div>
                 </div>
             </div>
