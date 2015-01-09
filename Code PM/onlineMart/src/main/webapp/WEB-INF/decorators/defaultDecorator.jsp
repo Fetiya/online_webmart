@@ -247,7 +247,11 @@ logged user    ${not empty loggedUser}
             <div class="footer-widget">
                 <div class="container">
                     <div class="row">
-                     </div>
+                       
+                       
+                        
+
+                    </div>
                 </div>
             </div>
 

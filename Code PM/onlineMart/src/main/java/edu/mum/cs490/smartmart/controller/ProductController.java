@@ -328,15 +328,23 @@ public class ProductController {
     public void addToGuestCart(Product product, HttpSession session) {
 
         int quantity = 1;
-
+        
+        List<ShoppingCartItem> currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+        
+        
+            if(currentCartItems==null)
+            {
+                currentCartItems=new ArrayList<ShoppingCartItem>();
+            }
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
 
         boolean flag = true;
 
-        List<ShoppingCartItem> currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
-        for (ShoppingCartItem item : currentCartItems) {
+        
+        
+            for (ShoppingCartItem item : currentCartItems) {
 
             if (item.getProduct().getId() == product.getId()) {
                 item.setQuantity(item.getQuantity() + quantity);
@@ -344,12 +352,14 @@ public class ProductController {
                 flag = false;
                 break;
             }
+        
         }
         if (flag) {
-            List<ShoppingCartItem> gcart = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
-            gcart.add(cartItem);
+            currentCartItems.add(cartItem);
+            
         }
 
+        session.setAttribute("guestShoppingCart", currentCartItems);
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
