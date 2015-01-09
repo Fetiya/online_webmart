@@ -32,7 +32,7 @@
 			<div class="step-one">
 				<h2 class="heading">Step1</h2>
 			</div>
-			<div class="checkout-options">
+<!--			<div class="checkout-options">
 				<h3>New User</h3>
 				<p>Checkout options</p>
 				<ul class="nav">
@@ -46,7 +46,8 @@
 						<a href=""><i class="fa fa-times"></i>Cancel</a>
 					</li>
 				</ul>
-			</div><!--/checkout-options-->
+			</div>-->
+                        
 
 			<div class="register-req">
 				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
@@ -71,9 +72,9 @@
 						<div class="bill-to">
 							<p>Bill To</p>
 							<div class="form-one">
-<<<<<<< HEAD
+
                                                             <form action="cardValidation" method="post"> 
-=======
+
 
 <!--                                                            <form action="cardValidation" commandName="payment" method="post" > 
 =======
@@ -170,7 +171,7 @@
                                                                  </tr>
                                                                 </table> 
                                                             </form:form>
->>>>>>> origin/master
+
 							</div>
                                                        	</div>
 					</div>
