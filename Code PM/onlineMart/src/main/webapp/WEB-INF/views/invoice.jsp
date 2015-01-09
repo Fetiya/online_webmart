@@ -14,22 +14,16 @@
         <title>invoice</title>
     </head>
     <body>
-        <div class="row">  	
-            <div class="col-sm-form">
-                <div class="contact-form">
-                    <h2 class="title text-center">Invoice</h2>
-                    <c:choose>
-                        <c:when test="${empty order}">
-                            <p style="color:red">${message}</p>          
-                        </c:when>
-                        <c:otherwise>
 
+        <c:choose>
+            <c:when test="${empty order}">
+                <p>${message}</p>          
+            </c:when>
+            <c:otherwise>
 
-                            <p style="color:red">${message}</p>    
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+                <h5 class="label-info"> Invoice</h5>
+                <p>${message}</p>    
+            </c:otherwise>
+        </c:choose>
+            </body>
+        </html>

@@ -192,17 +192,10 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
-    public String getProduct(Model model, @PathVariable long id, HttpSession session) {
-        session.setAttribute("product", productService.getProduct(id));
-        session.setAttribute("categories", productService.getListOfCategory());
-        session.setAttribute("vendors", productService.getListOfVendor());
-        return "redirect:/editProduct";
-    }
-    @RequestMapping(value="/editProduct")
-    public String editProduct(Model model, HttpSession session){
-        model.addAttribute("product", session.getAttribute("product"));
-        model.addAttribute("categories", session.getAttribute("categories"));
-        model.addAttribute("vendors", session.getAttribute("vendors"));
+    public String getProduct(Model model, @PathVariable long id) {
+        model.addAttribute("product", productService.getProduct(id));
+        model.addAttribute("categories", productService.getListOfCategory());
+        model.addAttribute("vendors", productService.getListOfVendor());
         return "editProduct";
     }
 
@@ -489,56 +482,14 @@ public class ProductController {
              session.setAttribute("payment", "payment");
              System.out.println("session payment object "+ session.getAttribute("payment"));
              // it will be redarected to checkout2
-             return "placeOrder";
+             return "redirect:/placeOrder";
          }
          else{
            return "redirect:/checkout";  
          }
           }
         }
-//      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
-//     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
-//         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
-//    RestTemplate restTemplate = new RestTemplate();
-//   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
-//   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
-//          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
-//         return "index";
-//     }
 
-
-//<<<<<<< HEAD
-//    @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
-//    public String Cardvalidation(String cardNumber, String securityNumber, String totalAmount, Model model, HttpSession session) {
-//        System.out.println("values from cardvalidation controler" + cardNumber + securityNumber + totalAmount);
-//        boolean result;
-//        RestTemplate restTemplate = new RestTemplate();
-//        Payment payment = restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/" + cardNumber + "/" + securityNumber + "/" + totalAmount, Payment.class);
-//        if (payment.getId() != null) {
-//            result = true;
-//        } else {
-//            result = false;
-//        }
-//        model.addAttribute("result", result);
-////         boolean result=restTemplate.getForObject(payment, );
-//        System.out.println("+++++++++++" + payment.getCardNumber());
-//
-//
-//        if (result) {
-//            // it will be redarected to checkout2
-//            return "redirect:placeOrder";
-//        } else {
-//            return "redirect:/checkout";
-//        }
-//    }
-
-//        if (result) {
-//            // it will be redarected to checkout2
-//            return "redirect:placeOrder";
-//        } else {
-//            return "redirect:/checkout";
-//        }
-//    }
 
     @RequestMapping(value = "/placeOrder", method = RequestMethod.GET)
     public String placeOrder(Model model, final RedirectAttributes re, HttpSession session) {
@@ -549,9 +500,9 @@ public class ProductController {
 
         if (session.getAttribute("loggedUser") != null) {
 
-            Customer c = (Customer) session.getAttribute("loggedUser");
+            customer = (Customer) session.getAttribute("loggedUser");
            
-            currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
+            currentCartItems = shoppingCartService.getCustomerShoppingCart(customer);
         } else {
 
             currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
@@ -594,7 +545,8 @@ public class ProductController {
                 order = cartItemsToOrderItems(order, currentCartItems);
                 order.setCustomer(customer);
 
-                customer.getOrder().add(order);
+                
+              //  customer.getOrder().add(order);
 
                 //save order
                 orderService.addOrder(order);

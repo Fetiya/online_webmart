@@ -70,14 +70,9 @@ public class ProductCategoryController {
     }
 
     @RequestMapping(value = "/productCategoryEdit/{id}", method = RequestMethod.GET)
-    public String getProduct(Model model, @PathVariable long id,HttpSession session) {
-        session.setAttribute("productCategory", categoryService.getProductCategoryById(id));
-        return "redirect:/editProductCategory";
-    }
-    @RequestMapping(value = "editProductCategory")
-     public String productCategory(Model model, @PathVariable long id,HttpSession session) {
-        model.addAttribute("productCategory",session.getAttribute("productCategory"));
-         return "editProductCategory";
+    public String getProduct(Model model, @PathVariable long id) {
+        model.addAttribute("productCategory", categoryService.getProductCategoryById(id));
+        return "editProductCategory";
     }
 
     @RequestMapping(value = "/editCategory", method = RequestMethod.POST)

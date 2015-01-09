@@ -17,17 +17,70 @@
         <title>JSP Page</title>
     </head>
     <body>
+ 
+	
 
-        <div class="row">  	
-            <div class="col-sm-form">
-                <div class="contact-form">
-                    <h2 class="title text-center">Check Out</h2>
-                    <p class="title ">New User check Out Options</p>
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="#">Home</a></li>
+				  <li class="active">Check out</li>
+				</ol>
+			</div><!--/breadcrums-->
 
-                    <p class="title ">
-                        <a class="title" style="color:#fe980f;font-size: 13px; text-decoration: underline" href= "#">Register Account</a>
-                        <a class="title" style="color:#fe980f;font-size: 13px; text-decoration: underline" href= "#"> Guest Checkout</a>
-                    </p>
+			<div class="step-one">
+				<h2 class="heading">Step1</h2>
+			</div>
+<!--			<div class="checkout-options">
+				<h3>New User</h3>
+				<p>Checkout options</p>
+				<ul class="nav">
+					<li>
+						<label><input type="checkbox"> Register Account</label>
+					</li>
+					<li>
+						<label><input type="checkbox"> Guest Checkout</label>
+					</li>
+					<li>
+						<a href=""><i class="fa fa-times"></i>Cancel</a>
+					</li>
+				</ul>
+			</div>-->
+                        
+
+			<div class="register-req">
+				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
+			</div><!--/register-req-->
+
+			<div class="shopper-informations">
+				<div class="row">
+<!--                                    
+					<div class="col-sm-3">
+						<div class="shopper-info">
+							<p>Shopper Information</p>
+							<form>
+								<input type="text" placeholder="Display Name">
+								<input type="text" placeholder="User Name">
+								<input type="password" placeholder="Password">
+								<input type="password" placeholder="Confirm password">
+							</form>
+							
+						</div>
+					</div>-->
+					<div class="col-sm-5 clearfix">
+						<div class="bill-to">
+							<p>Bill To</p>
+							<div class="form-one">
+
+                                                            <form action="cardValidation" method="post"> 
+
+
+<!--                                                            <form action="cardValidation" commandName="payment" method="post" > 
+=======
+                                                            <form action="cardValidation" method="post"> 
+>>>>>>> origin/master
+>>>>>>> origin/master
                                                                     
                                                                         <input type="text" placeholder="First Name *">
 									<input type="text" placeholder="Middle Name">
@@ -64,6 +117,7 @@
                                                                          <input type="text" name="totalAmount" >
 						                       <button class="btn btn-primary" type="submit">Place Order </button>
 						                                                                           	
+<<<<<<< HEAD
                                                                        </form>
 =======
                                                                        </form>-->
@@ -264,3 +318,12 @@
 		</div>
 	</section> <!--/#cart_items-->
 
+
+
+    <script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/jquery.prettyPhoto.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

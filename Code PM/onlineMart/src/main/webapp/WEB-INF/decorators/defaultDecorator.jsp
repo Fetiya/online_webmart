@@ -74,13 +74,13 @@
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
                                         <ul  class="sub-menu">
-                                            <li><a  href="addVendor">Vendor</a></li> <br />
+                                            <li><a  href="addVendor">Vendor</a></li> 
                                             <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
                                     <!--<li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
 
-                                    <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/checkSelection"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                         <c:choose>   
                                             <c:when test="${not empty loggedUser }">
@@ -89,7 +89,7 @@
                                             <li>  <a href="/SmartMart/j_spring_security_logout"><i class="fa fa-lock"></i> Logout</a>        </li>
                                             </c:when>
                                             <c:otherwise>
-                                            
+                                            <li><a href="${pageContext.request.contextPath}/addCustomer"><i class="fa fa-user"></i> Register</a></li>
                                             <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>                                            
                                             </c:otherwise>
                                         </c:choose>
@@ -118,7 +118,7 @@
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="products">Products</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/checkout">Checkout</a></li> 
+                                            <li><a href="${pageContext.request.contextPath}/checkSelection">Checkout</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li> 
 
                                         </ul>

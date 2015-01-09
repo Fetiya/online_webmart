@@ -14,7 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
+        <h2>Search Results : </h2>
         <!--features_items-->
         <h2 class="title text-center">Search Results</h2>
          <c:forEach var="product" items="${products}"  >

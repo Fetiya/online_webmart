@@ -91,22 +91,22 @@
                                 </div>
 
                         </div>
-                            <section id="do_action">
-                            <div class="">
+                        <section id="do_action">
+                            <div class="container">
                                 <div class="heading">
                                 </div>
-                                <div class="contact-form">
-                                    
+                                <div class="row">
 
-                                    <div class="col-sm-6 total_area pull-right">
-                                        <div>
+
+                                    <div class="col-sm-6">
+                                        <div class="total_area">
                                             <ul>
                                                 <li>Cart Sub Total <span>$ <c:out value="${totalPrice}"/></span></li>
                                                 <li>Shipping Cost <span>Free</span></li>
                                                 <li>Total <span>$ <c:out value="${totalPrice}"/></span></li>
                                             </ul>
 
-                                            <a class="btn btn-default check_out pull-right" href="checkout">Check Out</a>
+                                            <a class="btn btn-default check_out" href="checkout">Check Out</a>
 
                                         </div>
                                     </div>
@@ -121,5 +121,4 @@
             </div>
         </div>
     </body>
-</html>
-
+</html

@@ -45,7 +45,6 @@ edu\mum\cs490\smartmart\service\INotificationService.class
 edu\mum\cs490\smartmart\dao\impl\UserDAOImpl.class
 edu\mum\cs490\smartmart\dao\IVendorDAO.class
 edu\mum\cs490\smartmart\service\IOrderService.class
-edu\mum\cs490\smartmart\controller\guestRegistrationController.class
 edu\mum\cs490\smartmart\service\IReportService.class
 edu\mum\cs490\smartmart\controller\ReportController.class
 edu\mum\cs490\smartmart\dao\IOrderDAO.class
