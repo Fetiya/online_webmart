@@ -23,7 +23,7 @@
                             <p class="title ">Add Product Category</p>
                             <tr class="form-group col-md-12">
                                 <td class="td-label">Category Name : </td>
-                                <td class="td-input"><form:input type="text" path="name" class="form-control" placeholder="Category Name" /> </td>  
+                                <td class="td-input"><form:input type="text" path="name"  class="form-control"  placeholder="Category Name" /> </td>  
                                 <td><form:errors path="name" cssClass="error" /> </td>
                             </tr>
                             <tr class="form-group col-md-12">

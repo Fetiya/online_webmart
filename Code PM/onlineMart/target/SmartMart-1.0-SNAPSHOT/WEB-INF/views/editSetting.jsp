@@ -18,11 +18,7 @@
         <form:form modelAttribute="setting" action="../editSetting" method="post">
             <table>
                 <form:hidden path="id"/>
-                 <tr>
-                    <td>Name: </td>
-                    <td> <form:input path="name" /> </td>
-                    <td><form:errors path="name" cssClass="error" /> </td>
-                </tr>               
+                             
                 
                 <tr>
                     <td>Account Number:  </td>
@@ -30,11 +26,7 @@
                     <td><form:errors path="accountNum" cssClass="error" /> </td>
                 </tr>
                 
-                <tr>
-                    <td>Value </td>
-                    <td><form:input path="value" /></td>
-                    <td><form:errors path="value" cssClass="error" /> </td>
-                </tr>
+               
                 
                 <tr>
                     <td>Profit Percentage: </td>
