@@ -54,25 +54,22 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-<<<<<<< HEAD
         <property name="password" value="mumsql" />
-=======
-        <property name="password" value="root" />
->>>>>>> origin/master
-    </bean>
+
+      </bean>
 
     <!-- hibernate Properties -->
     <bean id="hibernateProperties"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-<<<<<<< HEAD
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
-=======
+
+<!--                <prop key="hibernate.hbm2ddl.auto">create</prop>-->
+
 
                 <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
 
->>>>>>> origin/master
+
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
