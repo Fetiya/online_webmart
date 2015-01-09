@@ -55,7 +55,7 @@ public class UserSerivceImpl implements IUserService {
         cred.setUsername(userName);
         Users user = new Users();
         user.setCredential(cred);
-        List<Users> matchingusers = userDAO.findByExample(user, new String[]{});
+        List<Users> matchingusers = userDAO.findUsers(userName);//indByExample(user, new String[]{});
 
         if (matchingusers.size() == 1) {
             return matchingusers.get(0);

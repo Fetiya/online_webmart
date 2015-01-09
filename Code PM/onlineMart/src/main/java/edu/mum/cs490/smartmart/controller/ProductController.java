@@ -475,8 +475,10 @@ public class ProductController {
          }
          else{
         boolean validationResult=false;
+        payment.setTotalAmount((double)session.getAttribute("cartAmount"));
+        
          RestTemplate restTemplate = new RestTemplate();
-         Payment  validPayment=restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
+         Payment  validPayment=restTemplate.getForObject("http://10.10.14.40:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
          if(validPayment.getId()!=null){
              validationResult=true;
          }

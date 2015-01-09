@@ -106,7 +106,7 @@
                                                 <li>Total <span>$ <c:out value="${totalPrice}"/></span></li>
                                             </ul>
 
-                                            <a class="btn btn-default check_out" href="checkout">Check Out</a>
+                                            <a class="btn btn-default check_out" href="${pageContext.request.contextPath}/checkSelection">Check Out</a>
 
                                         </div>
                                     </div>
