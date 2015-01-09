@@ -78,9 +78,9 @@
                                             <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
-                                    <!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
+                                    <!--<li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
 
-                                    <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/checkSelection"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                         <c:choose>   
                                             <c:when test="${not empty loggedUser }">
@@ -118,12 +118,12 @@
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="products">Products</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/checkout">Checkout</a></li> 
+                                            <li><a href="${pageContext.request.contextPath}/checkSelection">Checkout</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li> 
-                                            <li><a href="${pageContext.request.contextPath}/login">Login</a></li> 
+
                                         </ul>
                                     </li> 
-                                   <!--<li><a href="contactUs">Contact </a></li>-->
+                                    <!--<li><a href="contactUs">Contact </a></li>-->
                                 </ul>
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                                 <div class="panel-group category-products" id="accordian">category-productsr
                                     < c:import  url="/navigation"/>
 
-                                </div>
+                            </div>
 
                                 <div class="brands_products">brands_products
                                     <h2>Brands</h2>
@@ -204,7 +204,7 @@ logged user    ${not empty loggedUser}
 
                                 <a href="insertProduct">Insert Product</a><br/>         
 
-                                <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
+                                <a href="report" target="_blank" >View Vendor Sales Report </a><br/><br />
 
                             </security:authorize>
 
