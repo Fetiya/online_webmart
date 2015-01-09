@@ -17,8 +17,6 @@ import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.NotBlank;
 
-
-
 /**
  *
  * @author Komal
@@ -26,31 +24,23 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @XmlRootElement
 public class Payment implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-
-    @NotBlank (message = "Card Number required")
+    @NotBlank(message = "Card Number required")
 //    @CreditCardNumber 
-    @Pattern(regexp="(\\d{16})",message = "Invalid Card")
+    @Pattern(regexp = "(\\d{16})", message = "Invalid Card")
     private String cardNumber;
-
-    @NotBlank (message = "Security Number required")
+    @NotBlank(message = "Security Number required")
     private String securityNumber;
-
     private String cardType;
-
-    @NotBlank (message = "Name required")
+    @NotBlank(message = "Name required")
     private String name;
-
-
-    @NotBlank (message = "required filed")
+    @NotBlank(message = "required filed")
     private String expiryDate;
     private double totalAmount;
-    
-    
 
     public Long getId() {
         return id;
@@ -75,8 +65,6 @@ public class Payment implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    
 
     public String getCardNumber() {
         return cardNumber;
@@ -93,8 +81,6 @@ public class Payment implements Serializable {
     public void setCardType(String cardType) {
         this.cardType = cardType;
     }
-
-    
 
     public String getExpiryDate() {
         return expiryDate;
@@ -136,5 +122,5 @@ public class Payment implements Serializable {
     public String toString() {
         return "com.mypayment.paymentgateway.Payment[ id=" + id + " ]";
     }
-    
+
 }

@@ -19,9 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Fetiya
  */
 
-
 @Transactional(propagation = Propagation.REQUIRED)
-
 public class UserSerivceImpl implements IUserService {
 
     IUserDAO userDAO;

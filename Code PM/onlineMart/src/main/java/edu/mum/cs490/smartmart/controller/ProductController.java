@@ -300,6 +300,7 @@ public class ProductController {
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
+        cartItem.setPrice(product.getPrice());
         cartItem.setCustomer(customer);
         boolean flag = true;
 
@@ -339,6 +340,7 @@ public class ProductController {
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
+        cartItem.setPrice(product.getPrice());
 
         boolean flag = true;
 
@@ -795,7 +797,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/cart/edit/{id}", method = RequestMethod.POST)
-    public String editCart(Model model, @PathVariable long id, String quantity, HttpSession session) {
+    public String editCart(Model model, @PathVariable long id, String quantity, HttpSession session,RedirectAttributes res) {
 
         try {
             Integer.valueOf(quantity);
@@ -804,7 +806,7 @@ public class ProductController {
 
         } catch (Exception e) {
 
-            session.setAttribute("message", "Error: Your shopping cart is not updated. '" + quantity + "' is not a valid quantity");
+            res.addFlashAttribute("message", "Error: Your shopping cart is not updated. '" + quantity + "' is not a valid quantity");
             return "redirect:/cart";
         }
         session.setAttribute("message", "");
