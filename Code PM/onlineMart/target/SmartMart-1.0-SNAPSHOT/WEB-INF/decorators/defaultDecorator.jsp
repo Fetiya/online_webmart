@@ -3,6 +3,7 @@
     Created on : Jan 3, 2015, 8:02:45 AM
     Author     : Fetiya
 --%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -73,12 +74,12 @@
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
                                         <ul  class="sub-menu">
-                                            <li><a  href="addVendor">Vendor</a></li><br>
+                                            <li><a  href="addVendor">Vendor</a></li> 
                                             <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
-<!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
-                                   
+                                    <!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
+
                                     <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                         <c:choose>   
@@ -88,7 +89,7 @@
                                             <li>  <a href="/SmartMart/j_spring_security_logout"><i class="fa fa-lock"></i> Logout</a>        </li>
                                             </c:when>
                                             <c:otherwise>
-                                            
+                                            <li><a href="${pageContext.request.contextPath}/addCustomer"><i class="fa fa-user"></i> Register</a></li>
                                             <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>                                            
                                             </c:otherwise>
                                         </c:choose>
@@ -122,14 +123,7 @@
                                             <li><a href="${pageContext.request.contextPath}/login">Login</a></li> 
                                         </ul>
                                     </li> 
-                                    <li class="dropdown"><a href="blogPage">Blog</i></a>
-<!--                                        <ul role="menu" class="sub-menu">
-                                            <li><a href="blog.html">Blog List</a></li>
-                                            <li><a href="blog-single.html">Blog Single</a></li>
-                                        </ul>-->
-                                    </li> 
-
-                                    <li><a href="contactUs">Contact</a></li>
+                                   <!--<li><a href="contactUs">Contact </a></li>-->
                                 </ul>
                             </div>
                         </div>
@@ -146,28 +140,80 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                            <h2>Category</h2>
-                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                <c:import  url="/navigation"/>
+<!--                              <h2>Category</h2>
+                                <div class="panel-group category-products" id="accordian">category-productsr
+                                    < c:import  url="/navigation"/>
 
-                            </div>
+                                </div>
 
-                            <div class="brands_products"><!--brands_products-->
-                                <h2>Brands</h2>
-                                <c:import  url="/brands"/>
-                            </div><!--/brands_products-->
+                                <div class="brands_products">brands_products
+                                    <h2>Brands</h2>
+                                    < c:import  url="/brands"/>
+                                </div>/brands_products
 
-                           
+                                <div class="shipping text-center">shipping
+                                    <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
+                                </div>/shipping-->
 
-                            <div class="shipping text-center"><!--shipping-->
-                                <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
-                            </div><!--/shipping-->
+logged user    ${not empty loggedUser}
+                            <security:authorize access="hasRole('ROLE_ANONYMOUS')">
+                                <h2>Category</h2>
+                                <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                    <c:import  url="/navigation"/>
+
+                                </div>
+
+                                <div class="brands_products"><!--brands_products-->
+                                    <h2>Brands</h2>
+                                    <c:import  url="/brands"/>
+                                </div><!--/brands_products-->
+
+                                <div class="shipping text-center"><!--shipping-->
+                                    <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
+                                </div><!--/shipping-->
+                            </security:authorize>
+
+                            <security:authorize access="hasRole('ROLE_CUSTOMER')">
+                                <h2>Category</h2>
+                                <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                    <c:import  url="/navigation"/>
+
+                                </div>
+
+                                <div class="brands_products"><!--brands_products-->
+                                    <h2>Brands</h2>
+                                    <c:import  url="/brands"/>
+                                </div><!--/brands_products-->
+
+                                <div class="shipping text-center"><!--shipping-->
+                                    <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
+                                </div><!--/shipping-->
+                            </security:authorize>
+
+
+                            <security:authorize access="hasRole('ROLE_ADMIN')" >
+                                <a href="viewPendingVendors" >View pending Vendor</a><br/>
+                                <a href="VendorsForUnsubscribe" >Vendor Unsubscribe</a><br/>
+                                <a href="addSetting">Add Setting</a><br/>
+                                <a href="viewCategory" >View Product Category </a><br/>
+                                <a href="addProductCategory" >Add Product Category</a><br/>
+                                <a href="viewCategory" >View Product Category </a><br/>
+                            </security:authorize>
+
+                            <security:authorize access="hasRole('ROLE_VENDORADMIN')" >
+
+                                <a href="insertProduct">Insert Product</a><br/>         
+
+                                <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
+
+                            </security:authorize>
+
 
                         </div>
                     </div>
 
                     <div class="col-sm-9 padding-right">
-                        <sitemesh:write property='body' />
+                        <sitemesh:write property='body'/>
                     </div>
                 </div>
             </div>
@@ -185,7 +231,67 @@
                                 <p>Buy Your Stuff  easily. Free Shopping World Wide</p>
                             </div>
                         </div>
-                         </div>
+                        <div class="col-sm-7">
+                            <div class="col-sm-3">
+                                <div class="video-gallery text-center">
+                                    <a href="#">
+                                        <div class="iframe-img">
+                                            <img src="resources/bootstrap/images/home/iframe1.png" alt="" />
+                                        </div>
+                                        <div class="overlay-icon">
+                                            <i class="fa fa-play-circle-o"></i>
+                                        </div>
+                                    </a>
+                                    <p>Circle of Hands</p>
+                                    <h2>1 JAN 2015</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="video-gallery text-center">
+                                    <a href="#">
+                                        <div class="iframe-img">images
+                                            <img src="resources/bootstrap/images/home/iframe2.png" alt="" />
+                                        </div>
+                                        <div class="overlay-icon">
+                                            <i class="fa fa-play-circle-o"></i>
+                                        </div>
+                                    </a>
+                                    <p>Circle of Hands</p>
+                                    <h2>1 JAN 2015</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="video-gallery text-center">
+                                    <a href="#">
+                                        <div class="iframe-img">
+                                            <img src="resources/bootstrap/images/home/iframe3.png" alt="" />
+                                        </div>
+                                        <div class="overlay-icon">
+                                            <i class="fa fa-play-circle-o"></i>
+                                        </div>
+                                    </a>
+                                    <p>Circle of Hands</p>
+                                    <h2>1 JAN 2015</h2>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="video-gallery text-center">
+                                    <a href="#">
+                                        <div class="iframe-img">
+                                            <img src="resources/bootstrap/images/home/iframe4.png" alt="" />
+                                        </div>
+                                        <div class="overlay-icon">
+                                            <i class="fa fa-play-circle-o"></i>
+                                        </div>
+                                    </a>
+                                    <p>Circle of Hands</p>
+                                    <h2>1 JAN 2015</h2>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-sm-3">
                             <div class="address">
                                 <img src="resources/bootstrap/images/home/map.png" alt="" />
@@ -199,9 +305,64 @@
             <div class="footer-widget">
                 <div class="container">
                     <div class="row">
-                       
-                       
-                        
+                        <div class="col-sm-2">
+                            <div class="single-widget">
+                                <h2>Service</h2>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="">Online Help</a></li>
+                                    <li><a href="">Contact Us</a></li>
+                                    <li><a href="">Order Status</a></li>
+                                    <li><a href="">Change Location</a></li>
+                                    <li><a href="">FAQ’s</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="single-widget">
+                                <h2>Quock Shop</h2>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="">T-Shirt</a></li>
+                                    <li><a href="">Mens</a></li>
+                                    <li><a href="">Womens</a></li>
+                                    <li><a href="">Gift Cards</a></li>
+                                    <li><a href="">Shoes</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="single-widget">
+                                <h2>Policies</h2>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="">Terms of Use</a></li>
+                                    <li><a href="">Privecy Policy</a></li>
+                                    <li><a href="">Refund Policy</a></li>
+                                    <li><a href="">Billing System</a></li>
+                                    <li><a href="">Ticket System</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="single-widget">
+                                <h2>About Shopper</h2>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="">Company Information</a></li>
+                                    <li><a href="">Careers</a></li>
+                                    <li><a href="">Store Location</a></li>
+                                    <li><a href="">Affillate Program</a></li>
+                                    <li><a href="">Copyright</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-sm-offset-1">
+                            <div class="single-widget">
+                                <h2>About Shopper</h2>
+                                <form action="#" class="searchform">
+                                    <input type="text" placeholder="Your email address" />
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
+                                    <p>Get the most recent updates from <br />our site and be updated your self...</p>
+                                </form>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

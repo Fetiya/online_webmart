@@ -37,23 +37,11 @@
     <filter-mapping>
         <filter-name>SpringOpenSessionInViewFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    
+    </filter-mapping> 
    
-   <!-- decorator -->
-	<filter>
-		<filter-name>sitemesh</filter-name>
-		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>sitemesh</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-  
-    
+        
     <!-- Spring Security -->
-<!--    <filter>
+    <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy
         </filter-class>
@@ -73,6 +61,18 @@
         <filter-name>MyFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    -->
+    
+    <!-- decorator -->
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+        
+    
 </web-app>
 

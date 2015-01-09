@@ -124,15 +124,4 @@ public class NotificationServiceImpl implements INotificationService {
         sendMail(template.getFrom(), o.getCredential().getUsername(), "Your SmartMart's Oder", emailMessage);
     }
 
-    @Override
-    public void notifayVendorStatus(Vendor vendor, String message) {
-        SimpleMailMessage template = getToCustomersTemplate();
-             System.out.println("Vendor is" + vendor);
-        System.out.println("Vendor admin is" + vendor.getVendorAdmin());
-        System.out.println("Vendor credential is" + vendor.getVendorAdmin().getCredential());
-        String emailMessage = String.format(template.getText(), vendor.getVendorAdmin().getFirstName() + " " + vendor.getVendorAdmin().getLastName(), message);
-   
-        sendMail(template.getFrom(), vendor.getVendorAdmin().getCredential().getUsername(), template.getSubject(), emailMessage);
-    }
-
 }

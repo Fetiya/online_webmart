@@ -52,18 +52,6 @@ public class EmailAdvice {
         notificationService.notifyVendorSignUp(v, text);
     }
     
-    
-    //need to add vendor unsubscription and aproval method 
-     @AfterReturning(pointcut = "execution(* edu.mum.cs490.smartmart.controller.VendorController.unsubscribeVendors(..))")
-    public void notifayVendorStatus(JoinPoint jp) {
-        Vendor v = (Vendor) jp.getArgs()[0];
-
-        System.out.println("Eamil Notification--------------------------/////-----");
-        String text = "Welcome to Smart Mart.Your request is approve.\n You can loggin to use our service.";
-
-        notificationService.notifyVendorSignUp(v, text);
-    }
-    
       @AfterReturning(pointcut = "execution(* edu.mum.cs490.smartmart.serviceImpl.CustomerServiceImpl.notifyCustomerCheckout(..))")
     public void checkoutEmailNotification(JoinPoint jp) {
         Order order = (Order) jp.getArgs()[1];

@@ -21,7 +21,7 @@
                 <table class="table table-condensed">
                     <thead>
                         <tr class="cart_menu">
-                            
+                            <th>id</th>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Description</th>
@@ -37,7 +37,7 @@
                     <tbody>
                         <c:forEach var="product" items="${products}" varStatus="loopStatus" >
                             <tr>
-                              
+                                <td>${product.id}</td>
 
                                 <td width="40%">
                                     <img src="productImage/${product.id}" />

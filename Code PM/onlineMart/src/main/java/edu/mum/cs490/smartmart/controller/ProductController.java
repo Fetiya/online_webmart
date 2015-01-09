@@ -307,6 +307,7 @@ public class ProductController {
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
+        cartItem.setPrice(product.getPrice());
         cartItem.setCustomer(customer);
         boolean flag = true;
 
@@ -346,6 +347,7 @@ public class ProductController {
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
+        cartItem.setPrice(product.getPrice());
 
         boolean flag = true;
 
@@ -408,11 +410,13 @@ public class ProductController {
         return "cart";
     }
 
+
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
         model.addAttribute("payment", new Payment());
         return "checkout";
     }
+
 
 //    @RequestMapping(value = "/validation", method = RequestMethod.POST)
 //     public String validation(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
@@ -472,7 +476,7 @@ public class ProductController {
          else{
         boolean validationResult=false;
          RestTemplate restTemplate = new RestTemplate();
-         Payment  validPayment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
+         Payment  validPayment=restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
          if(validPayment.getId()!=null){
              validationResult=true;
          }
@@ -485,7 +489,7 @@ public class ProductController {
              session.setAttribute("payment", "payment");
              System.out.println("session payment object "+ session.getAttribute("payment"));
              // it will be redarected to checkout2
-             return "index";
+             return "placeOrder";
          }
          else{
            return "redirect:/checkout";  
@@ -800,7 +804,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/cart/edit/{id}", method = RequestMethod.POST)
-    public String editCart(Model model, @PathVariable long id, String quantity, HttpSession session) {
+    public String editCart(Model model, @PathVariable long id, String quantity, HttpSession session,RedirectAttributes res) {
 
         try {
             Integer.valueOf(quantity);
@@ -809,7 +813,7 @@ public class ProductController {
 
         } catch (Exception e) {
 
-            session.setAttribute("message", "Error: Your shopping cart is not updated. '" + quantity + "' is not a valid quantity");
+            res.addFlashAttribute("message", "Error: Your shopping cart is not updated. '" + quantity + "' is not a valid quantity");
             return "redirect:/cart";
         }
         session.setAttribute("message", "");
@@ -873,9 +877,39 @@ public class ProductController {
 
         return "redirect:/cart";
     }
+    
+  
+ 
+    @RequestMapping(value = "/checkSelection", method = RequestMethod.GET)
+    public String checkoutOption(Model model,HttpSession session) {
+        
+        if(session.getAttribute("loggedUser")==null)
+            
+        {
+           return"checkOutSelection";
+        }
+        else
+        {
+            return "redirect:/checkout";
+        }
+
+
+
+    }
+    
+//    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+//    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+//        model.addAttribute("payment", new Payment());
+//        return "checkout";
+//    }
+//   
+    
+  
+
 
     public void clearGuestShoppingCart(HttpSession session) {
        
+
         List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
         items.clear();
 

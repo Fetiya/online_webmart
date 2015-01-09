@@ -11,7 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Invoice</title>
+        <title>invoice</title>
     </head>
     <body>
 
@@ -20,8 +20,9 @@
                 <p>${message}</p>          
             </c:when>
             <c:otherwise>
-                 <h4 class="text-center">Invoice</h4>
-                <p class="title ">${message}</p> 
+
+                <h5 class="label-info"> Invoice</h5>
+                <p>${message}</p>    
             </c:otherwise>
         </c:choose>
             </body>

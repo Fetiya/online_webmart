@@ -14,7 +14,7 @@
     </head>
 
     <body>
-        <div class="row">  	
+        <div class="row">      
             <div class="col-sm-form">
                 <div class="contact-form">
                     <h2 class="title text-center">CART</h2>
@@ -113,9 +113,8 @@
                                 </div>
                             </div>
                         </section><!--/#do_action-->
-                        </section> <!--/#cart_items-->
 
-                        
+
 
                     </c:otherwise>
                 </c:choose> 

@@ -24,6 +24,4 @@ public interface INotificationService {
     public void contactAdmin(Admin admin, String message);
     
     public void notifyCustomerCheckout(Customer customer, String message) ;
-    
-    public void notifayVendorStatus(Vendor vendor, String message);
 }
