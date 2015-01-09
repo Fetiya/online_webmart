@@ -6,6 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -67,7 +71,7 @@
 						<div class="bill-to">
 							<p>Bill To</p>
 							<div class="form-one">
-                                                            <form action="cardValidation" commandName="payment" method="post" > 
+<!--                                                            <form action="cardValidation" commandName="payment" method="post" > 
                                                                     
                                                                         <input type="text" name="name" placeholder="First Name and Last Name *">
                                                                         <select  name="cardType" placeholder="Card Type *">
@@ -82,7 +86,36 @@
 									
                                                                         
 						                                                                           	
-                                                                       </form>
+                                                                       </form>-->
+                                                            
+                                                            <form:form commandName="payment" modelAttribute="payment" action="cardValidation" method="post">
+                                                                <table>
+                                                                    <tr class="form-group col-md-12">
+                                                                 <td class="td-label"><form:label path="name"  class="td-label">Full Name:</form:label></td>
+                                                                 <td class="td-input"><form:input path="name"  placeholder="First Name and Last Name" /></td>
+                                                                 <td><form:errors path="name" cssClass="error" /></td>
+                                                                </tr>
+<!--                                                                <select  name="cardType" placeholder="Card Type *">
+                                                                                <option>Visa </option>
+										<option>Master Card</option>
+                                                                        </select>
+                                                                -->
+                                                                <td class="td-label"><form:label path="name"  class="td-label">Card Number:</form:label></td>
+                                                               <td class="td-input"><form:input path="cardNumber"  placeholder="Card Number *"/></td>
+                                                                <td><form:errors path="cardNumber" cssClass="error" /></td>
+                                                                 
+                                                                <td class="td-label"><form:label path="name"  class="td-label">Full Name:</form:label></td>
+                                                                <td class="td-input"><form:input path="securityNumber" placeholder="Card Security Number *"/></td>
+                                                                <td><form:errors path="securityNumber" cssClass="error" /></td>
+                                                                 
+                                                                <td class="td-label"><form:label path="name"  class="td-label">Full Name:</form:label></td>
+                                                                <td class="td-input"><form:input path="expiryDate"   placeholder="Expiry Date *"/></td>
+                                                                <td><form:errors path="expiryDate" cssClass="error" /></td>
+                                                                
+                                                                 <button class="btn btn-primary" type="submit">Place Order </button>
+                                                                 
+                                                                </table> 
+                                                            </form:form>
 							</div>
                                                        	</div>
 					</div>
