@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -29,6 +30,7 @@ public class Address implements Serializable {
     @NotBlank (message = "{NotBlank.Address.city.validation}")
     private String city;
     @NotBlank (message = "{NotBlank.Address.street.validation}")
+    @Size (min = 1, max = 3, message = "{Min.Address.street.validation}")
     private String street;
     @NotBlank (message = "{NotBlank.Address.country.validation}")
     private String country;
@@ -52,8 +54,6 @@ public class Address implements Serializable {
     public void setZip(int zip) {
         this.zip = zip;
     }
-
- 
 
     public String getCity() {
         return city;

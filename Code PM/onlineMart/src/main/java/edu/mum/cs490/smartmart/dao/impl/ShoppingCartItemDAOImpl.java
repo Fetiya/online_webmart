@@ -33,7 +33,7 @@ public class ShoppingCartItemDAOImpl extends GenericDAOImpl<ShoppingCartItem, Lo
     public List<ShoppingCartItem> getCustomerShoppingCart(Customer customer) {
        
         List<ShoppingCartItem> cartItems;
-        Query query = getSf().getCurrentSession().createQuery("select i from ShoppingCartItem i where i.customer=:customer");
+        Query query = getSf().getCurrentSession().createQuery("from ShoppingCartItem where customer=:customer");
         
         query.setParameter("customer", customer);
         
@@ -68,7 +68,5 @@ public class ShoppingCartItemDAOImpl extends GenericDAOImpl<ShoppingCartItem, Lo
         
         return cart;
     }
-
-
     
 }

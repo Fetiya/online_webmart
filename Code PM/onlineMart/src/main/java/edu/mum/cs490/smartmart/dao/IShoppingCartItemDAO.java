@@ -20,10 +20,6 @@ public interface IShoppingCartItemDAO   extends IGenericDAO<ShoppingCartItem, Lo
   public List<ShoppingCartItem>   getCustomerShoppingCart(Customer customer);
   
   public void clearCustomerShoppingCart(Customer customer);
-  
   public ShoppingCartItem getShoppingCartByProduct(Long id);
-  
-
-          
      
 }

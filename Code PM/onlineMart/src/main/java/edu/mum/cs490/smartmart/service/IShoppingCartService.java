@@ -12,6 +12,8 @@ public interface IShoppingCartService {
 
     public ShoppingCartItem getShoppingCart(Long id);
 
+    public List<ShoppingCartItem> getCart(Customer customer);
+
     public void clearCart(int id);
 
     public void addShoppingCartItem(Customer customer, ShoppingCartItem item);

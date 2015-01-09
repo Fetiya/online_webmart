@@ -403,6 +403,7 @@ public class ProductController {
 
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+        model.addAttribute("payment", new Payment());
         return "checkout";
     }
 
@@ -421,6 +422,7 @@ public class ProductController {
 //        }
 //        return "redirect:/cardValidation";
 //        }
+
 
 //     
 //     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
@@ -493,6 +495,8 @@ public class ProductController {
 //         return "index";
 //     }
 
+
+//<<<<<<< HEAD
 //    @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
 //    public String Cardvalidation(String cardNumber, String securityNumber, String totalAmount, Model model, HttpSession session) {
 //        System.out.println("values from cardvalidation controler" + cardNumber + securityNumber + totalAmount);
@@ -509,6 +513,14 @@ public class ProductController {
 //        System.out.println("+++++++++++" + payment.getCardNumber());
 //
 //
+//        if (result) {
+//            // it will be redarected to checkout2
+//            return "redirect:placeOrder";
+//        } else {
+//            return "redirect:/checkout";
+//        }
+//    }
+
 //        if (result) {
 //            // it will be redarected to checkout2
 //            return "redirect:placeOrder";

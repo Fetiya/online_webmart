@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -26,7 +25,7 @@ public class ProductCategory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank(message= "{NotBlank.ProductCategory.name.validation}") 
+    @NotNull(message= "{NotNull.ProductCategory.name.validation}") 
     private String name;
     private String description;
     @OneToMany(mappedBy = "productCategory",cascade = CascadeType.ALL)
