@@ -104,7 +104,7 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
         String sql = "SELECT p.id as productId, p.name as productName, p.quantity as qtyInStock , sum(o.quantity) as qtySold, sum(o.price * o.quantity) as totalPrice, sum(s.profitToVendor) as totalNetIncome"
                 + " FROM orderitem o,product p,salesdetail s, order_table ot"
                 + " WHERE o.product_id=p.id and o.id=s.`orderItem_id` and p.vendor_id = v.id and v.id=" + vendorId + " and ot.`orderDate` >= '" + startDate + "' AND ot.`orderDate` < '" + endDate + "' "
-                + " GROUP BY p.id";
+                + " GROUP BY p.id,p.quantity,p.name,";
         Query query = getSf().getCurrentSession().createSQLQuery(sql);
         List<Object[]> listResult = query.list();
         List<ProductSales> result = new ArrayList<>();
