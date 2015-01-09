@@ -23,9 +23,7 @@ public class Settings implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
-    private int profitpercentage;
-    private String accountNum;
+  
 
     
 //    @NotNull
@@ -65,22 +63,7 @@ public class Settings implements Serializable {
         this.id = id;
     }
 
-    public int getProfitpercentage() {
-        return profitpercentage;
-    }
-
-    public void setProfitpercentage(int profitpercentage) {
-        this.profitpercentage = profitpercentage;
-    }
-
-    public String getAccountNum() {
-        return accountNum;
-    }
-
-    public void setAccountNum(String accountNum) {
-        this.accountNum = accountNum;
-    }
-    
+ 
     
 
     @Override

@@ -22,24 +22,27 @@ import javax.validation.constraints.Min;
  */
 @Entity
 public class OrderItem implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private Order order;
-    @ManyToOne
-    private Product product;
-    
-    @OneToOne(mappedBy = "orderItem",cascade = CascadeType.ALL)
-    private SalesDetail salesDetail;
-    
-     @Min(0)
+
+    @Min(0)
     private double price;
-           
+
     @Min(1)
     private int quantity;
-    
+
+    @ManyToOne
+    private Order order;
+
+    @ManyToOne
+    private Product product;
+
+    @OneToOne(mappedBy = "orderItem", cascade = CascadeType.ALL)
+    private SalesDetail salesDetail;
+
     public Long getId() {
         return id;
     }
@@ -63,8 +66,6 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
     }
 
-    
-    
     public SalesDetail getSalesDetail() {
         return salesDetail;
     }
@@ -117,5 +118,5 @@ public class OrderItem implements Serializable {
     public String toString() {
         return "edu.mum.cs490.webmart.domain.OrderItem[ id=" + id + " ]";
     }
-    
+
 }
