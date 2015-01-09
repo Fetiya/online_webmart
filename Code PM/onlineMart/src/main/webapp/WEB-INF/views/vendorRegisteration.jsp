@@ -35,7 +35,7 @@
                             </tr>
                             <tr class="form-group col-md-12">
                                 <td class="td-label">
-                                    <form:button class="btn btn-primary" >Sign up</form:button>
+                                    <form:button class="btn btn-primary" >Next</form:button>
                                     </td>
                                 </tr>
                             </table>

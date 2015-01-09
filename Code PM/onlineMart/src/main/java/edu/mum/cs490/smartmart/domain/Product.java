@@ -17,6 +17,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull; 
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -29,7 +30,7 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
+    @NotBlank(message= "{NotBlank.Product.name.validation}")
     private String name;
     private String description;
    // @Column(name="poductImage",columnDefinition="longblob")

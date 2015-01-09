@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -26,9 +27,10 @@ public class Settings implements Serializable {
   
 
     
-    @NotNull
+    @NotBlank (message = "{NotBlank.Setting.name.validation}")
     private String name;
     
+    @NotBlank (message = "{NotBlank.Setting.value.validation}")
     private String value;
     
      public Settings() {
