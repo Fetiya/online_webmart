@@ -54,6 +54,7 @@ public class MyFilter implements Filter {
                 org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) token.getPrincipal();
                 ((HttpServletRequest) request).getSession().setAttribute("loggedUser", userService.getUserByUsername(user.getUsername()));
                 System.out.println("User logged in _____________________________________"+((HttpServletRequest) request).getSession().getAttribute("loggedUser"));
+
             }
         } 
         //re-attach the customer object to the session

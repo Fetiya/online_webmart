@@ -165,6 +165,7 @@ public class ProductController {
     public String initalHome(Model model) {
             
         model.addAttribute("products", productService.getAllAvailalbleProducts());
+
         return "index";
     }
     
@@ -410,28 +411,101 @@ public class ProductController {
 //        }
 //        return "redirect:/cardValidation";
 //        }
-    @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
-    public String Cardvalidation(String cardNumber, String securityNumber, String totalAmount, Model model, HttpSession session) {
-        System.out.println("values from cardvalidation controler" + cardNumber + securityNumber + totalAmount);
-        boolean result;
-        RestTemplate restTemplate = new RestTemplate();
-        Payment payment = restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/" + cardNumber + "/" + securityNumber + "/" + totalAmount, Payment.class);
-        if (payment.getId() != null) {
-            result = true;
-        } else {
-            result = false;
-        }
-        model.addAttribute("result", result);
-//         boolean result=restTemplate.getForObject(payment, );
-        System.out.println("+++++++++++" + payment.getCardNumber());
 
-        if (result) {
-            // it will be redarected to checkout2
-            return "redirect:placeOrder";
-        } else {
-            return "redirect:/checkout";
+//     
+//     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+//     public String Cardvalidation(String cardNumber,String securityNumber,String totalAmount,Model model, HttpSession session) {
+//         System.out.println("values from cardvalidation controler"+ cardNumber+securityNumber+totalAmount);
+//         boolean result;
+//         RestTemplate restTemplate = new RestTemplate();
+//         Payment  payment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+cardNumber+"/"+securityNumber+"/"+totalAmount, Payment.class); 
+//         if(payment.getId()!=null){
+//             result=true;
+//         }
+//         else{
+//             result=false;
+//         }
+//         model.addAttribute("result",result);
+////         boolean result=restTemplate.getForObject(payment, );
+//         System.out.println("+++++++++++"+payment.getCardNumber());
+////         System.out.println("+++++++"+payment.getSecurityNumber());
+////          System.out.println(result+"1111111111111111111111111111111111111");
+////          if(payment){
+////              return "index";
+////          }
+//         if(result){
+//             // it will be redarected to checkout2
+//             return "index";
+//         }
+//         else{
+//           return "redirect:/checkout";  
+//         }
+//          }
+     
+     
+     
+      
+     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+     public String Cardvalidation(@ModelAttribute(value="payment") @Valid Payment payment,BindingResult result,Model model, HttpSession session) {
+         if(result.hasErrors()){
+             return "checkout";
+         }
+         else{
+        boolean validationResult=false;
+         RestTemplate restTemplate = new RestTemplate();
+         Payment  validPayment=restTemplate.getForObject("http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
+         if(validPayment.getId()!=null){
+             validationResult=true;
+         }
+         
+         model.addAttribute("validationResult",validationResult);
+         
+         System.out.println("+++++++++++"+validPayment.getCardNumber());
+
+         if(validationResult){
+             session.setAttribute("payment", "payment");
+             System.out.println("session payment object "+ session.getAttribute("payment"));
+             // it will be redarected to checkout2
+             return "index";
+         }
+         else{
+           return "redirect:/checkout";  
+         }
+          }
         }
-    }
+//      @RequestMapping(value = "/dispUser/{cardNumber}", method = RequestMethod.POST)
+//     public String dispUser(@PathVariable("cardNumber") String cardNumber) {
+//         System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+//    RestTemplate restTemplate = new RestTemplate();
+//   String url="http://localhost:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/findCardByNumber/{cardNumber}";
+//   Boolean resualt=restTemplate.getForObject(url, Boolean.class,cardNumber);
+//          System.out.println("dispUser!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +resualt);
+//         return "index";
+//     }
+
+//    @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
+//    public String Cardvalidation(String cardNumber, String securityNumber, String totalAmount, Model model, HttpSession session) {
+//        System.out.println("values from cardvalidation controler" + cardNumber + securityNumber + totalAmount);
+//        boolean result;
+//        RestTemplate restTemplate = new RestTemplate();
+//        Payment payment = restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/" + cardNumber + "/" + securityNumber + "/" + totalAmount, Payment.class);
+//        if (payment.getId() != null) {
+//            result = true;
+//        } else {
+//            result = false;
+//        }
+//        model.addAttribute("result", result);
+////         boolean result=restTemplate.getForObject(payment, );
+//        System.out.println("+++++++++++" + payment.getCardNumber());
+//
+//
+//        if (result) {
+//            // it will be redarected to checkout2
+//            return "redirect:placeOrder";
+//        } else {
+//            return "redirect:/checkout";
+//        }
+//    }
 
     @RequestMapping(value = "/placeOrder", method = RequestMethod.GET)
     public String placeOrder(Model model, final RedirectAttributes re, HttpSession session) {
@@ -778,3 +852,4 @@ public class ProductController {
 
     }
 }
+

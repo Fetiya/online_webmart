@@ -26,7 +26,6 @@ edu\mum\cs490\smartmart\validators\annotations\FieldMatch.class
 edu\mum\cs490\smartmart\serviceImpl\ProductServiceImpl.class
 edu\mum\cs490\smartmart\domain\Vendor.class
 edu\mum\cs490\smartmart\validators\annotations\UniqueUserName.class
-edu\mum\cs490\smartmart\controller\ProductController.class
 edu\mum\cs490\smartmart\dao\IProductDAO.class
 edu\mum\cs490\smartmart\dao\impl\VendorDAOImpl.class
 edu\mum\cs490\smartmart\controller\UserController.class
@@ -79,7 +78,6 @@ edu\mum\cs490\smartmart\domain\Role.class
 edu\mum\cs490\smartmart\domain\Product.class
 edu\mum\cs490\smartmart\validators\UniqueUserNameValidator.class
 edu\mum\cs490\smartmart\service\IProductService.class
-edu\mum\cs490\smartmart\serviceImpl\UserSerivceImpl.class
 edu\mum\cs490\smartmart\filter\MyFilter.class
 edu\mum\cs490\smartmart\service\IUserService.class
 edu\mum\cs490\smartmart\validators\annotations\FieldMatch$List.class

@@ -3,6 +3,7 @@
     Created on : Jan 3, 2015, 8:02:45 AM
     Author     : Fetiya
 --%>
+
 <%@taglib  prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -74,7 +75,7 @@
                                 <ul class="nav navbar-nav">
                                     <li class="dropdown register "><a href="#"><i class="fa fa-user"></i>Register<i class="fa fa-angle-down"></i></a>
                                         <ul  class="sub-menu">
-                                            <li><a  href="addVendor">Vendor</a></li><br/>
+                                            <li><a  href="addVendor">Vendor</a></li> <br />
                                             <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
@@ -208,7 +209,6 @@ logged user    ${not empty loggedUser}
                                 <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
 
                             </sec:authorize>
-
 
 
                         </div>
