@@ -29,5 +29,7 @@
         
         <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
         
+        <a href="guestRegistration"> Guest Registration</a><br/>
+        <a href="checkOutSelection">CheckOut</a><br/>
     </body>
 </html>

@@ -22,24 +22,25 @@
                     <c:if test="${error eq true}">
                         <p>${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
                     </c:if>
-                    <table>
-                        <form method="post" action="j_spring_security_check" />
-                        <tr class="form-group col-md-12">
-                            <td class="td-label">User: </td>
-                            <td class="td-input"><input name="j_username" class="form-control" required="required"  placeholder="User Name" /> </td>
-                        </tr>
-                        <tr class="form-group col-md-12">
-                            <td class="td-label">Password: </td>
-                            <td class="td-input"><input type="password" name='j_password'class="form-control" required="required" placeholder="Password" />  </td>
-                        </tr>
-                        <tr class="form-group col-md-12">
-                            <td class="td-label">      
-                                <input type="submit" value="Login"  class="btn btn-primary" />
-                            </td>
-                        </tr>
 
-                        </form>
-                    </table>
+                    <form method="post" action="j_spring_security_check" >
+                        <table>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">User: </td>
+                                <td class="td-input"><input name="j_username" class="form-control" placeholder="User Name" /> </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">Password: </td>
+                                <td class="td-input"><input type="password" name='j_password' class="form-control" placeholder="Password" />  </td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="td-label">      
+                                    <input type="submit" value="Login"  class="btn btn-primary" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
                 </div>
             </div>
         </div>

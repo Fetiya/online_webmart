@@ -63,8 +63,11 @@ public class NotificationServiceImpl implements INotificationService {
         String emailMessage = String.format(template.getText(), customer.getFirstName() + " " + customer.getLastName(), message);
         System.out.println("+++++++++=========" + customer);
         System.out.println("+++++++++" + customer.getCredential());
-        sendMail(template.getFrom(), customer.getCredential().getUsername(), template.getSubject(), emailMessage);
-
+        try {
+            sendMail(template.getFrom(), customer.getCredential().getUsername(), template.getSubject(), emailMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -76,13 +79,15 @@ public class NotificationServiceImpl implements INotificationService {
     @Override
     public void notifyVendorSignUp(Vendor vendor, String message) {
         SimpleMailMessage template = getToCustomersTemplate();
-             System.out.println("Vendor is" + vendor);
+        System.out.println("Vendor is" + vendor);
         System.out.println("Vendor admin is" + vendor.getVendorAdmin());
         System.out.println("Vendor credential is" + vendor.getVendorAdmin().getCredential());
         String emailMessage = String.format(template.getText(), vendor.getVendorAdmin().getFirstName() + " " + vendor.getVendorAdmin().getLastName(), message);
-   
-        sendMail(template.getFrom(), vendor.getVendorAdmin().getCredential().getUsername(), template.getSubject(), emailMessage);
-
+        try {
+            sendMail(template.getFrom(), vendor.getVendorAdmin().getCredential().getUsername(), template.getSubject(), emailMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -120,8 +125,11 @@ public class NotificationServiceImpl implements INotificationService {
         System.out.println("this is under template for email");
         SimpleMailMessage template = getToCustomersTemplate();
         String emailMessage = String.format(template.getText(), o.getFirstName() + " " + o.getLastName(), message);
-
-        sendMail(template.getFrom(), o.getCredential().getUsername(), "Your SmartMart's Oder", emailMessage);
+        try {
+            sendMail(template.getFrom(), o.getCredential().getUsername(), "Your SmartMart's Oder", emailMessage);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

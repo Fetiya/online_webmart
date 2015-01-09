@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Transactional(propagation = Propagation.REQUIRED)
-
 public class UserSerivceImpl implements IUserService {
 
     IUserDAO userDAO;
@@ -69,5 +68,9 @@ public class UserSerivceImpl implements IUserService {
     public void updateUser(Users user) {
         userDAO.save(user);
     }
+    
+    
+    
+   
 
 }
