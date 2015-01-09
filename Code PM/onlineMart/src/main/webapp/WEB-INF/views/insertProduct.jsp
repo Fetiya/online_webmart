@@ -27,7 +27,7 @@
                         <table>
                             <tr class="form-group col-md-12">
                                 <td class="td-label">Name: </td>
-                                <td class="td-input"> <form:input path="name" class="form-control" placeholder="Name" /> </td>
+                                <td class="td-input"> <form:input path="name" class="form-control"  placeholder="Name" /> </td>
                                 <td><form:errors path="name" cssClass="error" /> </td>
                             </tr>
 
