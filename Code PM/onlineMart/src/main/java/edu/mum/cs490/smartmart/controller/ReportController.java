@@ -26,7 +26,7 @@ import org.springframework.ui.Model;
  * @author senai
  */
 @Controller
-@RequestMapping("/report/")
+//@RequestMapping("/report/")
 public class ReportController {
     
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);

@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="Pass@deliver" />
+        <property name="password" value="root" />
 
     </bean>
 
@@ -323,8 +323,8 @@ Administrator @SM.
         <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
          <sec:intercept-url pattern="/checkSelection" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         
-        
-        <sec:intercept-url pattern="/report" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+<!--        <sec:intercept-url pattern="/report/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/report/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>-->
         
         <!--        <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />
         <sec:intercept-url pattern="/addProductCategory**" access="ROLE_CUSTOMER" />

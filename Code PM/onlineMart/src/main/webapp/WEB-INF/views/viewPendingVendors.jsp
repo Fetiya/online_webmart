@@ -29,15 +29,15 @@
                         <thead>
                             <tr class="cart_menu">
                                 <th>Company Name</th>
-                                <th>Email</th>
+                                <!--<th>Email</th>-->
                                 <th>Subscription Rule</th>
                                 <th>Account Number</th>
                             </tr>
                             <c:forEach var="vendor" items="${pendingVendors}" >               
                                 <tr>
                                     <td class="tg-hv32">${vendor.companyName}</td>
-                                    <td class="tg-bsv2">${vendor.email}</td>
-                                    <td class="tg-bsv2">${vedor.subscriptionRule}</td>
+                                    <!--<td class="tg-bsv2">{vendor.email}</td>-->
+                                    <td class="tg-bsv2">${vedor.subscriptionRule.rangeProduct}</td>
                                     <td class="tg-bsv2">${vendor.accountNum}</td>
                                     <td class="tg-bsv2">  <form action="approveVendors/${vendor.id}" method="post">
                                             <input type="radio" name="Status" value="ACTIVE" />Approve

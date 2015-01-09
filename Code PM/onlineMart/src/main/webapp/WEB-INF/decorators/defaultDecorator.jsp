@@ -204,7 +204,7 @@ logged user    ${not empty loggedUser}
 
                                 <a href="insertProduct">Insert Product</a><br/>         
 
-                                <a href="report" target="_blank" >View Vendor Sales Report Weekly</a><br/><br />
+                                <a href="report" target="_blank" >View Vendor Sales Report </a><br/><br />
 
                             </security:authorize>
 
