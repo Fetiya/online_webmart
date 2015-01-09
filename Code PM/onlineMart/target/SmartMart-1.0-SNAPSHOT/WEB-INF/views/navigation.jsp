@@ -12,13 +12,13 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
 
-                        <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#${cat.id}">
                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
                                 ${cat.name}
                         </a>
                     </h4>
                 </div>
-                <div id="sportswear" class="panel-collapse collapse">
+                <div id="${cat.id}" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul>
                             <li> 
