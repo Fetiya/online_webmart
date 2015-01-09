@@ -163,10 +163,8 @@ public class ProductController {
     // take it to product controller???
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String initalHome(Model model) {
-        System.out.println("Controller");
-
-        // List<Product> usr= userService.getAllUsers();
-        model.addAttribute("products", productService.getAllProducts());
+            
+        model.addAttribute("products", productService.getAllAvailalbleProducts());
         return "index";
     }
     
@@ -293,8 +291,9 @@ public class ProductController {
     }
 
     public void addToCustomerCart(Product product, HttpSession session) {
-        //Customer customer = (Customer) session.getAttribute("loggedUser");
-        Customer customer = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+        
+        Customer customer = (Customer) session.getAttribute("loggedUser");
+        //Customer customer = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
         int quantity = 1;
 
         ShoppingCartItem cartItem = new ShoppingCartItem();
@@ -304,6 +303,7 @@ public class ProductController {
         boolean flag = true;
 
         List<ShoppingCartItem> currentCartItems = shoppingCartService.getCustomerShoppingCart(customer);
+        
         for (ShoppingCartItem item : currentCartItems) {
 
             if (item.getProduct().getId() == product.getId()) {
@@ -317,6 +317,7 @@ public class ProductController {
         if (flag) {
             //if the items are of different product
             customer.getShoppingCart().add(cartItem);
+            
             shoppingCartService.addShoppingCart(cartItem);
 
         }
@@ -357,9 +358,8 @@ public class ProductController {
         if (session.getAttribute("loggedUser") != null) {
 
             Customer customer = new Customer();
-            Long id = Long.valueOf(String.valueOf(1));
-
-            customer = customerService.getCustomerById(id);
+          
+            customer = (Customer) session.getAttribute("loggedUser");
 
             cartItems = shoppingCartService.findAll();
 
@@ -442,9 +442,8 @@ public class ProductController {
 
         if (session.getAttribute("loggedUser") != null) {
 
-            // Customer c = (Customer) session.getAttribute("loggedUser");
-            //------------------------------------------
-            Customer c = customerService.getCustomerById(Long.valueOf(String.valueOf(1)));
+            Customer c = (Customer) session.getAttribute("loggedUser");
+           
             currentCartItems = shoppingCartService.getCustomerShoppingCart(c);
         } else {
 
@@ -773,6 +772,7 @@ public class ProductController {
     }
 
     public void clearGuestShoppingCart(HttpSession session) {
+       
         List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
         items.clear();
 

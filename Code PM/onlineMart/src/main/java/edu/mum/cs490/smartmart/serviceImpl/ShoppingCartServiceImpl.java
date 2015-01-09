@@ -41,10 +41,6 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
 
     }
 
-    @Override
-    public List<ShoppingCartItem> getCart(Customer customer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void clearCart(int id) {

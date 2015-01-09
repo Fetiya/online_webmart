@@ -140,8 +140,22 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
+                              <h2>Category</h2>
+                                <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                    <c:import  url="/navigation"/>
 
-logged user    ${not empty loggedUser }
+                                </div>
+
+                                <div class="brands_products"><!--brands_products-->
+                                    <h2>Brands</h2>
+                                    <c:import  url="/brands"/>
+                                </div><!--/brands_products-->
+
+                                <div class="shipping text-center"><!--shipping-->
+                                    <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
+                                </div><!--/shipping-->
+
+logged user    ${not empty loggedUser}
                             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
                                 <h2>Category</h2>
                                 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
