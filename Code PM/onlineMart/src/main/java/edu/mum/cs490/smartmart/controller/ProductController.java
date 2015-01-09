@@ -192,10 +192,17 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
-    public String getProduct(Model model, @PathVariable long id) {
-        model.addAttribute("product", productService.getProduct(id));
-        model.addAttribute("categories", productService.getListOfCategory());
-        model.addAttribute("vendors", productService.getListOfVendor());
+    public String getProduct(Model model, @PathVariable long id, HttpSession session) {
+        session.setAttribute("product", productService.getProduct(id));
+        session.setAttribute("categories", productService.getListOfCategory());
+        session.setAttribute("vendors", productService.getListOfVendor());
+        return "redirect:/editProduct";
+    }
+    @RequestMapping(value="/editProduct")
+    public String editProduct(Model model, HttpSession session){
+        model.addAttribute("product", session.getAttribute("product"));
+        model.addAttribute("categories", session.getAttribute("categories"));
+        model.addAttribute("vendors", session.getAttribute("vendors"));
         return "editProduct";
     }
 
