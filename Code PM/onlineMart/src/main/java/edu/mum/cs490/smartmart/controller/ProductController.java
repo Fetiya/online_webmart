@@ -329,7 +329,14 @@ public class ProductController {
     public void addToGuestCart(Product product, HttpSession session) {
 
         int quantity = 1;
-
+        
+        List<ShoppingCartItem> currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
+        
+        
+            if(currentCartItems==null)
+            {
+                currentCartItems=new ArrayList<ShoppingCartItem>();
+            }
         ShoppingCartItem cartItem = new ShoppingCartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
@@ -337,8 +344,9 @@ public class ProductController {
 
         boolean flag = true;
 
-        List<ShoppingCartItem> currentCartItems = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
-        for (ShoppingCartItem item : currentCartItems) {
+        
+        
+            for (ShoppingCartItem item : currentCartItems) {
 
             if (item.getProduct().getId() == product.getId()) {
                 item.setQuantity(item.getQuantity() + quantity);
@@ -346,12 +354,14 @@ public class ProductController {
                 flag = false;
                 break;
             }
+        
         }
         if (flag) {
-            List<ShoppingCartItem> gcart = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
-            gcart.add(cartItem);
+            currentCartItems.add(cartItem);
+            
         }
 
+        session.setAttribute("guestShoppingCart", currentCartItems);
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
@@ -395,6 +405,7 @@ public class ProductController {
 
     @RequestMapping(value = "/checkout", method = RequestMethod.GET)
     public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+        model.addAttribute("payment", new Payment());
         return "checkout";
     }
 
@@ -413,6 +424,7 @@ public class ProductController {
 //        }
 //        return "redirect:/cardValidation";
 //        }
+
 
 //     
 //     @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
@@ -485,6 +497,8 @@ public class ProductController {
 //         return "index";
 //     }
 
+
+//<<<<<<< HEAD
 //    @RequestMapping(value = "/cardValidation", method = RequestMethod.POST)
 //    public String Cardvalidation(String cardNumber, String securityNumber, String totalAmount, Model model, HttpSession session) {
 //        System.out.println("values from cardvalidation controler" + cardNumber + securityNumber + totalAmount);
@@ -501,6 +515,14 @@ public class ProductController {
 //        System.out.println("+++++++++++" + payment.getCardNumber());
 //
 //
+//        if (result) {
+//            // it will be redarected to checkout2
+//            return "redirect:placeOrder";
+//        } else {
+//            return "redirect:/checkout";
+//        }
+//    }
+
 //        if (result) {
 //            // it will be redarected to checkout2
 //            return "redirect:placeOrder";
