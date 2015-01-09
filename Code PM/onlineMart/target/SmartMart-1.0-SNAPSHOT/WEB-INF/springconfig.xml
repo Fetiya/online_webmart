@@ -56,7 +56,7 @@
         <property name="username" value="root" />
         <property name="password" value="Pass@deliver" />
 
-      </bean>
+    </bean>
 
     <!-- hibernate Properties -->
     <bean id="hibernateProperties"
@@ -310,11 +310,19 @@ Administrator @SM.
         <sec:intercept-url pattern="/cart/edit" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/cart/delete" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/addVendor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/companyAddressInformation" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/selectSubscriptionRule" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addAdminCredential" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addAdminAddress" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/addVendorAdmin" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
          
         <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/guestRegistration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
         <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+         <sec:intercept-url pattern="/checkSelection" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
         
         <sec:intercept-url pattern="/report" access="ROLE_VENDORADMIN"/>
         

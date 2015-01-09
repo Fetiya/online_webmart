@@ -95,6 +95,7 @@ D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\serviceImpl\Not
 D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\domain\Role.java
 D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\validators\FieldMatchValidator.java
 D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\controller\validationController.java
+D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\controller\guestRegistrationController.java
 D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\dao\ISubscriptionRuleDAO.java
 D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\serviceImpl\ProductCategoryServiceImpl.java
 D:\Code\Code PM\onlineMart\src\main\java\edu\mum\cs490\smartmart\serviceImpl\CustomerServiceImpl.java
