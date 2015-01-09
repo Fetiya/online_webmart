@@ -32,15 +32,15 @@
 				<p>Checkout options</p>
 				<ul class="nav">
 					<li>
-						<label><a href="login">Returning User</a></label>
+						<label><a href="${pageContext.request.contextPath}/login">Returning User</a></label>
                                                 
 					</li>
 				<li>
-						<label><a href="guestRegistration">Guest Checkout</a> </label>
+						<label><a href="${pageContext.request.contextPath}/guestRegistration">Guest Checkout</a> </label>
                                                 
 					</li>
 					<li>
-						<label><a href="addCredential">New User Sign Up</a> </label>
+						<label><a href="${pageContext.request.contextPath}/addCredential">New User Sign Up</a> </label>
 					</li>
 				</ul>
 			</div><!--/checkout-options-->

@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class guestRegistrationController {
     
-    
-    @RequestMapping(value = "/guestRegistration", method = RequestMethod.GET)
-    public String addProductGet(@ModelAttribute("customer") Customer customer) {
+        @RequestMapping(value = "/guestRegistration", method = RequestMethod.GET)
+    public String guestRegistration(@ModelAttribute("customer") Customer customer) {
         
         return "guestRegistration";
     }
+    
     
             
     @RequestMapping(value = "/checkOutSelection", method = RequestMethod.GET)
@@ -39,9 +39,11 @@ public class guestRegistrationController {
     @RequestMapping(value = "/guestRegistration", method = RequestMethod.POST)
     public String addGuest(Customer customer, HttpSession session) {
         session.setAttribute("guestUser", customer);
+        
         System.out.println("name :++++++++++++++++++++" +customer.getFirstName());
         System.out.println("City:====================="+customer.getAddress().getCity());
         System.out.println("Username:=========++++============"+customer.getCredential().getUsername());
+     
         return "redirect:checkout";
     }
     

@@ -388,11 +388,7 @@ public class ProductController {
         return "cart";
     }
 
-    @RequestMapping(value = "/checkoutFetia", method = RequestMethod.GET)
-    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
-        return "checkout";
-    }
-
+   
 //    @RequestMapping(value = "/validation", method = RequestMethod.POST)
 //     public String validation(@Valid Customer customer, BindingResult result, RedirectAttributes flashAttr) {
 //        
@@ -464,7 +460,7 @@ public class ProductController {
              session.setAttribute("payment", "payment");
              System.out.println("session payment object "+ session.getAttribute("payment"));
              // it will be redarected to checkout2
-             return "index";
+             return "placeOrder";
          }
          else{
            return "redirect:/checkout";  
@@ -840,17 +836,28 @@ public class ProductController {
     }
     
   
- @RequestMapping(value = "checkout", method = RequestMethod.GET)
-    
-    public String editCart(Model model,HttpSession session) {
+ 
+    @RequestMapping(value = "/checkSelection", method = RequestMethod.GET)
+    public String checkoutOption(Model model,HttpSession session) {
         
         if(session.getAttribute("loggedUser")==null)
             
         {
            return"checkOutSelection";
         }
-        return "redirect:/checkout";
+        else
+        {
+            return "redirect:/checkout";
+        }
 
+    }
+    
+    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
+    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
+        model.addAttribute("payment", new Payment());
+        return "checkout";
+    }
+   
     
     public void clearGuestShoppingCart(HttpSession session)
     {

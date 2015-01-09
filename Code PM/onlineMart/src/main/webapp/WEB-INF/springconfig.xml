@@ -62,7 +62,7 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="properties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect
                 </prop>
                 <prop key="connection.pool_size">1</prop>
@@ -309,9 +309,12 @@ Administrator @SM.
         <sec:intercept-url pattern="/addVendor" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
          
         <sec:intercept-url pattern="/customerRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/guestRegistration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/vendorRegisteration" access="IS_AUTHENTICATED_ANONYMOUSLY"/>        
         <sec:intercept-url pattern="/cart" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <sec:intercept-url pattern="/checkout" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+         <sec:intercept-url pattern="/checkSelection" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        
         
         <sec:intercept-url pattern="/report" access="ROLE_VENDORADMIN"/>
         
