@@ -79,7 +79,7 @@
                                             <li><a href="addCredential">Customer</a></li>
                                         </ul>
                                     </li>
-                                    <!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
+                                    <!--<li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
 
                                     <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
@@ -121,10 +121,10 @@
                                             <li><a href="products">Products</a></li>
                                             <li><a href="${pageContext.request.contextPath}/checkout">Checkout</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li> 
-                                            <li><a href="${pageContext.request.contextPath}/login">Login</a></li> 
+
                                         </ul>
                                     </li> 
-                                   <!--<li><a href="contactUs">Contact </a></li>-->
+                                    <!--<li><a href="contactUs">Contact </a></li>-->
                                 </ul>
                             </div>
                         </div>
@@ -141,22 +141,21 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-                              <h2>Category</h2>
-                                <div class="panel-group category-products" id="accordian"><!--category-productsr-->
-                                    <c:import  url="/navigation"/>
+                            <h2>Category</h2>
+                            <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                                <c:import  url="/navigation"/>
 
-                                </div>
+                            </div>
 
-                                <div class="brands_products"><!--brands_products-->
-                                    <h2>Brands</h2>
-                                    <c:import  url="/brands"/>
-                                </div><!--/brands_products-->
+                            <div class="brands_products"><!--brands_products-->
+                                <h2>Brands</h2>
+                                <c:import  url="/brands"/>
+                            </div><!--/brands_products-->
 
-                                <div class="shipping text-center"><!--shipping-->
-                                    <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
-                                </div><!--/shipping-->
+                            <div class="shipping text-center"><!--shipping-->
+                                <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
+                            </div><!--/shipping-->
 
-logged user    ${not empty loggedUser}
                             <sec:authorize access="hasRole('ROLE_ANONYMOUS')">
                                 <h2>Category</h2>
                                 <div class="panel-group category-products" id="accordian"><!--category-productsr-->
