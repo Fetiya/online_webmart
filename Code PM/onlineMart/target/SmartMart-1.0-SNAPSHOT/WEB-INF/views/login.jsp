@@ -26,11 +26,11 @@
                         <form method="post" action="j_spring_security_check" />
                         <tr class="form-group col-md-12">
                             <td class="td-label">User: </td>
-                            <td class="td-input"><input name="j_username" class="form-control" placeholder="User Name" /> </td>
+                            <td class="td-input"><input name="j_username" class="form-control" required="required"  placeholder="User Name" /> </td>
                         </tr>
                         <tr class="form-group col-md-12">
                             <td class="td-label">Password: </td>
-                            <td class="td-input"><input type="password" name='j_password'class="form-control" placeholder="Password" />  </td>
+                            <td class="td-input"><input type="password" name='j_password'class="form-control" required="required" placeholder="Password" />  </td>
                         </tr>
                         <tr class="form-group col-md-12">
                             <td class="td-label">      

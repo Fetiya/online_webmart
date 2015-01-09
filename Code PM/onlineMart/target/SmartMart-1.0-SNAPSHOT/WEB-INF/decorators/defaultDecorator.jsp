@@ -90,7 +90,7 @@
                                             <li>  <a href="/SmartMart/j_spring_security_logout"><i class="fa fa-lock"></i> Logout</a>        </li>
                                             </c:when>
                                             <c:otherwise>
-                                            <li><a href="${pageContext.request.contextPath}/addCustomer"><i class="fa fa-user"></i> Register</a></li>
+                                            
                                             <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>                                            
                                             </c:otherwise>
                                         </c:choose>
