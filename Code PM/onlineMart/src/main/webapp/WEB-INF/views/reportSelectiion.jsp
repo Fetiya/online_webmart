@@ -5,26 +5,29 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%--<%@ taglib prefix="s" uri="/struts-tags" %>--%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>jQuery UI Datepicker - Default functionality</title>
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/resources/demos/style.css">
-        <script>
-            $(function () {
-                $("#datepicker").datepicker();
-            });
-        </script>
+        <title></title>
+
+        <!--        <link rel="stylesheet" href="/resources/datepicker/jquery-ui.css">
+                <script src="/resources/datepicker/external/jquery/jquery"></script>
+                <script src="/resources/datepicker/jquery-ui.js"></script>
+                <link rel="stylesheet" href="/resources/demos/style.css">-->
+        <!--        <script>
+                    $(function () {
+                        $("#datepicker").datepicker();
+                    });
+                </script>-->
     </head>
     <body>
         <form action="report/pdf">
-            <p>Report start Date: <input type="text" id="datepicker" value="${reportStartDate}"></p>
-            <p>Report start Date: <input type="text" id="datepicker" value="${reportEndDate}"></p>
-        <input type="submit" value="Generate"/>
+            <!--<s:date name="customDate" />-->
+            <p>Report start Date: <input type="text" id="startdatepicker" value="${reportStartDate}"> <i>(YYYY/MM/DD)</i></p>
+            <p>Report end Date: <input type="text" id="endDatepicker" value="${reportEndDate}"><i>(YYYY/MM/DD)</i></p>
+            <input type="submit" value="Generate"/>
         </form>
 
     </body>

@@ -52,6 +52,7 @@ public class MyFilter implements Filter {
             UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) ((HttpServletRequest) request).getUserPrincipal();
             if (token != null) {
                 org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) token.getPrincipal();
+                System.out.println("User Login"+user.getUsername());
                 ((HttpServletRequest) request).getSession().setAttribute("loggedUser", userService.getUserByUsername(user.getUsername()));
                 System.out.println("User logged in _____________________________________"+((HttpServletRequest) request).getSession().getAttribute("loggedUser"));
 

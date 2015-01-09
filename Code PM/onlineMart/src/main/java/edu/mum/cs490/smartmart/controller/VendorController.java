@@ -20,6 +20,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -77,6 +78,7 @@ public class VendorController {
        Vendor vendor = vendorService.getVendorById(id);
         if (Status.equalsIgnoreCase("ACTIVE")) {
             vendor.setStatus(VendorStatus.ACTIVE);
+            vendor.getVendorAdmin().getCredential().setActive(true);
         } else {
             vendor.setStatus(VendorStatus.REJECTED);
         }
@@ -227,7 +229,9 @@ public class VendorController {
         }
         if (!result.hasErrors()) {
             credential.setRole(Role.ROLE_VENDORADMIN);
-            credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
+             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(credential.getPassword());
+            credential.setPassword(hashedPassword);
             credential.setActive(false);
             
             session.setAttribute("credential", credential);

@@ -80,7 +80,7 @@
                                     </li>
                                     <!--                                    <li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
 
-                                    <li><a href="${pageContext.request.contextPath}/checkSelection"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                    <li><a href="${pageContext.request.contextPath}/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                     <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                         <c:choose>   
                                             <c:when test="${not empty loggedUser }">
@@ -118,7 +118,7 @@
                                     <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                         <ul role="menu" class="sub-menu">
                                             <li><a href="products">Products</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/checkSelection">Checkout</a></li> 
+                                            <li><a href="${pageContext.request.contextPath}/checkout">Checkout</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/cart">Cart</a></li> 
                                             <li><a href="${pageContext.request.contextPath}/login">Login</a></li> 
                                         </ul>
