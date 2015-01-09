@@ -18,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Fetiya
  */
-//@Service("userService")
-@Transactional(propagation=Propagation.REQUIRED)
+
+
+@Transactional(propagation = Propagation.REQUIRED)
+
 public class UserSerivceImpl implements IUserService {
 
     IUserDAO userDAO;
@@ -56,6 +58,7 @@ public class UserSerivceImpl implements IUserService {
         Users user = new Users();
         user.setCredential(cred);
         List<Users> matchingusers = userDAO.findByExample(user, new String[]{});
+
         if (matchingusers.size() == 1) {
             return matchingusers.get(0);
         } else {

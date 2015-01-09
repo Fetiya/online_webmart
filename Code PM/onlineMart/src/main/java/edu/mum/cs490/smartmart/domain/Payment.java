@@ -13,9 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.validator.constraints.CreditCardNumber;
 
 /**
  *
@@ -28,19 +26,12 @@ public class Payment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
-    @CreditCardNumber 
     private String cardNumber;
-    @NotNull
     private String securityNumber;
-    @NotNull
     private String cardType;
-    @NotNull
     private String name;
-    @NotNull
     private String expiryDate;
-    
-    private double amount;
+    private double totalAmount;
     
     
 
@@ -96,15 +87,14 @@ public class Payment implements Serializable {
         this.expiryDate = expiryDate;
     }
 
-    public double getAmount() {
-        return amount;
+    public double getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 0;
