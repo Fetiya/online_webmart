@@ -37,9 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class VendorController {
 
-    
-    Credential cred = new Credential();
-    Address add= new Address();
+ 
     public VendorController() {
     }
 
@@ -150,41 +148,12 @@ public class VendorController {
     public String add(@Valid Vendor vendor, BindingResult result, HttpSession session, RedirectAttributes flashAttr) {
         String view = "redirect:/companyAddressInformation";
         if (!result.hasErrors()) {
-
-//            Credential credential = (Credential) session.getAttribute("credential");
-//            Address address = (Address) session.getAttribute("adminAddress");
-            
-            //Commenting
-//            Address companyAddress = (Address) session.getAttribute("comapnyAddress");
-//            SubscriptionRule subscriptionRule = (SubscriptionRule) session.getAttribute("subscriptionRule");
-//            VendorAdmin vendorAdmin = (VendorAdmin) session.getAttribute("vendorAdmin");
-//            vendor.setAddress(companyAddress);
-//            vendor.setSubscriptionRule(subscriptionRule);
-            
-            
            session.setAttribute("vendor", vendor);
-            
-//            VendorAdmin vendoradmin = new VendorAdmin();
-//            vendorAdmin.setCredential(credential);
-//            vendorAdmin.setAddress(address);
-//            vendor.setVendorAdmin(vendorAdmin);
-
-//            vendor.getVendorAdmin().setCredential(credential);
-//            vendor.getVendorAdmin().setAddress(address);
-
-//            vendorService.addVendor(vendor);
-//            session.removeAttribute("credential");
-//            session.removeAttribute("address");
-//            session.removeAttribute("subscriptionRule");
-//            session.removeAttribute("companyAddress");
-//            session.removeAttribute("vendorAdmin");
-            
             flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
 
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
-
             }
 
             view = "vendorRegisteration";
@@ -205,7 +174,6 @@ public class VendorController {
         String view = "redirect:/addVendorAdmin";
 
         if (!result.hasErrors()) {
-            add = adminAddress;
             session.setAttribute("adminAddress", adminAddress);
 
         } else {
@@ -219,19 +187,19 @@ public class VendorController {
 
     //Company Address
     @RequestMapping(value = "/companyAddressInformation", method = RequestMethod.GET)
-    public String addCompanyAddress(@ModelAttribute("companyAddress") Address comapnyAddress,Model model) {
-        model.addAttribute("companyAddress",comapnyAddress);
+    public String addCompanyAddress(@ModelAttribute("companyAddress") Address companyAddress,Model model) {
+        model.addAttribute("companyAddress",companyAddress);
         return "companyAddressInformation";
     }
 
     @RequestMapping(value = "/companyAddressInformation", method = RequestMethod.POST)
-    public String addCompany(@Valid Address comapnyAddress, BindingResult result, HttpSession session) {
+    public String addCompany(@Valid Address companyAddress, BindingResult result, HttpSession session) {
 
         String view = "redirect:/selectSubscriptionRule";
 
         if (!result.hasErrors()) {
 
-            session.setAttribute("companyAddress", comapnyAddress);
+            session.setAttribute("companyAddress", companyAddress);
 
         } else {
             for (FieldError err : result.getFieldErrors()) {
@@ -261,7 +229,6 @@ public class VendorController {
             credential.setRole(Role.ROLE_VENDORADMIN);
             credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
             credential.setActive(false);
-            cred = credential;
             
             session.setAttribute("credential", credential);
 

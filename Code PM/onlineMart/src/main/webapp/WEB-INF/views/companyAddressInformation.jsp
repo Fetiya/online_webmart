@@ -18,7 +18,7 @@
         <div class="row">  	
             <div class="col-sm-form">
                 <div class="contact-form">
-                    <form:form commandName="comapnyAddress" action="companyAddressInformation" method="POST" enctype="multipart/form-data">
+                    <form:form commandName="companyAddress" action="companyAddressInformation" method="POST" enctype="multipart/form-data">
                         <table>
                             <p class="title ">Please provide Company address information</p>
                             
