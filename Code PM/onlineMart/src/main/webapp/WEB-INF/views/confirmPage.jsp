@@ -1,7 +1,7 @@
 <%-- 
-    Document   : me
-    Created on : Jan 3, 2015, 11:38:52 AM
-    Author     : Fetiya
+    Document   : confirmPage
+    Created on : Jan 9, 2015, 4:09:51 AM
+    Author     : dipika
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <p>You are successfully Registered. Please login to continue.</p>
     </body>
 </html>

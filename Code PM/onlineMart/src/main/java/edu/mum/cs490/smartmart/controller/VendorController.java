@@ -20,6 +20,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -227,7 +228,10 @@ public class VendorController {
         }
         if (!result.hasErrors()) {
             credential.setRole(Role.ROLE_VENDORADMIN);
-            credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
+            //credential.setPassword(encryptionService.getEncryptedPassword(credential.getPassword()));
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(credential.getPassword());
+            credential.setPassword(hashedPassword);
             credential.setActive(false);
             
             session.setAttribute("credential", credential);
@@ -277,7 +281,7 @@ public class VendorController {
        @RequestMapping(value = "/addVendorAdmin", method = RequestMethod.POST)
     public String add(@Valid VendorAdmin vendorAdmin, BindingResult result, HttpSession session, Model model) {
 
-        String view = "redirect:/";
+        String view = "confirmPage";
 
         if (!result.hasErrors()) { 
             Credential credential = (Credential) session.getAttribute("credential");
