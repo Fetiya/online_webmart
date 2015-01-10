@@ -22,18 +22,18 @@
             </p>
         </c:if>
         <div id="body">
-            ${vendors.size()}
+         
             <table class="CSSTableGenerator" style="width:70%">
                     <tr>
                         <td>Company Name</td>
-                        <td>Email</td>
+<!--                        <td>Email</td>-->
                         <td>Subscription Rule</td>
                         <td>Account Number</td>
                     </tr>
                      <c:forEach var="vendor" items="${vendors}" >               
                         <tr>
                             <td class="tg-hv32">${vendor.companyName}</td>
-                            <td class="tg-bsv2">${vendor.email}</td>
+<!--                            <td class="tg-bsv2">$ {vendor.email}</td>-->
                             <td class="tg-bsv2">${vedor.subscriptionRule}</td>
                              <td class="tg-bsv2">${vendor.accountNum}</td>
                             <td class="tg-bsv2">  <form action="unsubscribeVendors/${vendor.id}" method="post">

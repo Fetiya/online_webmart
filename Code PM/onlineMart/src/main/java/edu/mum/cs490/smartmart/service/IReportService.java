@@ -13,5 +13,5 @@ import java.util.Map;
  * @author senai
  */
 public interface IReportService {
-    public abstract Map<String, Object> getVendorSalesReportByProduct(long vendorId, Calendar startDate,Calendar endDate);
+    public abstract Map<String, Object> getVendorSalesReportByProduct(long vendorId);
 }

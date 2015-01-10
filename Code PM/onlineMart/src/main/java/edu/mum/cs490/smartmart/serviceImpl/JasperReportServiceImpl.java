@@ -55,11 +55,11 @@ public class JasperReportServiceImpl implements IReportService {
 //            System.out.println("Report File Could not be found");
 //        }
 //    }
-    public Map<String, Object> getVendorSalesReportByProduct(long vendorId, Calendar startDate,Calendar endDate) {
+    public Map<String, Object> getVendorSalesReportByProduct(long vendorId) {
 
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         
-        List<ProductSales> productsList = productDAO.getPrductsSalesByVendor(vendorId, startDate, endDate);
+        List<ProductSales> productsList = productDAO.getPrductsSalesByVendor(vendorId);
 
         JRDataSource JRdataSource = new JRBeanCollectionDataSource(productsList);
 

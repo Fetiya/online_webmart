@@ -41,12 +41,12 @@ public class ReportController {
     }
     
     @RequestMapping(value = "/report/pdf",method = RequestMethod.GET)
-    public ModelAndView generatePdfReport(ModelAndView modelAndView, Calendar reportStartDate,Calendar reportEndDate) {
+    public ModelAndView generatePdfReport(ModelAndView modelAndView) {
         
         logger.debug("--------------generate PDF report----------");
         System.out.println("Aloha");
         //pdfReport bean has ben declared in the jasper-views.xml file
-        modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(1,reportStartDate,reportEndDate));
+        modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(1));
         return modelAndView;
         
     }//generatePdfReport
