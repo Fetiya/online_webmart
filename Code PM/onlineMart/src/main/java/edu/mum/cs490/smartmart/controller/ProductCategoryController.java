@@ -70,13 +70,25 @@ public class ProductCategoryController {
     }
 
     @RequestMapping(value = "/productCategoryEdit/{id}", method = RequestMethod.GET)
-    public String getProduct(Model model, @PathVariable long id) {
-        model.addAttribute("productCategory", categoryService.getProductCategoryById(id));
-        return "editProductCategory";
+    public String getProduct(Model model, @PathVariable long id, HttpSession session) {
+       // ProductCategory category = categoryService.getProductCategoryById(id);
+        session.setAttribute("productCategoryId", id);
+       // model.addAttribute("productCategory", categoryService.getProductCategoryById(id));
+        
+        return "redirect:/vieweditProductCategory";
     }
+    
+     @RequestMapping(value = "/vieweditProductCategory" ,method=RequestMethod.GET) 
+     public String editCategoryView(HttpSession session, Model model) {
+         long id = (long)session.getAttribute("productCategoryId");
+          ProductCategory category = categoryService.getProductCategoryById(id);
+         //ProductCategory category =  session.getAttribute("productCategory");
+         model.addAttribute("productCategory",category);
+         return "editProductCategory";
+     }
 
     @RequestMapping(value = "/editCategory", method = RequestMethod.POST)
-    public String updateProduct(@Valid ProductCategory category, BindingResult result) {
+    public String updateProduct( @ModelAttribute("category")ProductCategory category, BindingResult result) {
         if (!result.hasErrors()) {
             try {
                 System.out.println("Cat Id :" + category.getId());
@@ -84,7 +96,7 @@ public class ProductCategoryController {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            return "redirect:/products";
+            return "redirect:/viewCategory";
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println(err.getField() + ": " + err.getDefaultMessage());

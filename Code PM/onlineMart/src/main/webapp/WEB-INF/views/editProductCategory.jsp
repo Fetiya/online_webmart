@@ -4,6 +4,7 @@
     Author     : dipika
 --%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
@@ -14,14 +15,14 @@
     </head>
     <body>
         <h2>Update Product Category</h2>
-        <form:form modelAttribute="productCategory" action="../editCategory" method="POST">
+        <form:form commandName="productCategory" action="${pageContext.request.contextPath}/editCategory" method="POST">
             <table>
                 <form:hidden path="id"/>
                 <tr>
                     <td>Category Name : </td>
                     <td><form:input type="text" path="name" /> </td>   
                      <td><form:errors path="name" cssClass="error" /> </td>
-                </tr
+                </tr>
                  <tr>
                     <td>Category Description : </td>
                     <td><form:input type="text" path="description" /> </td>

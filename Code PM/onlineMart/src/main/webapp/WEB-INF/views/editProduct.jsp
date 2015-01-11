@@ -14,7 +14,7 @@
     <body>
        
         <h2>Update Product </h2>
-        <form:form modelAttribute="product" action="../editProduct" method="post">
+        <form:form modelAttribute="product" action="${pageContext.request.contextPath}/editProduct" method="post">
             <table>
                 <form:hidden path="id"/>
                 <tr>

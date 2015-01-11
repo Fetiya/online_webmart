@@ -89,7 +89,7 @@
                                             <li>  <a href="/SmartMart/j_spring_security_logout"><i class="fa fa-lock"></i> Logout</a>        </li>
                                             </c:when>
                                             <c:otherwise>
-                                            
+
                                             <li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-lock"></i> Login</a></li>                                            
                                             </c:otherwise>
                                         </c:choose>
@@ -140,20 +140,6 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="left-sidebar">
-<!--                              <h2>Category</h2>
-                                <div class="panel-group category-products" id="accordian">category-productsr
-                                    < c:import  url="/navigation"/>
-
-                            </div>
-
-                                <div class="brands_products">brands_products
-                                    <h2>Brands</h2>
-                                    < c:import  url="/brands"/>
-                                </div>/brands_products
-
-                                <div class="shipping text-center">shipping
-                                    <img src="resources/bootstrap/images/home/shipping.jpg" alt="" />
-                                </div>/shipping-->
 
 
                             <security:authorize access="hasRole('ROLE_ANONYMOUS')">
@@ -192,18 +178,30 @@
 
 
                             <security:authorize access="hasRole('ROLE_ADMIN')" >
-                                <a href="viewPendingVendors" >View pending Vendor</a><br/>
-                                <a href="VendorsForUnsubscribe" >Vendor Unsubscribe</a><br/>
-                                <a href="addSetting">Add Setting</a><br/>
-                                <a href="viewCategory" >View Product Category </a><br/>
-                                <a href="addProductCategory" >Add Product Category</a><br/>
-                                <a href="viewCategory" >View Product Category </a><br/>
+                                <div class="brands-name">
+
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li> <a href="viewPendingVendors" >View pending Vendor</a></li>
+                                        <li><a href="VendorsForUnsubscribe" >Vendor Unsubscribe</a></li>
+                                        <li><a href="addSetting">Add Setting</a></li>
+                                        <li> <a href="viewCategory" >View Product Category </a></li>
+                                        <li><a href="addProductCategory" >Add Product Category</a></li>
+                                        
+                                    </ul>
+                                </div>
+
+
                             </security:authorize>
 
                             <security:authorize access="hasRole('ROLE_VENDORADMIN')" >
+                                <h2>Navigations</h2>
+                                <div class="brands-name">
 
-                                <a href="insertProduct">Insert Product</a><br/>         
-
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li><a class= "navclass" href="insertProduct">Insert Product</a></li>       
+                                        <li><a class="navclass" href="viewProducts">View Products</a></li>
+                                    </ul>
+                                </div>
                                 <!--<a href="report/pdf" target="_blank" >View Vendor Sales Report </a><br/><br />-->
 
                             </security:authorize>
@@ -231,8 +229,8 @@
                                 <p>Buy Your Stuff  easily. Free Shopping World Wide</p>
                             </div>
                         </div>
-                        
-                       
+
+
                     </div>
                 </div>
             </div>
@@ -240,7 +238,7 @@
             <div class="footer-widget">
                 <div class="container">
                     <div class="row">
-                   </div>
+                    </div>
                 </div>
             </div>
 

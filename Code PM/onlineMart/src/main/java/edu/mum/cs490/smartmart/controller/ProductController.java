@@ -193,19 +193,27 @@ public class ProductController {
 
     @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
     public String getProduct(Model model, @PathVariable long id, HttpSession session) {
+        session.setAttribute("productId", id);
+
+        return "redirect:/vieweditProduct";
+    }
+
+    @RequestMapping(value = "/vieweditProduct")
+    public String editProductView(HttpSession session, Model model) {
+        long id = (long) session.getAttribute("productId");
         model.addAttribute("product", productService.getProduct(id));
         model.addAttribute("categories", productService.getListOfCategory());
         model.addAttribute("vendors", productService.getListOfVendor());
         return "editProduct";
     }
 
-    @RequestMapping(value = "/editProduct")
-    public String editProduct(Model model, HttpSession session) {
-        model.addAttribute("product", session.getAttribute("product"));
-        model.addAttribute("categories", session.getAttribute("categories"));
-        model.addAttribute("vendors", session.getAttribute("vendors"));
-        return "editProduct";
-    }
+//    @RequestMapping(value = "/editProduct")
+//    public String editProduct(Model model, HttpSession session) {
+//        model.addAttribute("product", session.getAttribute("product"));
+//        model.addAttribute("categories", session.getAttribute("categories"));
+//        model.addAttribute("vendors", session.getAttribute("vendors"));
+//        return "editProduct";
+//    }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public String getAll(Model model) {
@@ -778,7 +786,7 @@ public class ProductController {
     public String checkoutOption(@ModelAttribute("cartUpdate") ShoppingCartItem cartItem, Model model, HttpSession session) {
 
         String message = "";
-        String view="redirect:/";
+        String view = "redirect:/";
         Customer customer = new Customer();
         List<ShoppingCartItem> currentCartItems = new ArrayList<ShoppingCartItem>();
 
@@ -793,11 +801,11 @@ public class ProductController {
             customer = (Customer) session.getAttribute("guestUser");
         }
 
-        if (currentCartItems==null) {
+        if (currentCartItems == null) {
             message = "Your shopping cart is Empty";
             model.addAttribute("message", message);
             return "invoice";
-                
+
         } else {
 
             List<ShoppingCartItem> stockouts = checkQuantityAvailablity(currentCartItems);
@@ -817,13 +825,8 @@ public class ProductController {
 
             }
         }
-        
+
     }
-    
-
-
-
-    
 
     public void clearGuestShoppingCart(HttpSession session) {
 

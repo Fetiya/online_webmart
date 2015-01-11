@@ -721,7 +721,7 @@ h2.title:before, p.title:before{
   padding: 5px 20px;
 }
 
-.category-products .panel-default .panel-heading .panel-title a {
+.category-products .panel-default .panel-heading .panel-title a,.navclass {
   color: #696763;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -2541,6 +2541,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 .col-sm-form table .td-label{
     width:200px;
+    font-weight: normal !important;
 }
 .col-sm-form table .td-input{
     width:300px;
