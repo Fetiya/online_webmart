@@ -24,20 +24,21 @@
                         <li class="active">Stockout</li>
                     </ol>
                 </div>
-
-                <h4 style="font:red">${message}</h4>          
-
+                <div class="user_info">
+                <p>${message}</p>          
+                </div>
                 <div class="table-responsive cart_info">
                     <table class="table table-condensed">
                         <thead>
                             <tr class="cart_menu">
+                                <td></td>
                                 <td class="image">Item</td>
-                                <td class="description"></td>
                                 <td class="price">Price</td>
                                 <td class="quantity">Requested Quantity</td>
                                 <td class="quantity">Available Quantity</td>
-
-                                <td></td>
+                                
+                                <td>Edit</td>
+                                <td>Delete</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,7 +48,7 @@
 
                             <c:forEach var="cartItem" items="${stockOutItems}" varStatus="loopStatus" >
                                 <tr >
-                                    <form:form  commandName="cartCheckout" action="${pageContext.request.contextPath}/cart/edit/${cartItem.product.id}" method="post" enctype="multipart/form-data" >
+                                    <form:form  commandName="cartUpdate" action="${pageContext.request.contextPath}/cart/edit/${cartItem.product.id}" method="post" enctype="multipart/form-data" >
 
 
                                         <td class="cart_product">
@@ -57,6 +58,7 @@
                                         <td class="cart_description">
                                             <h4><a href="">${cartItem.product.name}</a></h4>
                                             <p>Web ID: ${cartItem.id}</p>
+                                            <p>${cartItem.product.description}</p>
                                         </td>
                                         <td class="cart_price">
                                             <p>${cartItem.product.price}</p>

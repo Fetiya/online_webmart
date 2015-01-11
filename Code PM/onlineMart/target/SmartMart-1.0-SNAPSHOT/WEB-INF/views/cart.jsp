@@ -30,7 +30,6 @@
                                             <tr class="cart_menu">
                                                 <td class="image">Item</td>
                                                 <td class="image">Name</td>
-                                                <td class="description"></td>
                                                 <td class="price">Price</td>
                                                 <td class="quantity">Quantity</td>
                                                 <td class="total">Total</td>
@@ -54,6 +53,7 @@
                                                         <td class="cart_description">
                                                             <h4><a href="">${cartItem.product.name}</a></h4>
                                                             <p>Web ID: ${cartItem.id}</p>
+                                                            <p>${cartItm.product.description}</p>
                                                         </td>
                                                         <td class="cart_price">
                                                             <p>${cartItem.product.price}</p>
@@ -65,7 +65,6 @@
                                                             </div>
                                                         </td>
 
-                                                        <td><form:errors path="quantity" cssClass="error" /> </td> 
                                                         <td class="cart_total">
                                                             <p class="cart_total_price">
                                                                 <c:set var="result" value="${cartItem.product.price * cartItem.quantity}"/>
