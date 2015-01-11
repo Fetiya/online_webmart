@@ -15,9 +15,12 @@ import edu.mum.cs490.smartmart.report.entity.ProductSales;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,12 +102,19 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
 
     }
 
-    public List<ProductSales> getPrductsSalesByVendor(long vendorId, Calendar startDate, Calendar endDate) {
-
+    @Override
+    public List<ProductSales> getPrductsSalesByVendor(long vendorId, Date startDate, Date endDate) {
+//Calendar cal=Calendar.getInstance();
+//cal.setTime(endDate);
+//cal.get
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String strstartDate = formatter.format(startDate);
+        String strendDate = formatter.format(endDate);
         String sql = "SELECT p.id as productId, p.name as productName, p.quantity as qtyInStock , sum(o.quantity) as qtySold, sum(o.price * o.quantity) as totalPrice, sum(s.profitToVendor) as totalNetIncome"
                 + " FROM orderitem o,product p,salesdetail s, order_table ot"
-                + " WHERE o.product_id=p.id and o.id=s.`orderItem_id` and p.vendor_id = v.id and v.id=" + vendorId + " and ot.`orderDate` >= '" + startDate + "' AND ot.`orderDate` < '" + endDate + "' "
-                + " GROUP BY p.id,p.quantity,p.name,";
+                + " WHERE o.product_id=p.id and o.id=s.`orderItem_id` and p.vendor_id=" + vendorId //+ " and ot.`orderDate` >= '" + strstartDate + "' AND ot.`orderDate` < '" + strendDate + "' "
+                + " GROUP BY p.id,p.quantity,p.`name`";
+        System.out.println(sql);
         Query query = getSf().getCurrentSession().createSQLQuery(sql);
         List<Object[]> listResult = query.list();
         List<ProductSales> result = new ArrayList<>();

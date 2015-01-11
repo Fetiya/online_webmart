@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVendorSalesReport-ByProduct" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptVendorSalesReport-ByProduct" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fcf4f5b4-dfb4-4052-a0df-1b29f01442c5">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -19,16 +19,16 @@
 	<title>
 		<band height="72" splitType="Stretch">
 			<image>
-				<reportElement x="275" y="0" width="300" height="64" />
+				<reportElement x="275" y="0" width="300" height="64" uuid="bfa04b1b-2c42-4eaa-8ad5-726dda07c830"/>
 				<imageExpression><![CDATA["leaf_banner_red.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" />
+				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="64028aab-371f-4e57-9655-a338456adc43"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Sales Report]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" />
+				<reportElement style="SubTitle" x="117" y="46" width="157" height="22" uuid="a72ca3ff-ff93-4977-a595-d871e9b8c761"/>
 				<text><![CDATA[By Product]]></text>
 			</staticText>
 		</band>
@@ -39,33 +39,33 @@
 	<columnHeader>
 		<band height="37" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" />
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="eae687ba-26c4-4467-b815-1ac27234e1e0"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="0" y="0" width="66" height="20" />
+				<reportElement x="0" y="15" width="66" height="20" uuid="56151a89-cf92-412c-bcf3-b5ff167a8bec"/>
 				<text><![CDATA[productId]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="66" y="0" width="149" height="20" />
+				<reportElement x="66" y="15" width="149" height="20" uuid="eae2c074-2bcf-4a5c-8a21-c338bdd68c75"/>
 				<text><![CDATA[productName]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="215" y="0" width="75" height="20" />
+				<reportElement x="215" y="15" width="75" height="20" uuid="90aac100-9976-491d-b4ca-c3663d150dc4"/>
 				<text><![CDATA[qtyInStock]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="290" y="0" width="83" height="20" />
+				<reportElement x="290" y="15" width="83" height="20" uuid="305fac04-3e21-418d-960f-574cc7fc1663"/>
 				<text><![CDATA[qtySold]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="373" y="0" width="100" height="20" />
+				<reportElement x="373" y="15" width="100" height="20" uuid="4a950f91-f188-4770-928e-8fbb9c4563c6"/>
 				<text><![CDATA[totalPriceSold]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="473" y="0" width="100" height="20" />
+				<reportElement x="473" y="15" width="80" height="20" uuid="1fd9d824-da3d-4edc-897f-6bd6c176860a"/>
 				<text><![CDATA[totalNetIncome]]></text>
 			</staticText>
 		</band>
@@ -73,33 +73,33 @@
 	<detail>
 		<band height="30" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" />
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="799ce7f0-d4a7-4eeb-9979-51be97ed40c0"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="0" y="0" width="66" height="20" />
+				<reportElement x="0" y="0" width="66" height="20" uuid="2d8414a4-53f4-47f4-9be8-2f3a11c462ed"/>
 				<textFieldExpression><![CDATA[$F{productId}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="66" y="0" width="149" height="20" />
+				<reportElement x="66" y="0" width="149" height="20" uuid="f3cdb915-db05-4422-b92f-3bf55144fc2e"/>
 				<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="215" y="0" width="75" height="20" />
+				<reportElement x="215" y="0" width="75" height="20" uuid="a97548aa-d9f7-4885-88df-fb1561d4d2e8"/>
 				<textFieldExpression><![CDATA[$F{qtyInStock}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="290" y="0" width="83" height="20" />
+				<reportElement x="290" y="0" width="83" height="20" uuid="6e427161-86b2-48af-aa46-b88c40a48bbf"/>
 				<textFieldExpression><![CDATA[$F{qtySold}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="373" y="0" width="100" height="20" />
+				<reportElement x="373" y="0" width="100" height="20" uuid="32843c39-9054-4715-a2cd-f3cdcdbe4357"/>
 				<textFieldExpression><![CDATA[$F{totalPriceSold}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="475" y="0" width="100" height="20" />
+				<reportElement x="473" y="0" width="92" height="20" uuid="83abcbf3-fbdf-4638-b1f5-f3acfbc29186"/>
 				<textFieldExpression><![CDATA[$F{totalNetIncome}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -107,7 +107,7 @@
 	<columnFooter>
 		<band height="45" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" />
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6b46e6f6-6b92-42fc-b19d-2712c021b128"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
@@ -117,21 +117,21 @@
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement style="Column header" x="433" y="0" width="80" height="20" />
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="50a29015-d432-4a67-8aba-5b43ea83f885"/>
 				<textElement textAlignment="Right">
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement style="Column header" x="513" y="0" width="40" height="20" />
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="daf039be-4c6b-4afe-9dc6-48e5a17513ef"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement style="Column header" x="0" y="0" width="197" height="20" />
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="c2a8db9d-6d42-4815-9e31-3053747ee0bc"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>

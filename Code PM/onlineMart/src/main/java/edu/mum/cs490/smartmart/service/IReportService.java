@@ -5,7 +5,8 @@
  */
 package edu.mum.cs490.smartmart.service;
 
-import java.util.Calendar;
+
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -13,5 +14,5 @@ import java.util.Map;
  * @author senai
  */
 public interface IReportService {
-    public abstract Map<String, Object> getVendorSalesReportByProduct(long vendorId, Calendar startDate,Calendar endDate);
+    public abstract Map<String, Object> getVendorSalesReportByProduct(long vendorId, Date startDate,Date endDate);
 }

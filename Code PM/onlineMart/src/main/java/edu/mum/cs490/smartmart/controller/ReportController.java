@@ -5,8 +5,11 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
+import static com.opensymphony.xwork2.Action.SUCCESS;
+import com.opensymphony.xwork2.ActionSupport;
 import edu.mum.cs490.smartmart.service.IReportService;
 import java.util.Calendar;
+import java.util.Date;
 //import org.convey.user.registration.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,29 +29,80 @@ import org.springframework.ui.Model;
  * @author senai
  */
 @Controller
-//@RequestMapping("/report/")
-public class ReportController {
-    
+@RequestMapping("/report/")
+public class ReportController {//extends ActionSupport {
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    
+
     @Autowired
     IReportService jasperReportService;
-    
-    @RequestMapping(value = "/report", method = RequestMethod.GET)
-    public String reportSelector() {        
-        
-        return "reportSelectiion";
+
+    private Date startDate;
+    private Date endDate;
+
+    public ReportController() {
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(2013, 1, 1);
+        startDate = cal.getTime();
+        cal.set(2015, 1, 30);
+        endDate = cal.getTime();
     }
-    
-    @RequestMapping(value = "/report/pdf",method = RequestMethod.GET)
-    public ModelAndView generatePdfReport(ModelAndView modelAndView, Calendar reportStartDate,Calendar reportEndDate) {
-        
+
+    //return today date
+    public Date getTodayDate() {
+
+        return new Date();
+    }
+
+    public IReportService getJasperReportService() {
+        return jasperReportService;
+    }
+
+    public void setJasperReportService(IReportService jasperReportService) {
+        this.jasperReportService = jasperReportService;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+//    public String execute() throws Exception {
+//
+//        return SUCCESS;
+//    }
+
+//    public String display() {
+//        return NONE;
+//    }
+
+    @RequestMapping(value = "reportSelection", method = RequestMethod.GET)
+    public ModelAndView reportSelector(ModelAndView modelAndView) {
+        return generatePdfReport(modelAndView, new Date(), new Date());
+//        return "reportSelection";
+    }
+
+    @RequestMapping(value = "pdf", method = RequestMethod.GET)
+    public ModelAndView generatePdfReport(ModelAndView modelAndView, Date reportStartDate, Date reportEndDate) {
+
         logger.debug("--------------generate PDF report----------");
         System.out.println("Aloha");
         //pdfReport bean has ben declared in the jasper-views.xml file
-        modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(1,reportStartDate,reportEndDate));
+        modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(3, reportStartDate, reportEndDate));
         return modelAndView;
-        
+
     }//generatePdfReport
 
 //    @RequestMapping(method = RequestMethod.GET , value = "xls")
@@ -92,9 +146,9 @@ public class ReportController {
 //    }//generatePdfReport
     @RequestMapping(method = RequestMethod.GET, value = "html")
     public ModelAndView generateHtmlReport(ModelAndView modelAndView) {
-        
+
         logger.debug("--------------generate HTML report----------");
-        
+
         Map<String, Object> parameterMap = new HashMap<String, Object>();
 
 //        List<User> usersList = userDao.retrieveAllRegisteredUsers();
@@ -103,10 +157,10 @@ public class ReportController {
 //        parameterMap.put("datasource", JRdataSource);
         //xlsReport bean has ben declared in the jasper-views.xml file
         modelAndView = new ModelAndView("htmlReport", parameterMap);
-        
+
         return modelAndView;
-        
+
     }//generatePdfReport
-    
+
 }//ReportController
 
