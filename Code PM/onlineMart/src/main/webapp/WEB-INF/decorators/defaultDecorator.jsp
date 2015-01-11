@@ -79,9 +79,10 @@
                                         </ul>
                                     </li>
                                     <!--<li><a href="#"><i class="fa fa-user"></i> Account</a></li>-->
-
-                                    <li><a href="${pageContext.request.contextPath}/checkSelection"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                    <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                    <security:authorize access="hasAnyRole('ROLE_ANONYMOUS','ROLE_CUSTOMER')">
+                                        <li><a href="${pageContext.request.contextPath}/checkSelection"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                    </security:authorize>
                                         <c:choose>   
                                             <c:when test="${not empty loggedUser }">
                                             <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
@@ -186,7 +187,7 @@
                                         <li><a href="addSetting">Add Setting</a></li>
                                         <li> <a href="viewCategory" >View Product Category </a></li>
                                         <li><a href="addProductCategory" >Add Product Category</a></li>
-                                        
+
                                     </ul>
                                 </div>
 
@@ -196,11 +197,8 @@
                             <security:authorize access="hasRole('ROLE_VENDORADMIN')" >
                                 <h2>Navigations</h2>
                                 <div class="brands-name">
-
-                                <a href="insertProduct">Insert Product</a><br/>         
-
-                                <a href="report/reportSelection" target="_blank" >View Vendor Sales Report </a><br/><br />
                                     <ul class="nav nav-pills nav-stacked">
+                                        <li><a href="report/reportSelection" target="_blank" >View Vendor Sales Report </a></li>
                                         <li><a class= "navclass" href="insertProduct">Insert Product</a></li>       
                                         <li><a class="navclass" href="viewProducts">View Products</a></li>
                                     </ul>

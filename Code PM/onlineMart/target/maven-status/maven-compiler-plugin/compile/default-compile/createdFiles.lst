@@ -54,6 +54,7 @@ edu\mum\cs490\smartmart\dao\IOrderItemDAO.class
 edu\mum\cs490\smartmart\domain\Settings.class
 edu\mum\cs490\smartmart\dao\impl\SalesDetailDAOImpl.class
 edu\mum\cs490\smartmart\domain\ProductCategory.class
+edu\mum\cs490\smartmart\dao\impl\VendorAdminDAOImpl.class
 edu\mum\cs490\smartmart\domain\SubscriptionRule.class
 edu\mum\cs490\smartmart\domain\Payment.class
 edu\mum\cs490\smartmart\domain\Credential.class
