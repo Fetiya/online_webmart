@@ -197,6 +197,9 @@
                                 <h2>Navigations</h2>
                                 <div class="brands-name">
 
+                                <a href="insertProduct">Insert Product</a><br/>         
+
+                                <a href="report/reportSelection" target="_blank" >View Vendor Sales Report </a><br/><br />
                                     <ul class="nav nav-pills nav-stacked">
                                         <li><a class= "navclass" href="insertProduct">Insert Product</a></li>       
                                         <li><a class="navclass" href="viewProducts">View Products</a></li>

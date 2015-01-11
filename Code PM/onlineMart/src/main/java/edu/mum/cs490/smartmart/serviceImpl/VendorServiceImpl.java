@@ -5,12 +5,14 @@
  */
 package edu.mum.cs490.smartmart.serviceImpl;
 
+import edu.mum.cs490.smartmart.dao.IVendorAdminDAO;
 import edu.mum.cs490.smartmart.domain.Role;
 import edu.mum.cs490.smartmart.domain.VendorStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import edu.mum.cs490.smartmart.dao.IVendorDAO;
 import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.domain.VendorAdmin;
 import edu.mum.cs490.smartmart.service.IEncryptionService;
 import edu.mum.cs490.smartmart.service.INotificationService;
 import edu.mum.cs490.smartmart.service.IVendorService;
@@ -25,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class VendorServiceImpl implements IVendorService {
 
     IVendorDAO vendorDAO;
+    
+    IVendorAdminDAO vendorAdminDAO;
 
     IEncryptionService encryptionService;
     
@@ -36,6 +40,14 @@ public class VendorServiceImpl implements IVendorService {
 
     public void setVendorDAO(IVendorDAO vendorDAO) {
         this.vendorDAO = vendorDAO;
+    }
+
+    public IVendorAdminDAO getVendorAdminDAO() {
+        return vendorAdminDAO;
+    }
+
+    public void setVendorAdminDAO(IVendorAdminDAO vendorAdminDAO) {
+        this.vendorAdminDAO = vendorAdminDAO;
     }
 
     public IEncryptionService getEncryptionService() {
@@ -118,5 +130,11 @@ public class VendorServiceImpl implements IVendorService {
     public Vendor getVendorById(Long id) {
         Vendor vendor=vendorDAO.getVendorById(id);
         return vendor;
+    }
+    
+    public Vendor getVendorByVendorAdminId(Long Id){
+        VendorAdmin vendorAdmin = vendorAdminDAO.findByPrimaryKey(Id);
+        
+        return vendorAdmin.getVendor();
     }
 }

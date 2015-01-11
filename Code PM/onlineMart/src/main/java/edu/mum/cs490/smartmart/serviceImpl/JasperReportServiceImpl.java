@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,11 +56,11 @@ public class JasperReportServiceImpl implements IReportService {
 //            System.out.println("Report File Could not be found");
 //        }
 //    }
-    public Map<String, Object> getVendorSalesReportByProduct(long vendorId) {
+    public Map<String, Object> getVendorSalesReportByProduct(long vendorId, Date startDate,Date endDate) {
 
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         
-        List<ProductSales> productsList = productDAO.getPrductsSalesByVendor(vendorId);
+        List<ProductSales> productsList = productDAO.getPrductsSalesByVendor(vendorId,startDate, endDate);
 
         JRDataSource JRdataSource = new JRBeanCollectionDataSource(productsList);
 

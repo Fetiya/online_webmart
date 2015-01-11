@@ -54,7 +54,7 @@
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost/smartmart" />
         <property name="username" value="root" />
-        <property name="password" value="Pass@deliver" />
+        <property name="password" value="root" />
 
     </bean>
 
@@ -136,6 +136,9 @@
     <bean id="settingsDAO" class="edu.mum.cs490.smartmart.dao.impl.SettingsDAOImpl" parent="hibernateDAO">
     </bean>
     
+    <bean id="vendorAdminDAO" class="edu.mum.cs490.smartmart.dao.impl.VendorAdminDAOImpl" parent="hibernateDAO">
+    </bean>
+    
     <!-- Email Service injections --> 
     <bean id="emailAdvice" class="edu.mum.cs490.smartmart.aop.EmailAdvice">
         <property name="notificationService" ref="notificationService"/>
@@ -153,6 +156,7 @@
     <bean  id="vendorService" class="edu.mum.cs490.smartmart.serviceImpl.VendorServiceImpl">
         
         <property name="vendorDAO" ref="vendorDAO" />
+        <property name="vendorAdminDAO" ref="vendorAdminDAO" />
         <!--<property name="customerService" ref="customerService" />-->
         <!--<property  name="credentialService" ref="credentialService" />-->
         <property  name="encryptionService" ref="encryptionService" />

@@ -16,4 +16,5 @@ import java.util.List;
 public interface IVendorAdminDAO  extends IGenericDAO<VendorAdmin, Long>{
     
     
+    
 }

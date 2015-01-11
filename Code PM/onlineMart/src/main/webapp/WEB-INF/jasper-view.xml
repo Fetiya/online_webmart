@@ -9,7 +9,7 @@
   http://www.springframework.org/schema/util 
   http://www.springframework.org/schema/util/spring-util-3.0.xsd">
  
-     <!--here all the url value should contains the valid path for the jrxml file-->
+    <!--here all the url value should contains the valid path for the jrxml file-->
      
     <bean id="pdfReport"
           class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
