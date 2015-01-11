@@ -19,6 +19,7 @@ public interface IVendorService {
     public void update(Vendor vendor);
     public List<Vendor>getAllPendingVendors();
     public List<Vendor> getAllActiveVendor();
+    public Vendor getVendorByVendorAdminId(Long vendorAdminId);
 }
 
 

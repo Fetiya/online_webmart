@@ -7,7 +7,11 @@ package edu.mum.cs490.smartmart.controller;
 
 import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
+import edu.mum.cs490.smartmart.domain.Users;
+import edu.mum.cs490.smartmart.domain.Vendor;
+import edu.mum.cs490.smartmart.domain.VendorAdmin;
 import edu.mum.cs490.smartmart.service.IReportService;
+import edu.mum.cs490.smartmart.service.IVendorService;
 import java.util.Calendar;
 import java.util.Date;
 //import org.convey.user.registration.model.User;
@@ -22,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 
 /**
@@ -36,6 +41,9 @@ public class ReportController {//extends ActionSupport {
 
     @Autowired
     IReportService jasperReportService;
+    
+    @Autowired 
+    IVendorService vendorService;
 
     private Date startDate;
     private Date endDate;
@@ -83,24 +91,32 @@ public class ReportController {//extends ActionSupport {
 //
 //        return SUCCESS;
 //    }
-
 //    public String display() {
 //        return NONE;
 //    }
-
     @RequestMapping(value = "reportSelection", method = RequestMethod.GET)
-    public ModelAndView reportSelector(ModelAndView modelAndView) {
-        return generatePdfReport(modelAndView, new Date(), new Date());
+    public ModelAndView reportSelector(ModelAndView modelAndView, HttpSession session) {
+        return generatePdfReport(modelAndView, new Date(), new Date(), session);
 //        return "reportSelection";
     }
 
     @RequestMapping(value = "pdf", method = RequestMethod.GET)
-    public ModelAndView generatePdfReport(ModelAndView modelAndView, Date reportStartDate, Date reportEndDate) {
+    public ModelAndView generatePdfReport(ModelAndView modelAndView, Date reportStartDate, Date reportEndDate, HttpSession session) {
 
         logger.debug("--------------generate PDF report----------");
-        System.out.println("Aloha");
-        //pdfReport bean has ben declared in the jasper-views.xml file
-        modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(3, reportStartDate, reportEndDate));
+        Users user = (Users) session.getAttribute("loggedUser");
+        VendorAdmin vendorAdmin;
+        if (user != null && user instanceof VendorAdmin) {
+            vendorAdmin = (VendorAdmin) user;
+            Vendor vendor=vendorService.getVendorByVendorAdminId(vendorAdmin.getId());
+            //pdfReport bean has ben declared in the jasper-views.xml file
+            modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(vendor.getId(), reportStartDate, reportEndDate));
+            return modelAndView;
+
+        } else {
+            System.out.println("User is not vendorAdmin");
+        }
+        
         return modelAndView;
 
     }//generatePdfReport
