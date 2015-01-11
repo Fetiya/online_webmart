@@ -5,7 +5,8 @@
  */
 package edu.mum.cs490.smartmart.dao;
 
-import edu.mum.cs490.smartmart.domain.Users;;
+import edu.mum.cs490.smartmart.domain.Users;import java.util.List;
+;
 
 
 /**
@@ -16,6 +17,6 @@ import edu.mum.cs490.smartmart.domain.Users;;
 
 public interface IUserDAO  extends IGenericDAO<Users, Long>{//   // extends HibernateDAO<User, Long> { //
 
-    
+    public List<Users> findUsers(String userName);
    
 }

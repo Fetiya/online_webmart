@@ -14,7 +14,7 @@
     <body>
         
         <form action="searchProduct" method="POST">  
-            <input type="text" name="productName" required="true" placeholder="search Product by name"/>   
+            <input type="text" name="productName" required="required" placeholder="search Product"/>   
             <div class="search_box pull-right">
                 <input type="submit" value = ""/>
             </div>

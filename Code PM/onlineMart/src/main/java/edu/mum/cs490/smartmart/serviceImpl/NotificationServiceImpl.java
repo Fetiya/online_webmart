@@ -60,11 +60,13 @@ public class NotificationServiceImpl implements INotificationService {
     @Override
     public void notifyCustomerSignUp(Customer customer, String message) {
         SimpleMailMessage template = getToCustomersTemplate();
+        
         String emailMessage = String.format(template.getText(), customer.getFirstName() + " " + customer.getLastName(), message);
-        System.out.println("+++++++++=========" + customer);
-        System.out.println("+++++++++" + customer.getCredential());
+        
+        if(customer.getCredential()!=null)
+        {
         sendMail(template.getFrom(), customer.getCredential().getUsername(), template.getSubject(), emailMessage);
-
+        }
     }
 
     /**
@@ -121,7 +123,15 @@ public class NotificationServiceImpl implements INotificationService {
         SimpleMailMessage template = getToCustomersTemplate();
         String emailMessage = String.format(template.getText(), o.getFirstName() + " " + o.getLastName(), message);
 
+        if(o.getEmail()==null)
+        {
         sendMail(template.getFrom(), o.getCredential().getUsername(), "Your SmartMart's Oder", emailMessage);
+        }
+        else
+        {
+            sendMail(template.getFrom(),o.getEmail(), "Your SmartMart's Oder", emailMessage);
+        }
+        
     }
 
 }

@@ -192,10 +192,17 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/productEdit/{id}", method = RequestMethod.GET)
-    public String getProduct(Model model, @PathVariable long id) {
+    public String getProduct(Model model, @PathVariable long id, HttpSession session) {
         model.addAttribute("product", productService.getProduct(id));
         model.addAttribute("categories", productService.getListOfCategory());
         model.addAttribute("vendors", productService.getListOfVendor());
+        return "editProduct";
+    }
+    @RequestMapping(value="/editProduct")
+    public String editProduct(Model model, HttpSession session){
+        model.addAttribute("product", session.getAttribute("product"));
+        model.addAttribute("categories", session.getAttribute("categories"));
+        model.addAttribute("vendors", session.getAttribute("vendors"));
         return "editProduct";
     }
 
@@ -468,8 +475,10 @@ public class ProductController {
          }
          else{
         boolean validationResult=false;
+        payment.setTotalAmount((double)session.getAttribute("cartAmount"));
+        
          RestTemplate restTemplate = new RestTemplate();
-         Payment  validPayment=restTemplate.getForObject("http://10.10.52.34:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
+         Payment  validPayment=restTemplate.getForObject("http://10.10.14.40:8080/PaymentGateWay/webresources/com.mypayment.paymentgateway.payment/checkValidation/"+payment.getCardNumber()+"/"+payment.getSecurityNumber()+"/"+payment.getTotalAmount(), Payment.class); 
          if(validPayment.getId()!=null){
              validationResult=true;
          }

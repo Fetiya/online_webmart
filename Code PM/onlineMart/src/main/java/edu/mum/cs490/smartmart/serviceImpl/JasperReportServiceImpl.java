@@ -60,7 +60,7 @@ public class JasperReportServiceImpl implements IReportService {
 
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         
-        List<ProductSales> productsList = productDAO.getPrductsSalesByVendor(vendorId, startDate, endDate);
+        List<ProductSales> productsList = productDAO.getPrductsSalesByVendor(vendorId);
 
         JRDataSource JRdataSource = new JRBeanCollectionDataSource(productsList);
 
