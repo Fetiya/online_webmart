@@ -5,13 +5,20 @@
  */
 package edu.mum.cs490.smartmart.report.entity;
 
+import java.util.Date;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author senai
  */
 public class ProductSales {
+    
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date startDate;
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    private Date endDate;
     
     private Long productId;
     private String productName;
@@ -32,6 +39,24 @@ public class ProductSales {
         this.totalNetIncome = totalNetIncome;
     }
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    
+    
     public Long getProductId() {
         return productId;
     }

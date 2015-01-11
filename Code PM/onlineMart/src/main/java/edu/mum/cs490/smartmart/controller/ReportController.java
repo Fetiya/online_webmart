@@ -12,6 +12,8 @@ import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorAdmin;
 import edu.mum.cs490.smartmart.service.IReportService;
 import edu.mum.cs490.smartmart.service.IVendorService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 //import org.convey.user.registration.model.User;
@@ -34,15 +36,15 @@ import org.springframework.ui.Model;
  * @author senai
  */
 @Controller
-@RequestMapping("/report/")
+@RequestMapping("/report")
 public class ReportController {//extends ActionSupport {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     IReportService jasperReportService;
-    
-    @Autowired 
+
+    @Autowired
     IVendorService vendorService;
 
     private Date startDate;
@@ -94,29 +96,40 @@ public class ReportController {//extends ActionSupport {
 //    public String display() {
 //        return NONE;
 //    }
-    @RequestMapping(value = "reportSelection", method = RequestMethod.GET)
-    public ModelAndView reportSelector(ModelAndView modelAndView, HttpSession session) {
-        return generatePdfReport(modelAndView, new Date(), new Date(), session);
-//        return "reportSelection";
+    @RequestMapping(value = "/reportSelection", method = RequestMethod.GET)
+    public String reportSelector(ModelAndView modelAndView, HttpSession session) {
+//        return generatePdfReport(modelAndView, new Date(), new Date(), session);
+        return "reportSelection";
     }
 
-    @RequestMapping(value = "pdf", method = RequestMethod.GET)
-    public ModelAndView generatePdfReport(ModelAndView modelAndView, Date reportStartDate, Date reportEndDate, HttpSession session) {
+    @RequestMapping(value = "/pdf", method = RequestMethod.GET)
+    public ModelAndView generatePdfReport(ModelAndView modelAndView, String reportStartDate, String reportEndDate, HttpSession session) {
 
         logger.debug("--------------generate PDF report----------");
-        Users user = (Users) session.getAttribute("loggedUser");
-        VendorAdmin vendorAdmin;
-        if (user != null && user instanceof VendorAdmin) {
-            vendorAdmin = (VendorAdmin) user;
-            Vendor vendor=vendorService.getVendorByVendorAdminId(vendorAdmin.getId());
-            //pdfReport bean has ben declared in the jasper-views.xml file
-            modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(vendor.getId(), reportStartDate, reportEndDate));
-            return modelAndView;
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("Date are :" + reportStartDate + " " + reportEndDate);
+        try {
+            Date rptStartDate = formatter.parse(reportStartDate);
+            Date rptEndDate = formatter.parse(reportEndDate);
 
-        } else {
-            System.out.println("User is not vendorAdmin");
+            Users user = (Users) session.getAttribute("loggedUser");
+            VendorAdmin vendorAdmin;
+            if (user != null && user instanceof VendorAdmin) {
+                vendorAdmin = (VendorAdmin) user;
+                Vendor vendor = vendorService.getVendorByVendorAdminId(vendorAdmin.getId());
+
+                //pdfReport bean has ben declared in the jasper-views.xml file
+                modelAndView = new ModelAndView("pdfReport", jasperReportService.getVendorSalesReportByProduct(vendor.getId(), rptStartDate, rptEndDate));
+                return modelAndView;
+
+            } else {
+                System.out.println("User is not vendorAdmin");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        
+
         return modelAndView;
 
     }//generatePdfReport
