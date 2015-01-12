@@ -17,23 +17,27 @@
     <body>
         <div class="row">  	
             <div class="col-sm-form">
-                <form:form action="report/pdf" method="post" commandName="report">
-                    <table>
-                        <tr>
-                            <td>Report start Date:</td>      
-                            <td><input type="date" name="reportStartDate" id="reportStartDate"/></td>
 
-                        </tr>
-                        <tr>
-                            <td>Report end Date: </td>
-                            <td><input type="date" name="reportEndDate" id="reportEndDate"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><input type="submit" value="Generate"/></td>
-                        </tr>
-                    </table>
+                <h2 class="title text-center">Report</h2>
+                <div class="contact-form">
+                    <form:form action="report/pdf" method="post" commandName="report">
+                        <table>
+                            <tr class="form-group col-md-12">
+                                <td class="input-label">Report start Date:</td>      
+                                <td class="input-text"><input type="date" name="reportStartDate" id="reportStartDate" class="form-control"/></td>
 
-                </form:form>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td class="input-label">Report end Date: </td>
+                                <td class="input-text"><input type="date" name="reportEndDate" id="reportEndDate" class="form-control"/></td>
+                            </tr>
+                            <tr class="form-group col-md-12">
+                                <td colspan="2"><input type="submit" value="Generate" class="btn btn-primary"/></td>
+                            </tr>
+                        </table>
+
+                    </form:form>
+                </div>
             </div>
         </div>
     </body>
