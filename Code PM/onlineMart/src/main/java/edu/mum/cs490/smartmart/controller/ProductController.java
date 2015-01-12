@@ -858,12 +858,7 @@ public class ProductController {
 
     }
     
-//    @RequestMapping(value = "/checkout", method = RequestMethod.GET)
-//    public String checkout(Model model, final RedirectAttributes re, HttpSession session) {
-//        model.addAttribute("payment", new Payment());
-//        return "checkout";
-//    }
-//   
+
     
   
 
@@ -874,6 +869,12 @@ public class ProductController {
         List<ShoppingCartItem> items = (List<ShoppingCartItem>) session.getAttribute("guestShoppingCart");
         items.clear();
 
+    }
+    
+     @RequestMapping(value = "/reportSelectionView", method = RequestMethod.GET)
+    public String reportSelectorView() {
+        // return "/report/pdf";
+        return "reportSelection";
     }
 }
 

@@ -17,7 +17,7 @@
     <body>
         <div class="row">  	
             <div class="col-sm-form">
-                <form:form action="../report/pdf" method="post" commandName="report">
+                <form:form action="report/pdf" method="post" commandName="report">
                     <table>
                         <tr>
                             <td>Report start Date:</td>      

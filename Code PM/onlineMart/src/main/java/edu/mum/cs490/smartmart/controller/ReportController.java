@@ -88,18 +88,15 @@ public class ReportController {
         this.endDate = endDate;
     }
 
-//    public String execute() throws Exception {
-//
-//        return SUCCESS;
-//    }
-//    public String display() {
-//        return NONE;
-//    }
+
     @RequestMapping(value = "/reportSelection", method = RequestMethod.GET)
     public String reportSelector() {
         // return "/report/pdf";
-        return "reportSelection";
+        return "redirect:/reportSelectionView";
+        //return "reportSelection";
     }
+    
+    
 
     @RequestMapping(value = "/pdf", method = RequestMethod.POST)
     public ModelAndView generatePdfReport(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
