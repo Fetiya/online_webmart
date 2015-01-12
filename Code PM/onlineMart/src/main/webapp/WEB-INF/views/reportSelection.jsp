@@ -15,23 +15,26 @@
 
     </head>
     <body>
-        <form:form >
-            <table>
-                <tr>
-                    <td>Report start Date:</td>
-                    <td><form:input type="datetime-local" path="reportStartDate" /> </td>
-                </tr>
-                <tr>
-                    <td>Report end Date: </td>
-                    <td><form:input type="datetime-local" id="endDatepicker" path="${reportEndDate}" /></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><form:input path="/report/pdf" type="submit" value="Generate"/></td>
-                </tr>
-            </table>
-                    
-        </form:form>
+        <div class="row">  	
+            <div class="col-sm-form">
+                <form:form action="../report/pdf" method="post" commandName="report">
+                    <table>
+                        <tr>
+                            <td>Report start Date:</td>      
+                            <td><input type="date" name="reportStartDate" id="reportStartDate"/></td>
 
+                        </tr>
+                        <tr>
+                            <td>Report end Date: </td>
+                            <td><input type="date" name="reportEndDate" id="reportEndDate"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="submit" value="Generate"/></td>
+                        </tr>
+                    </table>
 
+                </form:form>
+            </div>
+        </div>
     </body>
 </html>
