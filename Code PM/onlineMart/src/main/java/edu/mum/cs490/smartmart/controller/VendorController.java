@@ -37,45 +37,44 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 public class VendorController {
-
- 
+    
     public VendorController() {
     }
-
+    
     @Autowired
     ISubscriptionRuleService subscriptionRuleService;
-
+    
     @Autowired
     private IVendorService vendorService;
-
+    
     @Autowired
     private ICustomerService customerService;
-
+    
     @Autowired
     private IEncryptionService encryptionService;
-
+    
     public IVendorService getVendorService() {
         return vendorService;
     }
-
+    
     public void setVendorService(IVendorService vendorService) {
         this.vendorService = vendorService;
     }
-
+    
     public ISubscriptionRuleService getSubscriptionRuleService() {
         return subscriptionRuleService;
     }
     
-     @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
+    @RequestMapping(value = "/viewPendingVendors", method = RequestMethod.GET)
     public String getPendingVendors(Model model, HttpSession session) {
-        model.addAttribute("pendingVendors",vendorService.getAllPendingVendors());
-         return "viewPendingVendors";
+        model.addAttribute("pendingVendors", vendorService.getAllPendingVendors());
+        return "viewPendingVendors";
     }
     
-     @RequestMapping(value = "/approveVendors/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/approveVendors/{id}", method = RequestMethod.POST)
     public String approveVendors(@PathVariable Long id, String Status, Model model, HttpSession session) {
-         System.out.println("approveVendor controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-       Vendor vendor = vendorService.getVendorById(id);
+        System.out.println("approveVendor controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Vendor vendor = vendorService.getVendorById(id);
         if (Status.equalsIgnoreCase("ACTIVE")) {
             vendor.setStatus(VendorStatus.ACTIVE);
             vendor.getVendorAdmin().getCredential().setActive(true);
@@ -83,45 +82,46 @@ public class VendorController {
             vendor.setStatus(VendorStatus.REJECTED);
         }
         vendorService.update(vendor);
-         System.out.println("vendor "+ vendor.getId());
-         return "redirect:/viewPendingVendors";
+        System.out.println("vendor " + vendor.getId());
+        return "redirect:/viewPendingVendors";
     }
     
     @RequestMapping(value = "/VendorsForUnsubscribe", method = RequestMethod.GET)
     public String getVendorsForUnsubscribe(Model model, HttpSession session) {
-        model.addAttribute("vendors",vendorService.getAllActiveVendor());
+        model.addAttribute("vendors", vendorService.getAllActiveVendor());
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
-         return "vendorUnsubscribe";
+        return "vendorUnsubscribe";
     }
     
     @RequestMapping(value = "/unsubscribeVendors/{id}", method = RequestMethod.POST)
     public String unsubscribeVendors(@PathVariable Long id, String Status, Model model, HttpSession session) {
-         System.out.println("unsubscribeVendors controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-       Vendor vendor = vendorService.getVendorById(id);
-       if (Status.equalsIgnoreCase("DEACTIVATE")) {
+        System.out.println("unsubscribeVendors controler!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Vendor vendor = vendorService.getVendorById(id);
+        if (Status.equalsIgnoreCase("DEACTIVATE")) {
             vendor.setStatus(VendorStatus.DEACTIVATE);
-        vendorService.update(vendor);
-         System.out.println("vendor "+ vendor.getId());
-             }
-       return "redirect:/VendorsForUnsubscribe";
+            vendor.getVendorAdmin().getCredential().setActive(false);
+            vendorService.update(vendor);
+            System.out.println("vendor " + vendor.getId());
+        }
+        return "redirect:/VendorsForUnsubscribe";
     }
-
+    
     public void setSubscriptionRuleService(ISubscriptionRuleService subscriptionRuleService) {
         this.subscriptionRuleService = subscriptionRuleService;
     }
-
+    
     public IEncryptionService getEncryptionService() {
         return encryptionService;
     }
-
+    
     public void setEncryptionService(IEncryptionService encryptionService) {
         this.encryptionService = encryptionService;
     }
-
+    
     public ICustomerService getCustomerService() {
         return customerService;
     }
-
+    
     public void setCustomerService(ICustomerService customerService) {
         this.customerService = customerService;
     }
@@ -137,27 +137,26 @@ public class VendorController {
 //
 //        return "viewPendingVendors";
 //    }
-
     @RequestMapping(value = "/addVendor", method = RequestMethod.GET)
     public String addVendor(@ModelAttribute("vendor") Vendor vendor, Model model) {
-        model.addAttribute("vendor",vendor);
+        model.addAttribute("vendor", vendor);
 //        subscriptionRule = subscriptionRuleService.getAllSubscriptionRules();
 //        model.addAttribute("subscriptionRule", subscriptionRuleService.getAllSubscriptionRules());
         return "vendorRegisteration";
     }
-
+    
     @RequestMapping(value = "/addVendor", method = RequestMethod.POST)
     public String add(@Valid Vendor vendor, BindingResult result, HttpSession session, RedirectAttributes flashAttr) {
         String view = "redirect:/companyAddressInformation";
         if (!result.hasErrors()) {
-           session.setAttribute("vendor", vendor);
+            session.setAttribute("vendor", vendor);
             flashAttr.addFlashAttribute("successfulSignup", "Venodr signed up succesfully. please  log in to proceed");
-
+            
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
             }
-
+            
             view = "vendorRegisteration";
         }
         return view;
@@ -169,15 +168,15 @@ public class VendorController {
         model.addAttribute("adminAddress", adminAddress);
         return "addAdminAddressRegisteration";
     }
-
+    
     @RequestMapping(value = "/addAdminAddress", method = RequestMethod.POST)
     public String addAdAddress(@Valid Address adminAddress, BindingResult result, HttpSession session) {
-
+        
         String view = "redirect:/addVendorAdmin";
-
+        
         if (!result.hasErrors()) {
             session.setAttribute("adminAddress", adminAddress);
-
+            
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
@@ -189,20 +188,20 @@ public class VendorController {
 
     //Company Address
     @RequestMapping(value = "/companyAddressInformation", method = RequestMethod.GET)
-    public String addCompanyAddress(@ModelAttribute("companyAddress") Address companyAddress,Model model) {
-        model.addAttribute("companyAddress",companyAddress);
+    public String addCompanyAddress(@ModelAttribute("companyAddress") Address companyAddress, Model model) {
+        model.addAttribute("companyAddress", companyAddress);
         return "companyAddressInformation";
     }
-
+    
     @RequestMapping(value = "/companyAddressInformation", method = RequestMethod.POST)
     public String addCompany(@Valid Address companyAddress, BindingResult result, HttpSession session) {
-
+        
         String view = "redirect:/selectSubscriptionRule";
-
+        
         if (!result.hasErrors()) {
-
+            
             session.setAttribute("companyAddress", companyAddress);
-
+            
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
@@ -218,7 +217,7 @@ public class VendorController {
         model.addAttribute("credential", credential);
         return "addAdminCredential";
     }
-
+    
     @RequestMapping(value = "/addAdminCredential", method = RequestMethod.POST)
     public String addCredential(@Valid Credential credential, BindingResult result, HttpSession session) {
         String view = "redirect:/addAdminAddress";
@@ -229,13 +228,13 @@ public class VendorController {
         }
         if (!result.hasErrors()) {
             credential.setRole(Role.ROLE_VENDORADMIN);
-             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String hashedPassword = passwordEncoder.encode(credential.getPassword());
             credential.setPassword(hashedPassword);
             credential.setActive(false);
             
             session.setAttribute("credential", credential);
-
+            
         } else {
             view = "addAdminCredential";
         }
@@ -251,16 +250,16 @@ public class VendorController {
         model.addAttribute("subscriptionRule", subscriptionRule);
         return "selectSubscriptionRule";
     }
-
+    
     @RequestMapping(value = "/selectSubscriptionRule", method = RequestMethod.POST)
     public String addSubscriptionRule(@Valid SubscriptionRule subscriptionRule, BindingResult result, HttpSession session) {
-
+        
         String view = "redirect:/addAdminCredential";
-
+        
         if (!result.hasErrors()) {
-
+            
             session.setAttribute("subscriptionRule", subscriptionRule);
-
+            
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
@@ -275,15 +274,15 @@ public class VendorController {
     public String addCustomer(@ModelAttribute("vendorAdmin") VendorAdmin vendorAdmin, Model model) {
         model.addAttribute("vendorAdmin", vendorAdmin);
         return "adminRegisteration";
-
+        
     }
     
-       @RequestMapping(value = "/addVendorAdmin", method = RequestMethod.POST)
+    @RequestMapping(value = "/addVendorAdmin", method = RequestMethod.POST)
     public String add(@Valid VendorAdmin vendorAdmin, BindingResult result, HttpSession session, Model model) {
-
+        
         String view = "confirmPage";
-
-        if (!result.hasErrors()) { 
+        
+        if (!result.hasErrors()) {            
             Credential credential = (Credential) session.getAttribute("credential");
             Address address = (Address) session.getAttribute("adminAddress");
             Address companyAddress = (Address) session.getAttribute("companyAddress");
@@ -302,7 +301,7 @@ public class VendorController {
             session.removeAttribute("companyAddress");
             session.removeAttribute("vendor");
             session.removeAttribute("subscriptionRule");
-
+            
         } else {
             for (FieldError err : result.getFieldErrors()) {
                 System.out.println("Error:" + err.getField() + ":" + err.getDefaultMessage());
