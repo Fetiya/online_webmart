@@ -5,8 +5,6 @@
  */
 package edu.mum.cs490.smartmart.controller;
 
-import static com.opensymphony.xwork2.Action.SUCCESS;
-import com.opensymphony.xwork2.ActionSupport;
 import edu.mum.cs490.smartmart.domain.Users;
 import edu.mum.cs490.smartmart.domain.Vendor;
 import edu.mum.cs490.smartmart.domain.VendorAdmin;
@@ -16,7 +14,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-//import org.convey.user.registration.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -37,7 +36,7 @@ import org.springframework.ui.Model;
  */
 @Controller
 @RequestMapping("/report")
-public class ReportController {//extends ActionSupport {
+public class ReportController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -89,26 +88,25 @@ public class ReportController {//extends ActionSupport {
         this.endDate = endDate;
     }
 
-//    public String execute() throws Exception {
-//
-//        return SUCCESS;
-//    }
-//    public String display() {
-//        return NONE;
-//    }
-    @RequestMapping(value = "/reportSelection", method = RequestMethod.GET)
-    public String reportSelector(ModelAndView modelAndView, HttpSession session) {
-//        return generatePdfReport(modelAndView, new Date(), new Date(), session);
-        return "reportSelection";
-    }
 
-    @RequestMapping(value = "/pdf", method = RequestMethod.GET)
-    public ModelAndView generatePdfReport(ModelAndView modelAndView, String reportStartDate, String reportEndDate, HttpSession session) {
+    @RequestMapping(value = "/reportSelection", method = RequestMethod.GET)
+    public String reportSelector() {
+        // return "/report/pdf";
+        return "redirect:/reportSelectionView";
+        //return "reportSelection";
+    }
+    
+    
+
+    @RequestMapping(value = "/pdf", method = RequestMethod.POST)
+    public ModelAndView generatePdfReport(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
 
         logger.debug("--------------generate PDF report----------");
+
+        String reportStartDate = request.getParameter("reportStartDate");
+        String reportEndDate = request.getParameter("reportEndDate");
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("Date are :" + reportStartDate + " " + reportEndDate);
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
         try {
             Date rptStartDate = formatter.parse(reportStartDate);
             Date rptEndDate = formatter.parse(reportEndDate);
@@ -134,59 +132,99 @@ public class ReportController {//extends ActionSupport {
 
     }//generatePdfReport
 
-//    @RequestMapping(method = RequestMethod.GET , value = "xls")
-//    public ModelAndView generateXlsReport(ModelAndView modelAndView){
-// 
-//        logger.debug("--------------generate XLS report----------");
-// 
-//        Map<String,Object> parameterMap = new HashMap<String,Object>();
-// 
-//        List<User> usersList = userDao.retrieveAllRegisteredUsers();
-// 
-//        JRDataSource JRdataSource = new JRBeanCollectionDataSource(usersList);
-// 
-//        parameterMap.put("datasource", JRdataSource);
-// 
-//        //xlsReport bean has ben declared in the jasper-views.xml file
-//        modelAndView = new ModelAndView("xlsReport", parameterMap);
-// 
-//        return modelAndView;
-// 
-//    }//generatePdfReport
-// 
-//    @RequestMapping(method = RequestMethod.GET , value = "csv")
-//    public ModelAndView generateCsvReport(ModelAndView modelAndView){
-// 
-//        logger.debug("--------------generate CSV report----------");
-// 
-//        Map<String,Object> parameterMap = new HashMap<String,Object>();
-// 
-//        List<User> usersList = userDao.retrieveAllRegisteredUsers();
-// 
-//        JRDataSource JRdataSource = new JRBeanCollectionDataSource(usersList);
-// 
-//        parameterMap.put("datasource", JRdataSource);
-// 
-//        //xlsReport bean has ben declared in the jasper-views.xml file
-//        modelAndView = new ModelAndView("csvReport", parameterMap);
-// 
-//        return modelAndView;
-// 
-//    }//generatePdfReport
-    @RequestMapping(method = RequestMethod.GET, value = "html")
-    public ModelAndView generateHtmlReport(ModelAndView modelAndView) {
+    @RequestMapping(value = "/xls", method = RequestMethod.POST)
+    public ModelAndView generateXlsReport(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
+
+        logger.debug("--------------generate XLS report----------");
+
+        String reportStartDate = request.getParameter("reportStartDate");
+        String reportEndDate = request.getParameter("reportEndDate");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+        try {
+            Date rptStartDate = formatter.parse(reportStartDate);
+            Date rptEndDate = formatter.parse(reportEndDate);
+
+            Users user = (Users) session.getAttribute("loggedUser");
+            VendorAdmin vendorAdmin;
+            if (user != null && user instanceof VendorAdmin) {
+                vendorAdmin = (VendorAdmin) user;
+                Vendor vendor = vendorService.getVendorByVendorAdminId(vendorAdmin.getId());
+
+                //xlsReport bean has ben declared in the jasper-views.xml file
+                modelAndView = new ModelAndView("xlsReport", jasperReportService.getVendorSalesReportByProduct(vendor.getId(), rptStartDate, rptEndDate));
+
+            } else {
+                System.out.println("User is not vendorAdmin");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return modelAndView;
+    }//generatePdfReport
+
+    @RequestMapping(value = "/csv", method = RequestMethod.POST )
+    public ModelAndView generateCsvReport(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
+
+        logger.debug("--------------generate CSV report----------");
+
+        String reportStartDate = request.getParameter("reportStartDate");
+        String reportEndDate = request.getParameter("reportEndDate");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+        try {
+            Date rptStartDate = formatter.parse(reportStartDate);
+            Date rptEndDate = formatter.parse(reportEndDate);
+
+            Users user = (Users) session.getAttribute("loggedUser");
+            VendorAdmin vendorAdmin;
+            if (user != null && user instanceof VendorAdmin) {
+                vendorAdmin = (VendorAdmin) user;
+                Vendor vendor = vendorService.getVendorByVendorAdminId(vendorAdmin.getId());
+
+                //csvReport bean has ben declared in the jasper-views.xml file
+                modelAndView = new ModelAndView("csvReport", jasperReportService.getVendorSalesReportByProduct(vendor.getId(), rptStartDate, rptEndDate));
+
+            } else {
+                System.out.println("User is not vendorAdmin");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return modelAndView;
+
+    }//generatecsvReport
+
+    @RequestMapping(value = "/html", method = RequestMethod.POST )
+    public ModelAndView generateHtmlReport(ModelAndView modelAndView, HttpServletRequest request, HttpSession session) {
 
         logger.debug("--------------generate HTML report----------");
 
-        Map<String, Object> parameterMap = new HashMap<String, Object>();
+       String reportStartDate = request.getParameter("reportStartDate");
+        String reportEndDate = request.getParameter("reportEndDate");
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+        try {
+            Date rptStartDate = formatter.parse(reportStartDate);
+            Date rptEndDate = formatter.parse(reportEndDate);
 
-//        List<User> usersList = userDao.retrieveAllRegisteredUsers();
-// 
-//        JRDataSource JRdataSource = new JRBeanCollectionDataSource(usersList);
-//        parameterMap.put("datasource", JRdataSource);
-        //xlsReport bean has ben declared in the jasper-views.xml file
-        modelAndView = new ModelAndView("htmlReport", parameterMap);
+            Users user = (Users) session.getAttribute("loggedUser");
+            VendorAdmin vendorAdmin;
+            if (user != null && user instanceof VendorAdmin) {
+                vendorAdmin = (VendorAdmin) user;
+                Vendor vendor = vendorService.getVendorByVendorAdminId(vendorAdmin.getId());
 
+                //htmlReport bean has ben declared in the jasper-views.xml file
+                modelAndView = new ModelAndView("htmlReport", jasperReportService.getVendorSalesReportByProduct(vendor.getId(), rptStartDate, rptEndDate));
+
+            } else {
+                System.out.println("User is not vendorAdmin");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return modelAndView;
 
     }//generatePdfReport

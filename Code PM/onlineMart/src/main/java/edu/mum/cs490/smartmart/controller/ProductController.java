@@ -834,4 +834,8 @@ public class ProductController {
         items.clear();
 
     }
+    @RequestMapping(value="/reportSelectionView",method=RequestMethod.GET)
+    public String reportSelectionView() {
+        return "reportSelection";
+   }
 }

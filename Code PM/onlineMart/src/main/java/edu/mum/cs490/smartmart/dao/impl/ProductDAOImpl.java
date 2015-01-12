@@ -102,7 +102,9 @@ public class ProductDAOImpl extends GenericDAOImpl<Product, Long> implements IPr
 
     }
 
-    @Override
+
+        
+         @Override
     public List<ProductSales> getPrductsSalesByVendor(long vendorId, Date startDate, Date endDate) {
 //Calendar cal=Calendar.getInstance();
 //cal.setTime(endDate);
